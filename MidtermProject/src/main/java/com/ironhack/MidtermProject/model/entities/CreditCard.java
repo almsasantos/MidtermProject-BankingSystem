@@ -24,6 +24,13 @@ public class CreditCard extends Account{
         this.penaltyFee = penaltyFee1;
     }
 
+    public CreditCard(Long accountId, BigDecimal balance, String secretKey, AccountHolders primaryOwner, ThirdParty secondaryOwner, BigDecimal penaltyFee, Status status, BigDecimal creditLimit, BigDecimal interestRate, BigDecimal penaltyFee1) {
+        super(accountId, balance, secretKey, primaryOwner, secondaryOwner, penaltyFee, status);
+        this.creditLimit = creditLimit;
+        this.interestRate = interestRate;
+        this.penaltyFee = penaltyFee1;
+    }
+
     public BigDecimal getCreditLimit() {
         return creditLimit;
     }

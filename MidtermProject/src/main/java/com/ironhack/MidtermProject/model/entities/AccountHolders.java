@@ -24,6 +24,7 @@ public class AccountHolders extends User {
         super(name);
         this.dateOfBirth = dateOfBirth;
         this.primaryAddress = primaryAddress;
+        this.mailingAddress = null;
         this.accounts = new ArrayList<Account>();
     }
 

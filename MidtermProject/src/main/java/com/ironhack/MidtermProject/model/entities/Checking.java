@@ -24,6 +24,12 @@ public class Checking extends Account{
         this.monthlyMaintenanceFee = monthlyMaintenanceFee;
     }
 
+    public Checking(Long accountId, BigDecimal balance, String secretKey, AccountHolders primaryOwner, ThirdParty secondaryOwner, BigDecimal penaltyFee, Status status, BigDecimal minimumBalance, BigDecimal monthlyMaintenanceFee) {
+        super(accountId, balance, secretKey, primaryOwner,secondaryOwner, penaltyFee, status);
+        this.minimumBalance = minimumBalance;
+        this.monthlyMaintenanceFee = monthlyMaintenanceFee;
+    }
+
     public BigDecimal getMinimumBalance() {
         return minimumBalance;
     }

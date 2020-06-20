@@ -17,4 +17,8 @@ public class StudentChecking extends Account{
     public StudentChecking(Long accountId, BigDecimal balance, String secretKey, AccountHolders primaryOwner, BigDecimal penaltyFee, Status status) {
         super(accountId, balance, secretKey, primaryOwner, penaltyFee, status);
     }
+
+    public StudentChecking(Long accountId, BigDecimal balance, String secretKey, AccountHolders primaryOwner, ThirdParty secondaryOwner, BigDecimal penaltyFee, Status status) {
+        super(accountId, balance, secretKey, primaryOwner, secondaryOwner, penaltyFee, status);
+    }
 }

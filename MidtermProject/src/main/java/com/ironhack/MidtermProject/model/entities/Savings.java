@@ -17,7 +17,12 @@ public class Savings extends Account {
     }
 
     public Savings(Long accountId, BigDecimal balance, String secretKey, AccountHolders primaryOwner, BigDecimal penaltyFee, Status status, BigDecimal interestRate) {
-        super(accountId, balance, secretKey, primaryOwner,  penaltyFee, status);
+        super(accountId, balance, secretKey, primaryOwner, penaltyFee, status);
+        this.interestRate = interestRate;
+    }
+
+    public Savings(Long accountId, BigDecimal balance, String secretKey, AccountHolders primaryOwner, ThirdParty secondaryOwner, BigDecimal penaltyFee, Status status, BigDecimal interestRate) {
+        super(accountId, balance, secretKey, primaryOwner, secondaryOwner, penaltyFee, status);
         this.interestRate = interestRate;
     }
 

@@ -9,12 +9,15 @@ public abstract class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
     protected String name;
+    protected boolean isLogged;
 
     public User() {
+        this.isLogged = false;
     }
 
     public User(String name) {
         this.name = name;
+        this.isLogged = false;
     }
 
     public Long getId() {
@@ -31,5 +34,13 @@ public abstract class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void login(){
+        this.isLogged = true;
+    }
+
+    public void logOut(){
+        this.isLogged = false;
     }
 }

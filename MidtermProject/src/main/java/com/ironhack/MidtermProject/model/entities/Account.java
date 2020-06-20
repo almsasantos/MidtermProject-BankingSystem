@@ -16,7 +16,9 @@ public abstract class Account {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     protected AccountHolders primaryOwner;
-    //protected Optional<User> secondaryOwner;
+    @ManyToOne
+    @JoinColumn(name = "third_party_id", referencedColumnName = "id")
+    protected ThirdParty secondaryOwner;
     protected BigDecimal penaltyFee;
     @Enumerated(EnumType.STRING)
     protected Status status;
@@ -29,6 +31,17 @@ public abstract class Account {
         this.balance = balance;
         this.secretKey = secretKey;
         this.primaryOwner = primaryOwner;
+        this.secondaryOwner = null;
+        this.penaltyFee = penaltyFee;
+        this.status = status;
+    }
+
+    public Account(Long accountId, BigDecimal balance, String secretKey, AccountHolders primaryOwner, ThirdParty secondaryOwner, BigDecimal penaltyFee, Status status) {
+        this.accountId = accountId;
+        this.balance = balance;
+        this.secretKey = secretKey;
+        this.primaryOwner = primaryOwner;
+        this.secondaryOwner = secondaryOwner;
         this.penaltyFee = penaltyFee;
         this.status = status;
     }
@@ -63,6 +76,14 @@ public abstract class Account {
 
     public void setPrimaryOwner(AccountHolders primaryOwner) {
         this.primaryOwner = primaryOwner;
+    }
+
+    public ThirdParty getSecondaryOwner() {
+        return secondaryOwner;
+    }
+
+    public void setSecondaryOwner(ThirdParty secondaryOwner) {
+        this.secondaryOwner = secondaryOwner;
     }
 
     public BigDecimal getPenaltyFee() {
