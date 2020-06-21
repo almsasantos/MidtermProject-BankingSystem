@@ -4,9 +4,13 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class Address {
+    //@NotEmpty(message = "Please introduce your country.")
     private String country;
+    //@NotEmpty(message = "Please introduce your city.")
     private String city;
+    //@NotEmpty(message = "Please introduce your street.")
     private String street;
+    //@NotEmpty(message = "Please introduce your postal code.")
     private String postalCode;
 
     public Address() {}

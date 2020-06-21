@@ -11,14 +11,10 @@ import java.math.BigDecimal;
 @Table(name = "student_checking")
 @PrimaryKeyJoinColumn(name = "accountId")
 public class StudentChecking extends Account{
-    public StudentChecking() {
+    public StudentChecking() {}
+
+    public StudentChecking(BigDecimal balance, String secretKey, Status status) {
+        super(balance, secretKey, status);
     }
 
-    public StudentChecking(Long accountId, BigDecimal balance, String secretKey, AccountHolders primaryOwner, BigDecimal penaltyFee, Status status) {
-        super(accountId, balance, secretKey, primaryOwner, penaltyFee, status);
-    }
-
-    public StudentChecking(Long accountId, BigDecimal balance, String secretKey, AccountHolders primaryOwner, ThirdParty secondaryOwner, BigDecimal penaltyFee, Status status) {
-        super(accountId, balance, secretKey, primaryOwner, secondaryOwner, penaltyFee, status);
-    }
 }

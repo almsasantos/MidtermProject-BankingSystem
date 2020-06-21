@@ -6,26 +6,24 @@ import com.ironhack.MidtermProject.enums.Status;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "checking")
 @PrimaryKeyJoinColumn(name = "accountId")
 public class Checking extends Account{
+    @Digits(integer = 6, fraction = 4)
     private BigDecimal minimumBalance;
     private BigDecimal monthlyMaintenanceFee;
 
     public Checking() {
+        this.minimumBalance = minimumBalance == null ? new BigDecimal("250") : this.minimumBalance;
+        this.monthlyMaintenanceFee = monthlyMaintenanceFee == null ? new BigDecimal("12") : this.monthlyMaintenanceFee;
     }
 
-    public Checking(Long accountId, BigDecimal balance, String secretKey, AccountHolders primaryOwner, BigDecimal penaltyFee, Status status, BigDecimal minimumBalance, BigDecimal monthlyMaintenanceFee) {
-        super(accountId, balance, secretKey, primaryOwner, penaltyFee, status);
-        this.minimumBalance = minimumBalance;
-        this.monthlyMaintenanceFee = monthlyMaintenanceFee;
-    }
-
-    public Checking(Long accountId, BigDecimal balance, String secretKey, AccountHolders primaryOwner, ThirdParty secondaryOwner, BigDecimal penaltyFee, Status status, BigDecimal minimumBalance, BigDecimal monthlyMaintenanceFee) {
-        super(accountId, balance, secretKey, primaryOwner,secondaryOwner, penaltyFee, status);
+    public Checking(BigDecimal balance, String secretKey, Status status, BigDecimal minimumBalance, BigDecimal monthlyMaintenanceFee) {
+        super(balance, secretKey, status);
         this.minimumBalance = minimumBalance;
         this.monthlyMaintenanceFee = monthlyMaintenanceFee;
     }

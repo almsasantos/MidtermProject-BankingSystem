@@ -1,31 +1,32 @@
 package com.ironhack.MidtermProject.model.entities;
 
+import org.hibernate.annotations.DynamicUpdate;
+
 import javax.persistence.*;
 
 @Entity
+@DynamicUpdate
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long id;
+    protected Integer userId;
     protected String name;
     protected boolean isLogged;
 
-    public User() {
-        this.isLogged = false;
-    }
+    public User() {}
 
     public User(String name) {
         this.name = name;
         this.isLogged = false;
     }
 
-    public Long getId() {
-        return id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -42,5 +43,9 @@ public abstract class User {
 
     public void logOut(){
         this.isLogged = false;
+    }
+
+    public boolean isLogged() {
+        return isLogged;
     }
 }

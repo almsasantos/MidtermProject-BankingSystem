@@ -10,35 +10,28 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "credit_card")
+@Table(name = "savings")
 @PrimaryKeyJoinColumn(name = "accountId")
-public class CreditCard extends Account{
-    private BigDecimal creditLimit;
+public class Saving extends Account {
     @Digits(integer = 6, fraction = 4)
     private BigDecimal interestRate;
+    @Digits(integer = 6, fraction = 4)
+    private BigDecimal minimumBalance;
     private LocalDate date;
     private LocalDate lastInterestDate;
 
-    public CreditCard() {
-        this.creditLimit = creditLimit == null ? new BigDecimal("100") : this.creditLimit;
-        this.interestRate = interestRate == null ? new BigDecimal("0.2") : this.interestRate;
+    public Saving() {
+        this.interestRate = interestRate == null ? new BigDecimal("0.0025") : this.interestRate;
+        this.minimumBalance = minimumBalance == null ? new BigDecimal("1000") : this.minimumBalance;
         this.date = LocalDate.now();
     }
 
-    public CreditCard(BigDecimal balance, String secretKey, Status status, BigDecimal creditLimit, BigDecimal interestRate) {
+    public Saving(BigDecimal balance, String secretKey, Status status, BigDecimal interestRate, BigDecimal minimumBalance) {
         super(balance, secretKey, status);
-        this.creditLimit = creditLimit;
         this.interestRate = interestRate;
+        this.minimumBalance = minimumBalance;
         this.date = LocalDate.now();
         this.lastInterestDate = null;
-    }
-
-    public BigDecimal getCreditLimit() {
-        return creditLimit;
-    }
-
-    public void setCreditLimit(BigDecimal creditLimit) {
-        this.creditLimit = creditLimit;
     }
 
     public BigDecimal getInterestRate() {
@@ -47,6 +40,14 @@ public class CreditCard extends Account{
 
     public void setInterestRate(BigDecimal interestRate) {
         this.interestRate = interestRate;
+    }
+
+    public BigDecimal getMinimumBalance() {
+        return minimumBalance;
+    }
+
+    public void setMinimumBalance(BigDecimal minimumBalance) {
+        this.minimumBalance = minimumBalance;
     }
 
     public LocalDate getDate() {
@@ -65,3 +66,4 @@ public class CreditCard extends Account{
         this.lastInterestDate = lastInterestDate;
     }
 }
+

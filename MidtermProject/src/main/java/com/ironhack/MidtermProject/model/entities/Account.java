@@ -1,56 +1,54 @@
 package com.ironhack.MidtermProject.model.entities;
 
 import com.ironhack.MidtermProject.enums.Status;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
+@DynamicUpdate
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected Long accountId;
+    protected Integer accountId;
+
+    //@Digits(integer = 100, fraction = 4)
     protected BigDecimal balance;
     protected String secretKey;
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    protected AccountHolders primaryOwner;
-    @ManyToOne
-    @JoinColumn(name = "third_party_id", referencedColumnName = "id")
-    protected ThirdParty secondaryOwner;
+
+    //@Digits(integer = 6, fraction = 4)
     protected BigDecimal penaltyFee;
+
     @Enumerated(EnumType.STRING)
     protected Status status;
 
-    public Account() {
+    @ManyToOne
+    @JoinColumn(name = "owner_id", referencedColumnName = "userId")
+    protected AccountHolder primaryOwner;
+
+    //@JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "third_party_id", referencedColumnName = "userId")
+    protected ThirdParty secondaryOwner;
+
+    public Account(){
+        this.penaltyFee = new BigDecimal("40");
     }
 
-    public Account(Long accountId, BigDecimal balance, String secretKey, AccountHolders primaryOwner, BigDecimal penaltyFee, Status status) {
-        this.accountId = accountId;
+    public Account(BigDecimal balance, String secretKey, Status status) {
         this.balance = balance;
         this.secretKey = secretKey;
-        this.primaryOwner = primaryOwner;
-        this.secondaryOwner = null;
-        this.penaltyFee = penaltyFee;
+        this.penaltyFee = new BigDecimal("40");
         this.status = status;
     }
 
-    public Account(Long accountId, BigDecimal balance, String secretKey, AccountHolders primaryOwner, ThirdParty secondaryOwner, BigDecimal penaltyFee, Status status) {
-        this.accountId = accountId;
-        this.balance = balance;
-        this.secretKey = secretKey;
-        this.primaryOwner = primaryOwner;
-        this.secondaryOwner = secondaryOwner;
-        this.penaltyFee = penaltyFee;
-        this.status = status;
-    }
-
-    public Long getAccountId() {
+    public Integer getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(Long accountId) {
+    public void setAccountId(Integer accountId) {
         this.accountId = accountId;
     }
 
@@ -70,11 +68,11 @@ public abstract class Account {
         this.secretKey = secretKey;
     }
 
-    public AccountHolders getPrimaryOwner() {
+    public AccountHolder getPrimaryOwner() {
         return primaryOwner;
     }
 
-    public void setPrimaryOwner(AccountHolders primaryOwner) {
+    public void setPrimaryOwner(AccountHolder primaryOwner) {
         this.primaryOwner = primaryOwner;
     }
 
@@ -100,5 +98,17 @@ public abstract class Account {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "accountId=" + accountId +
+                ", balance=" + balance +
+                ", secretKey='" + secretKey + '\'' +
+                ", primaryOwner=" + primaryOwner +
+                ", penaltyFee=" + penaltyFee +
+                ", status=" + status +
+                '}';
     }
 }
