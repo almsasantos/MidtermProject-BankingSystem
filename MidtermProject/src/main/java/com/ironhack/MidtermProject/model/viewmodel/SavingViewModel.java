@@ -18,6 +18,11 @@ public class SavingViewModel {
     @Digits(integer = 6, fraction = 4)
     private BigDecimal minimumBalance;
 
+    public SavingViewModel() {
+        this.interestRate = null;
+        this.minimumBalance = null;
+    }
+
     public BigDecimal getBalance() {
         return balance;
     }

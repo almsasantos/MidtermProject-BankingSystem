@@ -1,6 +1,7 @@
 package com.ironhack.MidtermProject.service.accounts;
 
 import com.ironhack.MidtermProject.exception.DataNotFoundException;
+import com.ironhack.MidtermProject.model.classes.Money;
 import com.ironhack.MidtermProject.model.entities.accounts.CreditCard;
 import com.ironhack.MidtermProject.repository.accounts.CreditCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +32,16 @@ public class CreditCardService {
         if (creditCard.getLastInterestDate() == null) {
             Integer months = Period.between(LocalDate.now(), creditCard.getDate()).getMonths();
             if (months >= 1) {
-                BigDecimal interest = creditCard.getInterestRate().divide(new BigDecimal("12")).multiply(creditCard.getBalance());
-                creditCard.setBalance(creditCard.getBalance().add(interest));
+                BigDecimal interest = creditCard.getInterestRate().divide(new BigDecimal("12")).multiply(creditCard.getBalance().getAmount());
+                creditCard.setBalance(new Money(creditCard.getBalance().increaseAmount(interest)));
                 creditCard.setLastInterestDate(LocalDate.now());
                 creditCardRepository.save(creditCard);
             }
         } else {
             Integer months = Period.between(LocalDate.now(), creditCard.getLastInterestDate()).getMonths();
             if (months >= 1) {
-                BigDecimal interest = creditCard.getInterestRate().divide(new BigDecimal("12")).multiply(creditCard.getBalance());
-                creditCard.setBalance(creditCard.getBalance().add(interest));
+                BigDecimal interest = creditCard.getInterestRate().divide(new BigDecimal("12")).multiply(creditCard.getBalance().getAmount());
+                creditCard.setBalance(new Money(creditCard.getBalance().increaseAmount(interest)));
                 creditCard.setLastInterestDate(LocalDate.now());
                 creditCardRepository.save(creditCard);
             }

@@ -1,10 +1,12 @@
 package com.ironhack.MidtermProject.service.users;
 
+import com.ironhack.MidtermProject.dto.ChangeBalance;
+import com.ironhack.MidtermProject.enums.AccountType;
 import com.ironhack.MidtermProject.exception.DataNotFoundException;
+import com.ironhack.MidtermProject.model.classes.Money;
 import com.ironhack.MidtermProject.model.entities.accounts.*;
 import com.ironhack.MidtermProject.model.entities.users.AccountHolder;
 import com.ironhack.MidtermProject.model.entities.users.Admin;
-import com.ironhack.MidtermProject.model.entities.users.ThirdParty;
 import com.ironhack.MidtermProject.model.viewmodel.AccountViewModel;
 import com.ironhack.MidtermProject.model.viewmodel.CreditCardViewModel;
 import com.ironhack.MidtermProject.model.viewmodel.SavingViewModel;
@@ -20,7 +22,6 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -79,15 +80,21 @@ public class AdminService {
         AccountHolder secondaryOwner;
         Saving saving = new Saving();
         if(savingViewModel.getSecondaryOwnerId() != null){
-            secondaryOwner = accountsHolderRepository.findById(savingViewModel.getPrimaryOwnerId()).orElseThrow(() -> new DataNotFoundException("Secondary Owner id not found"));
+            secondaryOwner = accountsHolderRepository.findById(savingViewModel.getSecondaryOwnerId()).orElseThrow(() -> new DataNotFoundException("Secondary Owner id not found"));
             saving.setSecondaryOwner(secondaryOwner);
+            secondaryOwner.getAccounts().add(saving);
+            accountsHolderRepository.save(secondaryOwner);
         }
-        saving.setBalance(savingViewModel.getBalance());
+        saving.setBalance(new Money(savingViewModel.getBalance()));
         saving.setSecretKey(savingViewModel.getSecretKey());
         saving.setStatus(savingViewModel.getStatus());
         saving.setPrimaryOwner(primaryOwner);
-        saving.setInterestRate(savingViewModel.getInterestRate());
-        saving.setMinimumBalance(savingViewModel.getMinimumBalance());
+        if(savingViewModel.getInterestRate() != null){
+            saving.setInterestRate(savingViewModel.getInterestRate());
+        }
+        if(savingViewModel.getMinimumBalance() != null) {
+            saving.setMinimumBalance(savingViewModel.getMinimumBalance());
+        }
 
         if(saving.getInterestRate().compareTo(new BigDecimal("0.5")) == -1){
             System.out.println("good");
@@ -99,8 +106,8 @@ public class AdminService {
         } else{
             saving.setMinimumBalance(new BigDecimal("1000"));
         }
-        //accountHolders.getAccounts().add(savings);
-        //accountsHolderRepository.save(accountHolders);
+        primaryOwner.getAccounts().add(saving);
+        accountsHolderRepository.save(primaryOwner);
         savingsRepository.save(saving);
         LOGGER.info("[END] Create new Savings Account");
     }
@@ -120,10 +127,10 @@ public class AdminService {
     }
 
     public void createNewStudentChecking(AccountHolder primaryOwner, AccountViewModel accountViewModel, AccountHolder secondaryOwner){
-        StudentChecking studentChecking = new StudentChecking(accountViewModel.getBalance(), accountViewModel.getSecretKey(), accountViewModel.getStatus());
+        StudentChecking studentChecking = new StudentChecking(new Money(accountViewModel.getBalance()), accountViewModel.getSecretKey(), accountViewModel.getStatus());
         studentChecking.setPrimaryOwner(primaryOwner);
         if(accountViewModel.getSecondaryOwnerId() != null){
-            secondaryOwner = accountsHolderRepository.findById(accountViewModel.getPrimaryOwnerId()).orElseThrow(() -> new DataNotFoundException("Secondary Owner id not found"));
+            secondaryOwner = accountsHolderRepository.findById(accountViewModel.getSecondaryOwnerId()).orElseThrow(() -> new DataNotFoundException("Secondary Owner id not found"));
             studentChecking.setSecondaryOwner(secondaryOwner);
         }
         studentCheckingRepository.save(studentChecking);
@@ -132,10 +139,10 @@ public class AdminService {
     public void createNewCheckingAccount(AccountHolder primaryOwner, AccountViewModel accountViewModel, AccountHolder secondaryOwner){
         Checking checking = new Checking();
         if(accountViewModel.getSecondaryOwnerId() != null){
-            secondaryOwner = accountsHolderRepository.findById(accountViewModel.getPrimaryOwnerId()).orElseThrow(() -> new DataNotFoundException("Secondary Owner id not found"));
+            secondaryOwner = accountsHolderRepository.findById(accountViewModel.getSecondaryOwnerId()).orElseThrow(() -> new DataNotFoundException("Secondary Owner id not found"));
             checking.setSecondaryOwner(secondaryOwner);
         }
-        checking.setBalance(accountViewModel.getBalance());
+        checking.setBalance(new Money(accountViewModel.getBalance()));
         checking.setSecretKey(accountViewModel.getSecretKey());
         checking.setStatus(accountViewModel.getStatus());
         checking.setPrimaryOwner(primaryOwner);
@@ -153,12 +160,17 @@ public class AdminService {
             secondaryOwner = accountsHolderRepository.findById(creditCardViewModel.getPrimaryOwnerId()).orElseThrow(() -> new DataNotFoundException("Secondary Owner id not found"));
             creditCard.setSecondaryOwner(secondaryOwner);
         }
-        creditCard.setBalance(creditCardViewModel.getBalance());
+        creditCard.setBalance(new Money(creditCardViewModel.getBalance()));
         creditCard.setSecretKey(creditCardViewModel.getSecretKey());
         creditCard.setStatus(creditCardViewModel.getStatus());
         creditCard.setPrimaryOwner(primaryOwner);
-        creditCard.setCreditLimit(creditCardViewModel.getCreditLimit());
-        creditCard.setInterestRate(creditCardViewModel.getInterestRate());
+
+        if(creditCardViewModel.getCreditLimit() != null){
+            creditCard.setCreditLimit(creditCardViewModel.getCreditLimit());
+        }
+        if(creditCardViewModel.getInterestRate() != null){
+            creditCard.setInterestRate(creditCardViewModel.getInterestRate());
+        }
 
         if(creditCard.getCreditLimit().intValueExact()>=100 && creditCard.getCreditLimit().intValueExact()<=1000){
             System.out.println("good");
@@ -174,15 +186,72 @@ public class AdminService {
         LOGGER.info("[END] Create new Credit Card Account");
     }
 
-    public List<Object[]> checkAccountBalance(Integer accountId){
+    // --- CHECK BALANCE FROM ANY ACCOUNT ---
+
+    public BigDecimal checkAccountBalance(Integer accountId){
         LOGGER.info("[INIT] Admin Check Account Balance");
-        accountRepository.findById(accountId).orElseThrow(() -> new DataNotFoundException("Account id not found"));
+        Account account = accountRepository.findById(accountId).orElseThrow(() -> new DataNotFoundException("Account id not found"));
         LOGGER.info("[END] Admin Check Account Balance");
-        return adminRepository.checkAccountBalance(accountId);
+        if(account.getAccountType().equals(AccountType.CHECKING)){
+            return adminRepository.checkCheckingBalance(accountId);
+        } else if(account.getAccountType().equals(AccountType.STUDENT_CHECKING)){
+            return adminRepository.checkStudentCheckingBalance(accountId);
+        } else if(account.getAccountType().equals(AccountType.SAVINGS)){
+            return adminRepository.checkSavingsBalance(accountId);
+        } else{
+            return adminRepository.checkCreditCardBalance(accountId);
+        }
     }
 
-    // --- CREATE THIRD PARTY ---
+    // --- DEBIT THE BALANCE ---
+    public void debitBalance(Integer adminId, ChangeBalance changeBalance){
+        adminRepository.findById(adminId).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
+        Account account = accountRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Account id not found"));
+        if(account.getAccountType().equals(AccountType.CHECKING)){
+            Checking checking = checkingRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Checking account id not found"));
+            checking.setBalance(new Money(checking.getBalance().decreaseAmount(changeBalance.getAmount())));
+            checkingRepository.save(checking);
+        } else if(account.getAccountType().equals(AccountType.SAVINGS)){
+            Saving saving = savingsRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Savings account id not found"));
+            saving.setBalance(new Money(saving.getBalance().decreaseAmount(changeBalance.getAmount())));
+            savingsRepository.save(saving);
+        } else if(account.getAccountType().equals(AccountType.CREDIT_CARD)){
+            CreditCard creditCard = creditCardRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Credit card account id not found"));
+            creditCard.setBalance(new Money(creditCard.getBalance().decreaseAmount(changeBalance.getAmount())));
+            creditCardRepository.save(creditCard);
+        } else if(account.getAccountType().equals(AccountType.STUDENT_CHECKING)){
+            StudentChecking studentChecking = studentCheckingRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Student checking account id not found"));
+            studentChecking.setBalance(new Money(studentChecking.getBalance().decreaseAmount(changeBalance.getAmount())));
+            studentCheckingRepository.save(studentChecking);
+        }
+    }
 
+    // --- CREDIT THE BALANCE ---
+    public void creditBalance(Integer adminId, ChangeBalance changeBalance){
+        adminRepository.findById(adminId).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
+        Account account = accountRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Account id not found"));
+        if(account.getAccountType().equals(AccountType.CHECKING)){
+            Checking checking = checkingRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Checking account id not found"));
+            checking.setBalance(new Money(checking.getBalance().increaseAmount(changeBalance.getAmount())));
+            checkingRepository.save(checking);
+        } else if(account.getAccountType().equals(AccountType.SAVINGS)){
+            Saving saving = savingsRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Savings account id not found"));
+            saving.setBalance(new Money(saving.getBalance().increaseAmount(changeBalance.getAmount())));
+            savingsRepository.save(saving);
+        } else if(account.getAccountType().equals(AccountType.CREDIT_CARD)){
+            CreditCard creditCard = creditCardRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Credit card account id not found"));
+            creditCard.setBalance(new Money(creditCard.getBalance().increaseAmount(changeBalance.getAmount())));
+            creditCardRepository.save(creditCard);
+        } else if(account.getAccountType().equals(AccountType.STUDENT_CHECKING)){
+            StudentChecking studentChecking = studentCheckingRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Student checking account id not found"));
+            studentChecking.setBalance(new Money(studentChecking.getBalance().increaseAmount(changeBalance.getAmount())));
+            studentCheckingRepository.save(studentChecking);
+        }
+    }
+
+
+    // --- CREATE THIRD PARTY ---
+/*
     public void createNewThirdParty(Integer adminId, ThirdParty thirdParty){
         LOGGER.info("[INIT] Admin Create New Third Party");
         adminRepository.findById(adminId).orElseThrow(() -> new DataNotFoundException("Third Party id not found"));
@@ -200,4 +269,6 @@ public class AdminService {
         thirdPartyRepository.save(thirdParty);
         LOGGER.info("[END] Update Hash Map to Create New Third Party");
     }
+
+ */
 }

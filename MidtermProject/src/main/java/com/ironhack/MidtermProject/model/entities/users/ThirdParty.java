@@ -10,22 +10,22 @@ import java.util.HashMap;
 @PrimaryKeyJoinColumn(name = "userId")
 public class ThirdParty extends User {
     //hashed key and a name
-    private HashMap<Integer, String> accountDetails;
+    private HashMap<String, String> accountDetails;
 
     public ThirdParty() {
-        this.accountDetails = new HashMap<Integer, String>();
+        this.accountDetails = new HashMap<String, String>();
     }
 
     public ThirdParty(String name, String password) {
         super(name, password);
-        this.accountDetails = new HashMap<Integer, String>();
+        this.accountDetails = new HashMap<String, String>();
     }
 
-    public HashMap<Integer, String> getAccountDetails() {
+    public HashMap<String, String> getAccountDetails() {
         return accountDetails;
     }
 
-    public void setAccountDetails(HashMap<Integer, String> accountDetails) {
+    public void setAccountDetails(HashMap<String, String> accountDetails) {
         this.accountDetails = accountDetails;
     }
 }

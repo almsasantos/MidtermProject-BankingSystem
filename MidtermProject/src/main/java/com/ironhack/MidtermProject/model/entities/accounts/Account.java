@@ -2,23 +2,26 @@ package com.ironhack.MidtermProject.model.entities.accounts;
 
 import com.ironhack.MidtermProject.enums.AccountType;
 import com.ironhack.MidtermProject.enums.Status;
+import com.ironhack.MidtermProject.model.classes.Money;
 import com.ironhack.MidtermProject.model.entities.users.AccountHolder;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 @DynamicUpdate
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     protected Integer accountId;
 
     //@Digits(integer = 100, fraction = 4)
-    protected BigDecimal balance;
+    @Embedded
+    protected Money balance;
     @Pattern(regexp="[\\d]{6}", message = "Enter a valid secret key")
     protected String secretKey;
 
@@ -44,10 +47,10 @@ public abstract class Account {
         this.penaltyFee = new BigDecimal("40");
     }
 
-    public Account(BigDecimal balance, @Pattern(regexp="[\\d]{6}", message = "Enter a valid secret key") String secretKey, Status status) {
+    public Account(Money balance, String secretKey, Status status) {
         this.balance = balance;
         this.secretKey = secretKey;
-        this.penaltyFee = new BigDecimal("40");
+        this.penaltyFee =  new BigDecimal("40");
         this.status = status;
     }
 
@@ -59,11 +62,11 @@ public abstract class Account {
         this.accountId = accountId;
     }
 
-    public BigDecimal getBalance() {
+    public Money getBalance() {
         return balance;
     }
 
-    public void setBalance(BigDecimal balance) {
+    public void setBalance(Money balance) {
         this.balance = balance;
     }
 
@@ -127,5 +130,25 @@ public abstract class Account {
                 ", secondaryOwner=" + secondaryOwner +
                 ", accountType=" + accountType +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return Objects.equals(accountId, account.accountId) &&
+                Objects.equals(balance, account.balance) &&
+                Objects.equals(secretKey, account.secretKey) &&
+                Objects.equals(penaltyFee, account.penaltyFee) &&
+                status == account.status &&
+                Objects.equals(primaryOwner, account.primaryOwner) &&
+                Objects.equals(secondaryOwner, account.secondaryOwner) &&
+                accountType == account.accountType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(accountId, balance, secretKey, penaltyFee, status, primaryOwner, secondaryOwner, accountType);
     }
 }

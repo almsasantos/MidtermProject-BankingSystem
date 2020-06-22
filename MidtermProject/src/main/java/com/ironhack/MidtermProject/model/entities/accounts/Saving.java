@@ -2,6 +2,7 @@ package com.ironhack.MidtermProject.model.entities.accounts;
 
 import com.ironhack.MidtermProject.enums.AccountType;
 import com.ironhack.MidtermProject.enums.Status;
+import com.ironhack.MidtermProject.model.classes.Money;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -25,18 +26,18 @@ public class Saving extends Account {
         this.interestRate = interestRate == null ? new BigDecimal("0.0025") : this.interestRate;
         this.minimumBalance = minimumBalance == null ? new BigDecimal("1000") : this.minimumBalance;
         this.date = LocalDate.now();
-        this.accountType = AccountType.SAVING;
-        this.penaltyFee = new BigDecimal("40");
+        this.accountType = AccountType.SAVINGS;
+
     }
 
-    public Saving(BigDecimal balance, String secretKey, Status status, BigDecimal interestRate, BigDecimal minimumBalance) {
+    public Saving(Money balance, String secretKey, Status status, BigDecimal interestRate, BigDecimal minimumBalance) {
         super(balance, secretKey, status);
-        this.interestRate = interestRate;
-        this.minimumBalance = minimumBalance;
+        this.interestRate = interestRate == null ? new BigDecimal("0.0025") : this.interestRate;
+        this.minimumBalance = minimumBalance == null ? new BigDecimal("1000") : this.minimumBalance;
         this.date = LocalDate.now();
         this.lastInterestDate = null;
-        this.accountType = AccountType.SAVING;
-        this.penaltyFee = new BigDecimal("40");
+        this.accountType = AccountType.SAVINGS;
+
     }
 
     public BigDecimal getInterestRate() {

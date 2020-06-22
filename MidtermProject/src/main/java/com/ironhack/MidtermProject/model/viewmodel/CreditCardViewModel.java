@@ -17,6 +17,11 @@ public class CreditCardViewModel {
     @Digits(integer = 6, fraction = 4)
     private BigDecimal interestRate;
 
+    public CreditCardViewModel() {
+        this.creditLimit = null;
+        this.interestRate = null;
+    }
+
     public BigDecimal getBalance() {
         return balance;
     }

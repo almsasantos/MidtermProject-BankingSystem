@@ -6,10 +6,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 @Repository
 public interface AccountHolderRepository extends JpaRepository<AccountHolder, Integer> {
-    @Query(value = "SELECT a.account_id, a.balance FROM account a JOIN account_holders h ON a.owner_id = h.user_id WHERE a.account_id = :account_id", nativeQuery = true)
-    public List<Object[]> checkAccountBalance(@Param(value = "account_id") Integer accountId);
+    @Query(value = "SELECT balance FROM savings WHERE account_id = :account_id", nativeQuery = true)
+    public BigDecimal checkSavingsBalance(@Param("account_id") Integer accountId);
+
+    @Query(value = "SELECT balance FROM checking WHERE account_id = :account_id", nativeQuery = true)
+    public BigDecimal checkCheckingBalance(@Param("account_id") Integer accountId);
+
+    @Query(value = "SELECT balance FROM student_checking WHERE account_id = :account_id", nativeQuery = true)
+    public BigDecimal checkStudentCheckingBalance(@Param("account_id") Integer accountId);
+
+    @Query(value = "SELECT balance FROM credit_card WHERE account_id = :account_id", nativeQuery = true)
+    public BigDecimal checkCreditCardBalance(@Param("account_id") Integer accountId);
 }

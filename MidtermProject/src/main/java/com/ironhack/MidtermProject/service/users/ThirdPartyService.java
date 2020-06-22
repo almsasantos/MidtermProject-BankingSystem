@@ -2,6 +2,7 @@ package com.ironhack.MidtermProject.service.users;
 
 import com.ironhack.MidtermProject.dto.ThirdPartyTransaction;
 import com.ironhack.MidtermProject.exception.DataNotFoundException;
+import com.ironhack.MidtermProject.model.classes.Money;
 import com.ironhack.MidtermProject.model.entities.accounts.Account;
 import com.ironhack.MidtermProject.model.entities.users.ThirdParty;
 import com.ironhack.MidtermProject.repository.accounts.AccountRepository;
@@ -38,7 +39,7 @@ public class ThirdPartyService {
         ThirdParty thirdParty = thirdPartyRepository.findById(thirdPartyId).orElseThrow(() -> new DataNotFoundException("Third Party id not found"));
         Account account = accountRepository.findById(thirdPartyTransaction.getAccountId()).orElseThrow(() -> new DataNotFoundException("Account id not found"));
         if(account.getSecretKey().equals(thirdPartyTransaction.getSecretKey())){
-            account.setBalance(account.getBalance().subtract(thirdPartyTransaction.getAmount()));
+            account.setBalance(new Money(account.getBalance().decreaseAmount(thirdPartyTransaction.getAmount())));
             accountRepository.save(account);
         } else {
             throw new DataNotFoundException("Secret key doesn't bellow to account id");
@@ -51,7 +52,7 @@ public class ThirdPartyService {
         ThirdParty thirdParty = thirdPartyRepository.findById(thirdPartyId).orElseThrow(() -> new DataNotFoundException("Third Party id not found"));
         Account account = accountRepository.findById(thirdPartyTransaction.getAccountId()).orElseThrow(() -> new DataNotFoundException("Account id not found"));
         if(account.getSecretKey().equals(thirdPartyTransaction.getSecretKey())){
-            account.setBalance(account.getBalance().add(thirdPartyTransaction.getAmount()));
+            account.setBalance(new Money(account.getBalance().increaseAmount(thirdPartyTransaction.getAmount())));
             accountRepository.save(account);
         } else {
             throw new DataNotFoundException("Secret key doesn't bellow to account id");

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -26,9 +27,9 @@ public class AccountHolderController {
         return accountsHolderService.findById(id);
     }
 
-    @GetMapping("/accountholders/balance/{account_id}/{user_id}")
+    @GetMapping("/accountholders/balance")
     @ResponseStatus(HttpStatus.OK)
-    public List<Object[]> checkAccountBalance(@PathVariable("account_id") Integer accountId, @PathVariable("user_id") Integer userId){
+    public BigDecimal checkAccountBalance(@RequestParam(value = "account_id", required = true) Integer accountId, @RequestParam(value = "user_id", required = true)  Integer userId){
         return accountsHolderService.checkAccountBalance(accountId, userId);
     }
 
@@ -38,10 +39,10 @@ public class AccountHolderController {
         accountsHolderService.createAccountHolder(accountHolders);
     }
 
-    @PostMapping("/accountholder/transference/{user_name}")
+    @PostMapping("/transference")
     @ResponseStatus(HttpStatus.CREATED)
-    public void transferAmount(@PathVariable("user_name") String name, @RequestBody Transference transference){
-        accountsHolderService.transferAmount(name, transference);
+    public void transferAmount(@RequestBody Transference transference) throws Exception{
+        accountsHolderService.transferAmount(transference);
     }
 
 }

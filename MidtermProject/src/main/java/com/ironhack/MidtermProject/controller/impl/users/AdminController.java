@@ -1,7 +1,7 @@
 package com.ironhack.MidtermProject.controller.impl.users;
 
+import com.ironhack.MidtermProject.dto.ChangeBalance;
 import com.ironhack.MidtermProject.model.entities.users.Admin;
-import com.ironhack.MidtermProject.model.entities.users.ThirdParty;
 import com.ironhack.MidtermProject.model.viewmodel.AccountViewModel;
 import com.ironhack.MidtermProject.model.viewmodel.CreditCardViewModel;
 import com.ironhack.MidtermProject.model.viewmodel.SavingViewModel;
@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -36,35 +37,59 @@ public class AdminController {
         return adminService.findByName(name);
     }
 
+    // --- GET BALANCE FROM ANY ACCOUNT ---
+
+    @GetMapping("/admin/balance")
+    @ResponseStatus(HttpStatus.OK)
+    public BigDecimal checkAccountBalance(@RequestParam(value = "accountId", required = true) Integer accountId){
+        return adminService.checkAccountBalance(accountId);
+    }
+
     @PostMapping("/admin")
     @ResponseStatus(HttpStatus.CREATED)
     public void createNewAdmin(@RequestBody Admin admin){
         adminService.createNewAdmin(admin);
     }
-
+/*
     // --- CREATE THIRD PARTY ---
-    @PostMapping("/create_third_party/{admin_id}")
+    @PostMapping("/third_party/{admin_id}")
     @ResponseStatus(HttpStatus.CREATED)
     public void createNewThirdParty(@PathVariable("admin_id") Integer adminId, @RequestBody ThirdParty thirdParty){
         adminService.createNewThirdParty(adminId, thirdParty);
     }
 
+ */
+
     // --- CREATE ACCOUNTS ---
-    @PostMapping("/create_savings/{admin_id}")
+    @PostMapping("/savings/{admin_id}")
     @ResponseStatus(HttpStatus.CREATED)
     public void createSavingsAccount(@PathVariable("admin_id") Integer id, @RequestBody @Valid SavingViewModel savingViewModel){
         adminService.createNewSavingsAccount(id, savingViewModel);
     }
 
-    @PostMapping("/create_creditCard/{admin_id}")
+    @PostMapping("/creditCard/{admin_id}")
     @ResponseStatus(HttpStatus.CREATED)
     public void createCreditCardAccount(@PathVariable("admin_id") Integer id, @RequestBody @Valid CreditCardViewModel creditCardViewModel){
         adminService.createNewCreditCardAccount(id, creditCardViewModel);
     }
 
-    @PostMapping("/create_account_depending_age/{admin_id}")
+    @PostMapping("/account_depending_age/{admin_id}")
     @ResponseStatus(HttpStatus.CREATED)
     public void createNewAccount(@PathVariable("admin_id") Integer id, @RequestBody @Valid AccountViewModel accountViewModel){
         adminService.createNewAccountDepAge(id, accountViewModel);
     }
+
+    // --- DEBIT AND CREDIT BALANCE ---
+    @PostMapping("/debit_balance")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void debitBalance(@RequestParam("adminId") Integer adminId, @RequestBody ChangeBalance changeBalance){
+        adminService.debitBalance(adminId, changeBalance);
+    }
+
+    @PostMapping("/credit_balance")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void creditBalance(@RequestParam("adminId") Integer adminId, @RequestBody ChangeBalance changeBalance){
+        adminService.creditBalance(adminId, changeBalance);
+    }
+
 }

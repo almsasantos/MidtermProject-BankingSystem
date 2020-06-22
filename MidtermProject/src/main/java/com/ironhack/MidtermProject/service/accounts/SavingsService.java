@@ -1,6 +1,7 @@
 package com.ironhack.MidtermProject.service.accounts;
 
 import com.ironhack.MidtermProject.exception.DataNotFoundException;
+import com.ironhack.MidtermProject.model.classes.Money;
 import com.ironhack.MidtermProject.model.entities.accounts.Saving;
 import com.ironhack.MidtermProject.repository.accounts.SavingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +32,16 @@ public class SavingsService {
         if (saving.getLastInterestDate() == null) {
             Integer years = Period.between(LocalDate.now(), saving.getDate()).getYears();
             if (years >= 1) {
-                BigDecimal interest = saving.getBalance().multiply(saving.getInterestRate());
-                saving.setBalance(saving.getBalance().add(interest));
+                BigDecimal interest = saving.getBalance().getAmount().multiply(saving.getInterestRate());
+                saving.setBalance(new Money(saving.getBalance().increaseAmount(interest)));
                 saving.setLastInterestDate(LocalDate.now());
                 savingsRepository.save(saving);
             }
         } else {
             Integer years = Period.between(LocalDate.now(), saving.getLastInterestDate()).getYears();
             if (years >= 1) {
-                BigDecimal interest = saving.getBalance().multiply(saving.getInterestRate());
-                saving.setBalance(saving.getBalance().add(interest));
+                BigDecimal interest = saving.getBalance().getAmount().multiply(saving.getInterestRate());
+                saving.setBalance(new Money(saving.getBalance().increaseAmount(interest)));
                 saving.setLastInterestDate(LocalDate.now());
                 savingsRepository.save(saving);
             }
