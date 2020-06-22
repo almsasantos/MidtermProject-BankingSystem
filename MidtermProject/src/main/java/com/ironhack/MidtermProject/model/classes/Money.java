@@ -1,4 +1,4 @@
-package com.ironhack.MidtermProject.model.entities;
+package com.ironhack.MidtermProject.model.classes;
 
 import javax.persistence.Embeddable;
 

@@ -1,6 +1,6 @@
 package com.ironhack.MidtermProject.controller.impl.accounts;
 
-import com.ironhack.MidtermProject.model.entities.Saving;
+import com.ironhack.MidtermProject.model.entities.accounts.Saving;
 import com.ironhack.MidtermProject.service.accounts.SavingsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

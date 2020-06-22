@@ -1,6 +1,7 @@
 package com.ironhack.MidtermProject.controller.impl.users;
 
-import com.ironhack.MidtermProject.model.entities.ThirdParty;
+import com.ironhack.MidtermProject.dto.ThirdPartyTransaction;
+import com.ironhack.MidtermProject.model.entities.users.ThirdParty;
 import com.ironhack.MidtermProject.service.users.ThirdPartyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,9 +26,15 @@ public class ThirdPartyController {
         return thirdPartyService.findById(id);
     }
 
-    @PostMapping("/thirdparty")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createNewThirdParty(ThirdParty thirdParty){
-        thirdPartyService.createNewThirdParty(thirdParty);
+    @PatchMapping("/debit_transaction/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void debitTransaction(@PathVariable("id") Integer thirdPartyId, ThirdPartyTransaction thirdPartyTransaction){
+        thirdPartyService.debitTransaction(thirdPartyId, thirdPartyTransaction);
+    }
+
+    @PatchMapping("/credit_transaction/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void creditTransaction(@PathVariable("id") Integer thirdPartyId, ThirdPartyTransaction thirdPartyTransaction){
+        thirdPartyService.creditTransaction(thirdPartyId, thirdPartyTransaction);
     }
 }

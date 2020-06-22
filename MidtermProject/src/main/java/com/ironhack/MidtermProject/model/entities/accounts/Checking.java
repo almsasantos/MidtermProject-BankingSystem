@@ -1,6 +1,7 @@
-package com.ironhack.MidtermProject.model.entities;
+package com.ironhack.MidtermProject.model.entities.accounts;
 
 
+import com.ironhack.MidtermProject.enums.AccountType;
 import com.ironhack.MidtermProject.enums.Status;
 
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "checking")
 @PrimaryKeyJoinColumn(name = "accountId")
-public class Checking extends Account{
+public class Checking extends Account {
     @Digits(integer = 6, fraction = 4)
     private BigDecimal minimumBalance;
     private BigDecimal monthlyMaintenanceFee;
@@ -20,12 +21,14 @@ public class Checking extends Account{
     public Checking() {
         this.minimumBalance = minimumBalance == null ? new BigDecimal("250") : this.minimumBalance;
         this.monthlyMaintenanceFee = monthlyMaintenanceFee == null ? new BigDecimal("12") : this.monthlyMaintenanceFee;
+        this.accountType = AccountType.CHECKING;
     }
 
     public Checking(BigDecimal balance, String secretKey, Status status, BigDecimal minimumBalance, BigDecimal monthlyMaintenanceFee) {
         super(balance, secretKey, status);
         this.minimumBalance = minimumBalance;
         this.monthlyMaintenanceFee = monthlyMaintenanceFee;
+        this.accountType = AccountType.CHECKING;
     }
 
     public BigDecimal getMinimumBalance() {

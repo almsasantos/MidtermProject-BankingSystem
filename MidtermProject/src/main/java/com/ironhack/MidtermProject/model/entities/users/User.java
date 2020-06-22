@@ -1,4 +1,4 @@
-package com.ironhack.MidtermProject.model.entities;
+package com.ironhack.MidtermProject.model.entities.users;
 
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -6,18 +6,22 @@ import javax.persistence.*;
 
 @Entity
 @DynamicUpdate
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     protected Integer userId;
     protected String name;
+    protected String password;
     protected boolean isLogged;
 
-    public User() {}
+    public User() {
+        this.isLogged = false;
+    }
 
-    public User(String name) {
+    public User(String name, String password) {
         this.name = name;
+        this.password = password;
         this.isLogged = false;
     }
 
@@ -35,6 +39,14 @@ public abstract class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void login(){

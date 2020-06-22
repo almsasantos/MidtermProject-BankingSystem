@@ -1,5 +1,8 @@
-package com.ironhack.MidtermProject.model.entities;
+package com.ironhack.MidtermProject.model.entities.users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ironhack.MidtermProject.model.entities.Address;
+import com.ironhack.MidtermProject.model.entities.accounts.Account;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -17,27 +20,33 @@ public class AccountHolder extends User {
     private Address primaryAddress;
     private String mailingAddress;
 
-    //@JsonIgnore
-    @OneToMany(mappedBy = "primaryOwner", fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
+    @JsonIgnore
+    @OneToMany(mappedBy = "primaryOwner")
+    @Fetch(FetchMode.SUBSELECT)
     private List<Account> accounts;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "secondaryOwner")
+    private List<Account> secondaryAccounts;
 
     public AccountHolder() {}
 
-    public AccountHolder(String name, LocalDate dateOfBirth, Address primaryAddress) {
-        super(name);
+    public AccountHolder(String name, String password, LocalDate dateOfBirth, Address primaryAddress) {
+        super(name, password);
         this.dateOfBirth = dateOfBirth;
         this.primaryAddress = primaryAddress;
         this.mailingAddress = null;
         this.accounts = new ArrayList<>();
+        this.secondaryAccounts = new ArrayList<>();
     }
 
-    public AccountHolder(String name, LocalDate dateOfBirth, Address primaryAddress, String mailingAddress) {
-        super(name);
+    public AccountHolder(String name, String password, LocalDate dateOfBirth, Address primaryAddress, String mailingAddress) {
+        super(name, password);
         this.dateOfBirth = dateOfBirth;
         this.primaryAddress = primaryAddress;
         this.mailingAddress = mailingAddress;
         this.accounts = new ArrayList<>();
+        this.secondaryAccounts = new ArrayList<>();
     }
 
     public LocalDate getDateOfBirth() {
@@ -70,5 +79,13 @@ public class AccountHolder extends User {
 
     public void setAccounts(List<Account> accounts) {
         this.accounts = accounts;
+    }
+
+    public List<Account> getSecondaryAccounts() {
+        return secondaryAccounts;
+    }
+
+    public void setSecondaryAccounts(List<Account> secondaryAccounts) {
+        this.secondaryAccounts = secondaryAccounts;
     }
 }

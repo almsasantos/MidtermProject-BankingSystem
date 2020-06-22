@@ -1,6 +1,6 @@
 package com.ironhack.MidtermProject.controller.impl.accounts;
 
-import com.ironhack.MidtermProject.model.entities.StudentChecking;
+import com.ironhack.MidtermProject.model.entities.accounts.StudentChecking;
 import com.ironhack.MidtermProject.service.accounts.StudentCheckingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,5 +1,6 @@
-package com.ironhack.MidtermProject.model.entities;
+package com.ironhack.MidtermProject.model.entities.accounts;
 
+import com.ironhack.MidtermProject.enums.AccountType;
 import com.ironhack.MidtermProject.enums.Status;
 
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "credit_card")
 @PrimaryKeyJoinColumn(name = "accountId")
-public class CreditCard extends Account{
+public class CreditCard extends Account {
     private BigDecimal creditLimit;
     @Digits(integer = 6, fraction = 4)
     private BigDecimal interestRate;
@@ -23,6 +24,7 @@ public class CreditCard extends Account{
         this.creditLimit = creditLimit == null ? new BigDecimal("100") : this.creditLimit;
         this.interestRate = interestRate == null ? new BigDecimal("0.2") : this.interestRate;
         this.date = LocalDate.now();
+        this.accountType = AccountType.CREDIT_CARD;
     }
 
     public CreditCard(BigDecimal balance, String secretKey, Status status, BigDecimal creditLimit, BigDecimal interestRate) {
@@ -31,6 +33,7 @@ public class CreditCard extends Account{
         this.interestRate = interestRate;
         this.date = LocalDate.now();
         this.lastInterestDate = null;
+        this.accountType = AccountType.CREDIT_CARD;
     }
 
     public BigDecimal getCreditLimit() {

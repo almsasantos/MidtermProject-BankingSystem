@@ -1,7 +1,7 @@
 package com.ironhack.MidtermProject.controller.impl.users;
 
 import com.ironhack.MidtermProject.dto.Transference;
-import com.ironhack.MidtermProject.model.entities.AccountHolder;
+import com.ironhack.MidtermProject.model.entities.users.AccountHolder;
 import com.ironhack.MidtermProject.service.users.AccountHolderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.ironhack.MidtermProject.model.entities;
+package com.ironhack.MidtermProject.model.entities.users;
 
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -10,7 +10,7 @@ import javax.persistence.Table;
 public class Admin extends User {
     public Admin() {}
 
-    public Admin(String name) {
-        super(name);
+    public Admin(String name, String password) {
+        super(name, password);
     }
 }

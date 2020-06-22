@@ -1,8 +1,8 @@
 package com.ironhack.MidtermProject.service.accounts;
 
 import com.ironhack.MidtermProject.exception.DataNotFoundException;
-import com.ironhack.MidtermProject.model.entities.Saving;
-import com.ironhack.MidtermProject.repository.accounts.SavingsRepository;
+import com.ironhack.MidtermProject.model.entities.accounts.Saving;
+import com.ironhack.MidtermProject.repository.accounts.SavingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class SavingsService {
     @Autowired
-    private SavingsRepository savingsRepository;
+    private SavingRepository savingsRepository;
 
     public List<Saving> findAll(){
         return savingsRepository.findAll();

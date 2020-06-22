@@ -1,7 +1,7 @@
 package com.ironhack.MidtermProject.service.accounts;
 
 import com.ironhack.MidtermProject.exception.DataNotFoundException;
-import com.ironhack.MidtermProject.model.entities.CreditCard;
+import com.ironhack.MidtermProject.model.entities.accounts.CreditCard;
 import com.ironhack.MidtermProject.repository.accounts.CreditCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

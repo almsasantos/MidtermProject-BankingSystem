@@ -1,7 +1,7 @@
 package com.ironhack.MidtermProject.service.accounts;
 
 import com.ironhack.MidtermProject.exception.DataNotFoundException;
-import com.ironhack.MidtermProject.model.entities.Checking;
+import com.ironhack.MidtermProject.model.entities.accounts.Checking;
 import com.ironhack.MidtermProject.repository.accounts.CheckingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
