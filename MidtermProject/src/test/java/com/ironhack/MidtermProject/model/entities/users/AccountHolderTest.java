@@ -26,14 +26,8 @@ class AccountHolderTest {
         address.setStreet("Calle Golfo de Salonica");
 
         accountHolder = new AccountHolder();
-        accountHolder.setAccounts(accountList);
-        accountHolder.setUserId(1);
-        accountHolder.setName("Ana");
-        accountHolder.setPassword("pass");
-        accountHolder.setDateOfBirth(LocalDate.of(1995, 8, 19));
-        accountHolder.setMailingAddress("alms@gmail.com");
-        accountHolder.setPrimaryAddress(address);
-        accountHolder.setSecondaryAccounts(accountList);
+        accountHolder = new AccountHolder("Ana", "pass", LocalDate.of(1995, 8, 19), address);
+        accountHolder = new AccountHolder("Ana", "pass", LocalDate.of(1995, 8, 19), address, "alms@gmail.com");
     }
 
     @AfterEach
@@ -43,41 +37,59 @@ class AccountHolderTest {
     }
 
     @Test
-    void getDateOfBirth() {
-        LocalDate birthday = LocalDate.of(1995, 8, 19);
-        assertEquals(birthday, accountHolder.getDateOfBirth());
-    }
+    void getUserId() {
+        accountHolder.setUserId(1);
 
-    @Test
-    void getPrimaryAddress() {
         assertEquals(1, accountHolder.getUserId());
     }
 
     @Test
+    void getDateOfBirth() {
+        accountHolder.setDateOfBirth(LocalDate.of(1995, 8, 19));
+
+        assertEquals(LocalDate.of(1995, 8, 19), accountHolder.getDateOfBirth());
+    }
+
+    @Test
+    void getPrimaryAddress() {
+        accountHolder.setPrimaryAddress(address);
+
+        assertEquals(address, accountHolder.getPrimaryAddress());
+    }
+
+    @Test
     void getMailingAddress() {
+        accountHolder.setMailingAddress("alms@gmail.com");
+
         assertEquals("alms@gmail.com", accountHolder.getMailingAddress());
     }
 
 
     @Test
     void getAccounts() {
+        accountHolder.setAccounts(accountList);
+
         assertEquals(0, accountHolder.getAccounts().size());
     }
 
     @Test
     void getSecondaryAccounts() {
+        accountHolder.setSecondaryAccounts(accountList);
+
         assertEquals(0, accountHolder.getSecondaryAccounts().size());
     }
 
     @Test
     void login() {
         accountHolder.login();
+
         assertEquals(true, accountHolder.isLogged());
     }
 
     @Test
     void logOut() {
         accountHolder.logOut();
+
         assertEquals(false, accountHolder.isLogged());
     }
 
@@ -88,7 +100,34 @@ class AccountHolderTest {
 
     @Test
     void getPassword() {
+        accountHolder.setPassword("pass");
+
         assertEquals("pass", accountHolder.getPassword());
+    }
+
+    @Test
+    void getName() {
+        accountHolder.setName("Ana");
+
+        assertEquals("Ana", accountHolder.getName());
+    }
+
+    @Test
+    void testToString() {
+        String accountHolderString = accountHolder.toString();
+
+        assertEquals(accountHolderString, accountHolder.toString());
+    }
+
+    @Test
+    void testEquals() {
+        AccountHolder accountHolderCopy = accountHolder;
+        assertEquals(accountHolderCopy, accountHolder);
+    }
+
+    @Test
+    void getHashCode(){
+        assertEquals(accountHolder.hashCode(), accountHolder.hashCode());
     }
 
 }

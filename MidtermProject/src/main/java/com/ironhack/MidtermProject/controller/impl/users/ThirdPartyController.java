@@ -1,5 +1,6 @@
 package com.ironhack.MidtermProject.controller.impl.users;
 
+import com.ironhack.MidtermProject.dto.LoginAccount;
 import com.ironhack.MidtermProject.dto.ThirdPartyTransaction;
 import com.ironhack.MidtermProject.model.entities.users.ThirdParty;
 import com.ironhack.MidtermProject.service.users.ThirdPartyService;
@@ -26,15 +27,28 @@ public class ThirdPartyController {
         return thirdPartyService.findById(id);
     }
 
-    @PatchMapping("/debit_transaction/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void debitTransaction(@PathVariable("id") Integer thirdPartyId, ThirdPartyTransaction thirdPartyTransaction){
-        thirdPartyService.debitTransaction(thirdPartyId, thirdPartyTransaction);
+    @PatchMapping("/thirdparties/login")
+    @ResponseStatus(HttpStatus.OK)
+    public ThirdParty loginThirdParty(@RequestBody LoginAccount loginAccount){
+        return thirdPartyService.loginThirdParty(loginAccount);
     }
 
-    @PatchMapping("/credit_transaction/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void creditTransaction(@PathVariable("id") Integer thirdPartyId, ThirdPartyTransaction thirdPartyTransaction){
-        thirdPartyService.creditTransaction(thirdPartyId, thirdPartyTransaction);
+    @PatchMapping("/thirdparties/logout")
+    @ResponseStatus(HttpStatus.OK)
+    public ThirdParty logoutThirdParty(@RequestBody LoginAccount loginAccount){
+        return thirdPartyService.logOutThirdParty(loginAccount);
     }
+
+    @PatchMapping("/debit-transaction")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void debitTransaction(@RequestParam("hashed_key") String hashedKey, @RequestBody ThirdPartyTransaction thirdPartyTransaction){
+        thirdPartyService.debitTransaction(hashedKey, thirdPartyTransaction);
+    }
+
+    @PatchMapping("/credit-transaction")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void creditTransaction(@RequestParam("hashed_key") String hashedKey, @RequestBody ThirdPartyTransaction thirdPartyTransaction){
+        thirdPartyService.creditTransaction(hashedKey, thirdPartyTransaction);
+    }
+
 }

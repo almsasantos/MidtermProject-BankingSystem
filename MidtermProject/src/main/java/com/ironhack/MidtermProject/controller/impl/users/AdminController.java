@@ -1,6 +1,8 @@
 package com.ironhack.MidtermProject.controller.impl.users;
 
 import com.ironhack.MidtermProject.dto.ChangeBalance;
+import com.ironhack.MidtermProject.dto.CreateThirdParty;
+import com.ironhack.MidtermProject.dto.LoginAccount;
 import com.ironhack.MidtermProject.model.entities.users.Admin;
 import com.ironhack.MidtermProject.model.viewmodel.AccountViewModel;
 import com.ironhack.MidtermProject.model.viewmodel.CreditCardViewModel;
@@ -37,58 +39,67 @@ public class AdminController {
         return adminService.findByName(name);
     }
 
-    // --- GET BALANCE FROM ANY ACCOUNT ---
+    @PatchMapping("/admins/login")
+    @ResponseStatus(HttpStatus.OK)
+    public Admin loginAdmin(@RequestBody LoginAccount loginAccount){
+        return adminService.loginAdmin(loginAccount);
+    }
 
+    @PatchMapping("/admins/logout")
+    @ResponseStatus(HttpStatus.OK)
+    public Admin logoutAdmin(@RequestBody LoginAccount loginAccount){
+        return adminService.logOutAdmin(loginAccount);
+    }
+
+    // --- GET BALANCE FROM ANY ACCOUNT ---
     @GetMapping("/admin/balance")
     @ResponseStatus(HttpStatus.OK)
-    public BigDecimal checkAccountBalance(@RequestParam(value = "accountId", required = true) Integer accountId){
-        return adminService.checkAccountBalance(accountId);
+    public BigDecimal checkAccountBalance(@RequestParam(value = "admin_id", required = true) Integer adminId, @RequestParam(value = "accountId", required = true) Integer accountId){
+        return adminService.checkAccountBalance(adminId, accountId);
     }
 
     @PostMapping("/admin")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createNewAdmin(@RequestBody Admin admin){
+    public void createNewAdmin(@RequestBody @Valid Admin admin){
         adminService.createNewAdmin(admin);
     }
-/*
-    // --- CREATE THIRD PARTY ---
-    @PostMapping("/third_party/{admin_id}")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createNewThirdParty(@PathVariable("admin_id") Integer adminId, @RequestBody ThirdParty thirdParty){
-        adminService.createNewThirdParty(adminId, thirdParty);
-    }
 
- */
+    // --- CREATE THIRD PARTY ---
+    @PostMapping("/third-party")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createNewThirdParty(@RequestParam("admin_id") Integer adminId, @RequestBody @Valid CreateThirdParty createThirdParty){
+        adminService.createNewThirdParty(adminId, createThirdParty);
+    }
 
     // --- CREATE ACCOUNTS ---
-    @PostMapping("/savings/{admin_id}")
+    @PostMapping("/account/savings")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createSavingsAccount(@PathVariable("admin_id") Integer id, @RequestBody @Valid SavingViewModel savingViewModel){
-        adminService.createNewSavingsAccount(id, savingViewModel);
+    public void createSavingsAccount(@RequestParam("admin_id") Integer adminId, @RequestBody @Valid SavingViewModel savingViewModel){
+        adminService.createNewSavingsAccount(adminId, savingViewModel);
     }
 
-    @PostMapping("/creditCard/{admin_id}")
+    @PostMapping("/account/credit-card")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createCreditCardAccount(@PathVariable("admin_id") Integer id, @RequestBody @Valid CreditCardViewModel creditCardViewModel){
-        adminService.createNewCreditCardAccount(id, creditCardViewModel);
+    public void createCreditCardAccount(@RequestParam("admin_id") Integer adminId, @RequestBody @Valid CreditCardViewModel creditCardViewModel){
+        adminService.createNewCreditCardAccount(adminId, creditCardViewModel);
     }
 
-    @PostMapping("/account_depending_age/{admin_id}")
+    @PostMapping("/account/depending-age")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createNewAccount(@PathVariable("admin_id") Integer id, @RequestBody @Valid AccountViewModel accountViewModel){
-        adminService.createNewAccountDepAge(id, accountViewModel);
+    public void createNewAccount(@RequestParam("admin_id") Integer adminId, @RequestBody @Valid AccountViewModel accountViewModel){
+        adminService.createNewAccountDepAge(adminId, accountViewModel);
     }
 
     // --- DEBIT AND CREDIT BALANCE ---
-    @PostMapping("/debit_balance")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void debitBalance(@RequestParam("adminId") Integer adminId, @RequestBody ChangeBalance changeBalance){
+    @PatchMapping("/debit-balance")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void debitBalance(@RequestParam("admin_id") Integer adminId, @RequestBody ChangeBalance changeBalance){
         adminService.debitBalance(adminId, changeBalance);
     }
 
-    @PostMapping("/credit_balance")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void creditBalance(@RequestParam("adminId") Integer adminId, @RequestBody ChangeBalance changeBalance){
+    @PatchMapping("/credit-balance")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void creditBalance(@RequestParam("admin_id") Integer adminId, @RequestBody ChangeBalance changeBalance){
         adminService.creditBalance(adminId, changeBalance);
     }
 

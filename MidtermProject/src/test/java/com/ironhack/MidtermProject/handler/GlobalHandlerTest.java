@@ -10,6 +10,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class GlobalHandlerTest {
+
     GlobalHandler globalHandler = new GlobalHandler();
 
     @BeforeEach

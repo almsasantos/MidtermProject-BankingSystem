@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,15 +40,9 @@ class SavingTest {
         accountHolder.setMailingAddress("alms@gmail.com");
         accountHolder.setPrimaryAddress(address);
 
+        saving = new Saving();
+        saving = new Saving(new Money(new BigDecimal("900")), "000000", Status.ACTIVE, new BigDecimal("0.025"), new BigDecimal("1000"));
         saving.setAccountId(1);
-        saving.setBalance(new Money(new BigDecimal("900")));
-        saving.setSecretKey("000000");
-        saving.setPenaltyFee(new BigDecimal("40"));
-        saving.setStatus(Status.ACTIVE);
-        saving.setPrimaryOwner(accountHolder);
-        saving.setMinimumBalance(new BigDecimal("1000"));
-        saving.setInterestRate(new BigDecimal("0.025"));
-        saving.setDate(LocalDate.now());
 
         accountList.add(saving);
     }
@@ -62,21 +57,28 @@ class SavingTest {
 
     @Test
     void getInterestRate() {
+        saving.setInterestRate(new BigDecimal("0.025"));
+
         assertEquals(new BigDecimal("0.025"), saving.getInterestRate());
     }
 
     @Test
     void getMinimumBalance() {
+        saving.setMinimumBalance(new BigDecimal("1000"));
+
         assertEquals(new BigDecimal("1000"), saving.getMinimumBalance());
     }
 
     @Test
     void getDate() {
+        saving.setDate(LocalDate.now());
+
         assertEquals(LocalDate.now(), saving.getDate());
     }
 
     @Test
     void getLastInterestDate() {
+        saving.setLastInterestDate(null);
         assertEquals(null, saving.getLastInterestDate());
     }
 
@@ -87,21 +89,29 @@ class SavingTest {
 
     @Test
     void getBalance() {
+        saving.setBalance(new Money(new BigDecimal("900")));
+
         assertEquals(new Money(new BigDecimal("900")), saving.getBalance());
     }
 
     @Test
     void getSecretKey() {
+        saving.setSecretKey("000000");
+
         assertEquals("000000", saving.getSecretKey());
     }
 
     @Test
     void getPenaltyFee() {
+        saving.setPenaltyFee(new BigDecimal("40"));
+
         assertEquals(new BigDecimal("40"), saving.getPenaltyFee());
     }
 
     @Test
     void getStatus() {
+        saving.setStatus(Status.ACTIVE);
+
         assertEquals(Status.ACTIVE, saving.getStatus());
     }
 
@@ -112,6 +122,8 @@ class SavingTest {
 
     @Test
     void getPrimaryOwner() {
+        saving.setPrimaryOwner(accountHolder);
+
         assertEquals(accountHolder, saving.getPrimaryOwner());
     }
 
@@ -121,8 +133,23 @@ class SavingTest {
     }
 
     @Test
+    void getLastPenalty() {
+        saving.setLastPenalty(0);
+
+        assertEquals(0, saving.getLastPenalty());
+    }
+
+    @Test
+    void getTransactionsMade() {
+        List<LocalDateTime> transactionsMade = new ArrayList<LocalDateTime>();
+
+        assertEquals(0, saving.getTransactionsMade().size());
+    }
+
+    @Test
     void testToString() {
         String savingString = saving.toString();
+
         assertEquals(savingString, saving.toString());
     }
 }

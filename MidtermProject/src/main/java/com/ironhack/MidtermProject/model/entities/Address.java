@@ -1,16 +1,17 @@
 package com.ironhack.MidtermProject.model.entities;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotEmpty;
 
 @Embeddable
 public class Address {
-    //@NotEmpty(message = "Please introduce your country.")
+    @NotEmpty(message = "Please introduce your country.")
     private String country;
-    //@NotEmpty(message = "Please introduce your city.")
+    @NotEmpty(message = "Please introduce your city.")
     private String city;
-    //@NotEmpty(message = "Please introduce your street.")
+    @NotEmpty(message = "Please introduce your street.")
     private String street;
-    //@NotEmpty(message = "Please introduce your postal code.")
+    @NotEmpty(message = "Please introduce your postal code.")
     private String postalCode;
 
     public Address() {}

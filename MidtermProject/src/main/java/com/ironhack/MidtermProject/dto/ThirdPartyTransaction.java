@@ -7,14 +7,6 @@ public class ThirdPartyTransaction {
     private String secretKey;
     private BigDecimal amount;
 
-    public ThirdPartyTransaction() {}
-
-    public ThirdPartyTransaction(Integer accountId, String secretKey, BigDecimal amount) {
-        this.accountId = accountId;
-        this.secretKey = secretKey;
-        this.amount = amount;
-    }
-
     public Integer getAccountId() {
         return accountId;
     }

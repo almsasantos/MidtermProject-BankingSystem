@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public class ChangeBalance {
     private Integer accountId;
+    private String accountPrimaryOwnerName;
     private BigDecimal amount;
 
     public Integer getAccountId() {
@@ -20,5 +21,13 @@ public class ChangeBalance {
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public String getAccountPrimaryOwnerName() {
+        return accountPrimaryOwnerName;
+    }
+
+    public void setAccountPrimaryOwnerName(String accountPrimaryOwnerName) {
+        this.accountPrimaryOwnerName = accountPrimaryOwnerName;
     }
 }

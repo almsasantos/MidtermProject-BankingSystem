@@ -10,11 +10,12 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "account_holders")
 @PrimaryKeyJoinColumn(name = "userId")
-public class AccountHolder extends User {
+public class AccountHolder extends Users {
     private LocalDate dateOfBirth;
     @Embedded
     private Address primaryAddress;
@@ -87,5 +88,34 @@ public class AccountHolder extends User {
 
     public void setSecondaryAccounts(List<Account> secondaryAccounts) {
         this.secondaryAccounts = secondaryAccounts;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountHolder{" +
+                "dateOfBirth=" + dateOfBirth +
+                ", primaryAddress=" + primaryAddress +
+                ", mailingAddress='" + mailingAddress + '\'' +
+                ", accounts=" + accounts +
+                ", secondaryAccounts=" + secondaryAccounts +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        AccountHolder that = (AccountHolder) o;
+        return Objects.equals(dateOfBirth, that.dateOfBirth) &&
+                Objects.equals(primaryAddress, that.primaryAddress) &&
+                Objects.equals(mailingAddress, that.mailingAddress) &&
+                Objects.equals(accounts, that.accounts) &&
+                Objects.equals(secondaryAccounts, that.secondaryAccounts);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), dateOfBirth, primaryAddress, mailingAddress, accounts, secondaryAccounts);
     }
 }

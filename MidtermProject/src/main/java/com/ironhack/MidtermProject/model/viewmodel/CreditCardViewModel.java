@@ -1,16 +1,10 @@
 package com.ironhack.MidtermProject.model.viewmodel;
 
-import com.ironhack.MidtermProject.enums.Status;
-
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 
 public class CreditCardViewModel {
     private BigDecimal balance;
-    @Pattern(regexp="[\\d]{6}", message = "Enter a valid secret key")
-    private String secretKey;
-    private Status status;
     private Integer primaryOwnerId;
     private Integer secondaryOwnerId;
     private BigDecimal creditLimit;
@@ -28,22 +22,6 @@ public class CreditCardViewModel {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
-    }
-
-    public String getSecretKey() {
-        return secretKey;
-    }
-
-    public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 
     public Integer getPrimaryOwnerId() {

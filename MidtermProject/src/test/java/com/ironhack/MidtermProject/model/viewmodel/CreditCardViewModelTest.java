@@ -1,6 +1,5 @@
 package com.ironhack.MidtermProject.model.viewmodel;
 
-import com.ironhack.MidtermProject.enums.Status;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,8 +17,6 @@ class CreditCardViewModelTest {
         creditCardViewModel.setBalance(new BigDecimal("10000"));
         creditCardViewModel.setPrimaryOwnerId(1);
         creditCardViewModel.setSecondaryOwnerId(2);
-        creditCardViewModel.setSecretKey("999999");
-        creditCardViewModel.setStatus(Status.ACTIVE);
         creditCardViewModel.setCreditLimit(new BigDecimal("100"));
         creditCardViewModel.setInterestRate(new BigDecimal("0.2"));
     }
@@ -32,16 +29,6 @@ class CreditCardViewModelTest {
     @Test
     void getBalance() {
         assertEquals(new BigDecimal("10000"), creditCardViewModel.getBalance());
-    }
-
-    @Test
-    void getSecretKey() {
-        assertEquals("999999", creditCardViewModel.getSecretKey());
-    }
-
-    @Test
-    void getStatus() {
-        assertEquals(Status.ACTIVE, creditCardViewModel.getStatus());
     }
 
     @Test

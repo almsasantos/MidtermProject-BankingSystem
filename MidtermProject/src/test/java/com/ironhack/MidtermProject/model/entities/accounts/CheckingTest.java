@@ -1,5 +1,6 @@
 package com.ironhack.MidtermProject.model.entities.accounts;
 
+import com.ironhack.MidtermProject.enums.AccountType;
 import com.ironhack.MidtermProject.enums.Status;
 import com.ironhack.MidtermProject.model.classes.Money;
 import com.ironhack.MidtermProject.model.entities.Address;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,14 +40,14 @@ class CheckingTest {
         accountHolder.setMailingAddress("alms@gmail.com");
         accountHolder.setPrimaryAddress(address);
 
+        checking = new Checking();
+        checking = new Checking(new Money(new BigDecimal("900")), "000000", Status.ACTIVE, new BigDecimal("250"), new BigDecimal("12"));
         checking.setAccountId(1);
         checking.setBalance(new Money(new BigDecimal("900")));
-        checking.setSecretKey("000000");
         checking.setPenaltyFee(new BigDecimal("40"));
-        checking.setStatus(Status.ACTIVE);
         checking.setPrimaryOwner(accountHolder);
-        checking.setMinimumBalance(new BigDecimal("250"));
-        checking.setMonthlyMaintenanceFee(new BigDecimal("12"));
+        checking.setSecondaryOwner(accountHolder);
+        checking.setAccountType(AccountType.CHECKING);
 
         accountList.add(checking);
     }
@@ -60,12 +62,43 @@ class CheckingTest {
 
     @Test
     void getMinimumBalance() {
+        checking.setMinimumBalance(new BigDecimal("250"));
+
         assertEquals(new BigDecimal("250"), checking.getMinimumBalance());
     }
 
     @Test
     void getMonthlyMaintenanceFee() {
+        checking.setMonthlyMaintenanceFee(new BigDecimal("12"));
+
         assertEquals(new BigDecimal("12"), checking.getMonthlyMaintenanceFee());
     }
 
+    @Test
+    void getSecretKey() {
+        checking.setSecretKey("000000");
+
+        assertEquals("000000", checking.getSecretKey());
+    }
+
+    @Test
+    void getStatus() {
+        checking.setStatus(Status.ACTIVE);
+
+        assertEquals(Status.ACTIVE, checking.getStatus());
+    }
+
+    @Test
+    void getLastPenalty() {
+        checking.setLastPenalty(0);
+
+        assertEquals(0, checking.getLastPenalty());
+    }
+
+    @Test
+    void getTransactionsMade() {
+        List<LocalDateTime> transactionsMade = new ArrayList<LocalDateTime>();
+
+        assertEquals(0, checking.getTransactionsMade().size());
+    }
 }

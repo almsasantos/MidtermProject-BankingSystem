@@ -1,5 +1,6 @@
 package com.ironhack.MidtermProject.controller.impl.users;
 
+import com.ironhack.MidtermProject.dto.LoginAccount;
 import com.ironhack.MidtermProject.dto.Transference;
 import com.ironhack.MidtermProject.model.entities.users.AccountHolder;
 import com.ironhack.MidtermProject.service.users.AccountHolderService;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -33,15 +35,27 @@ public class AccountHolderController {
         return accountsHolderService.checkAccountBalance(accountId, userId);
     }
 
+    @PatchMapping("/accountholders/login")
+    @ResponseStatus(HttpStatus.OK)
+    public AccountHolder loginAccountHolder(@RequestBody LoginAccount loginAccount){
+        return accountsHolderService.loginAccountHolder(loginAccount);
+    }
+
+    @PatchMapping("/accountholders/logout")
+    @ResponseStatus(HttpStatus.OK)
+    public AccountHolder logoutAccountHolder(@RequestBody LoginAccount loginAccount){
+        return accountsHolderService.logOutAccountHolder(loginAccount);
+    }
+
     @PostMapping("/accountholder")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createAccountHolder(@RequestBody AccountHolder accountHolders){
+    public void createAccountHolder(@RequestBody @Valid AccountHolder accountHolders){
         accountsHolderService.createAccountHolder(accountHolders);
     }
 
-    @PostMapping("/transference")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void transferAmount(@RequestBody Transference transference) throws Exception{
+    @PatchMapping("/transference")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void transferAmount(@RequestBody Transference transference) throws RuntimeException{
         accountsHolderService.transferAmount(transference);
     }
 

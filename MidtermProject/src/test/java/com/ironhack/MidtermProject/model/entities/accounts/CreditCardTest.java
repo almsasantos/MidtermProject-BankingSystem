@@ -1,6 +1,5 @@
 package com.ironhack.MidtermProject.model.entities.accounts;
 
-import com.ironhack.MidtermProject.enums.Status;
 import com.ironhack.MidtermProject.model.classes.Money;
 import com.ironhack.MidtermProject.model.entities.Address;
 import com.ironhack.MidtermProject.model.entities.users.AccountHolder;
@@ -38,15 +37,12 @@ class CreditCardTest {
         accountHolder.setMailingAddress("alms@gmail.com");
         accountHolder.setPrimaryAddress(address);
 
+        creditCard = new CreditCard();
+        creditCard = new CreditCard(new Money(new BigDecimal("900")), new BigDecimal("100"), new BigDecimal("0.2"));
         creditCard.setAccountId(1);
         creditCard.setBalance(new Money(new BigDecimal("900")));
-        creditCard.setSecretKey("000000");
         creditCard.setPenaltyFee(new BigDecimal("40"));
-        creditCard.setStatus(Status.ACTIVE);
         creditCard.setPrimaryOwner(accountHolder);
-        creditCard.setInterestRate(new BigDecimal("0.2"));
-        creditCard.setCreditLimit(new BigDecimal("100"));
-        creditCard.setDate(LocalDate.now());
 
         accountList.add(creditCard);
     }
@@ -61,21 +57,29 @@ class CreditCardTest {
 
     @Test
     void getCreditLimit() {
+        creditCard.setCreditLimit(new BigDecimal("100"));
+
         assertEquals(new BigDecimal("100"), creditCard.getCreditLimit());
     }
 
     @Test
     void getInterestRate() {
+        creditCard.setInterestRate(new BigDecimal("0.2"));
+
         assertEquals(new BigDecimal("0.2"), creditCard.getInterestRate());
     }
 
     @Test
     void getDate() {
+        creditCard.setDate(LocalDate.now());
+
         assertEquals(LocalDate.now(), creditCard.getDate());
     }
 
     @Test
     void getLastInterestDate() {
-        assertEquals(null, creditCard.getLastInterestDate());
+        creditCard.setLastInterestDate(LocalDate.now());
+
+        assertEquals(LocalDate.now(), creditCard.getLastInterestDate());
     }
 }

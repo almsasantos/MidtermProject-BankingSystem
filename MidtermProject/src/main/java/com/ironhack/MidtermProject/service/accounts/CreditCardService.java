@@ -47,4 +47,16 @@ public class CreditCardService {
             }
         }
     }
+
+    public List<CreditCard> findByCreditLimit(BigDecimal creditLimit){
+        return creditCardRepository.findByCreditLimit(creditLimit);
+    }
+
+    public List<CreditCard> findByInterestRate(BigDecimal interestRate){
+        return creditCardRepository.findByInterestRate(interestRate);
+    }
+
+    public List<CreditCard> findByDate(LocalDate date){
+        return creditCardRepository.findByDate(date);
+    }
 }

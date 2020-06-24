@@ -17,7 +17,7 @@
         </Async>
     </Appenders>
     <Loggers>
-        <Root level="info">
+        <Root name = "com.ironhack*"  level="info">
             <AppenderRef ref="Async"/>
             <AppenderRef ref="Console"/>
             <AppenderRef ref="databaseAppender"/>

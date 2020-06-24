@@ -9,8 +9,9 @@ import java.io.IOException;
 
 @ControllerAdvice
 public class GlobalHandler {
+
     @ExceptionHandler(DataNotFoundException.class)
     public void handleDataIdNotFoundException(DataNotFoundException e, HttpServletResponse response) throws IOException{
-        response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());
-    }
+
+        response.sendError(HttpServletResponse.SC_NOT_FOUND, e.getMessage());}
 }
