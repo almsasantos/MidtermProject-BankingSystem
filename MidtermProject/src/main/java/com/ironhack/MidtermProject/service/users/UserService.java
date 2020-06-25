@@ -23,7 +23,7 @@ public class UserService {
     }
 
     public Users findById(Integer id){
-        LOGGER.info("Get user by id");
+        LOGGER.info("Get user by " + id);
         return userRepository.findById(id).orElseThrow(() -> new DataNotFoundException("User id not found"));
     }
 }

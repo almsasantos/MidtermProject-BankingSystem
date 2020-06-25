@@ -32,11 +32,6 @@ class SavingRepositoryTest {
     }
 
     @Test
-    void findBySecretKey() {
-        assertEquals(1, savingRepository.findBySecretKey("000000").size());
-    }
-
-    @Test
     void findByStatus() {
         assertEquals(1, savingRepository.findByStatus(Status.ACTIVE).size());
     }

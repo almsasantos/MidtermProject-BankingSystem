@@ -18,7 +18,7 @@ public class StudentChecking extends Account {
     private String secretKey;
     @Enumerated(EnumType.STRING)
     private Status status;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<LocalDateTime> transactionsMade;
 
     public StudentChecking() {

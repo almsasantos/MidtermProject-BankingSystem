@@ -28,13 +28,14 @@ public class Saving extends Account {
     private LocalDate date;
     private LocalDate lastInterestDate;
     private Integer lastPenalty;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<LocalDateTime> transactionsMade;
 
     public Saving() {
         this.interestRate = interestRate == null ? new BigDecimal("0.0025") : this.interestRate;
         this.minimumBalance = minimumBalance == null ? new BigDecimal("1000") : this.minimumBalance;
         this.date = LocalDate.now();
+        this.lastInterestDate = LocalDate.now();
         this.accountType = AccountType.SAVINGS;
         this.lastPenalty = 0;
         this.transactionsMade = new ArrayList<LocalDateTime>();
@@ -47,7 +48,7 @@ public class Saving extends Account {
         this.interestRate = interestRate;
         this.minimumBalance = minimumBalance;
         this.date = LocalDate.now();
-        this.lastInterestDate = null;
+        this.lastInterestDate = LocalDate.now();
         this.accountType = AccountType.SAVINGS;
         this.lastPenalty = 0;
         this.transactionsMade = new ArrayList<LocalDateTime>();

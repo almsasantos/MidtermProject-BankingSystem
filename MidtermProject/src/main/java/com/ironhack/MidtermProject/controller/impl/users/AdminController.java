@@ -33,10 +33,16 @@ public class AdminController {
         return adminService.findById(id);
     }
 
-    @GetMapping("/admins_name/{name}")
+    @GetMapping("/admins-name/{name}")
     @ResponseStatus(HttpStatus.OK)
     public List<Admin> findByName(@PathVariable("name") String name){
         return adminService.findByName(name);
+    }
+
+    @GetMapping("/admins/unfreeze-account")
+    @ResponseStatus(HttpStatus.OK)
+    public void unfreezeAccount(@RequestParam("adminId") Integer adminId, @RequestParam("accountId") Integer accountId){
+        adminService.unfreezeAccount(adminId, accountId);
     }
 
     @PatchMapping("/admins/login")

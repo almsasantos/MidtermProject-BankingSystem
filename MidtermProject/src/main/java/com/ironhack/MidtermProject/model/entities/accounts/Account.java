@@ -39,13 +39,13 @@ public abstract class Account {
 
     public Account(){
         this.penaltyFee = new BigDecimal("40");
-        this.maxTransferencesInADay = 1;
+        this.maxTransferencesInADay = 2;
     }
 
     public Account(Money balance) {
         this.balance = balance;
         this.penaltyFee =  new BigDecimal("40");
-        this.maxTransferencesInADay = 1;
+        this.maxTransferencesInADay = 2;
     }
 
     public Integer getAccountId() {

@@ -24,6 +24,7 @@ public class CreditCard extends Account {
         this.creditLimit = creditLimit == null ? new BigDecimal("100") : this.creditLimit;
         this.interestRate = interestRate == null ? new BigDecimal("0.2") : this.interestRate;
         this.date = LocalDate.now();
+        this.lastInterestDate = LocalDate.now();
         this.accountType = AccountType.CREDIT_CARD;
     }
 
@@ -32,7 +33,7 @@ public class CreditCard extends Account {
         this.creditLimit = creditLimit;
         this.interestRate = interestRate;
         this.date = LocalDate.now();
-        this.lastInterestDate = null;
+        this.lastInterestDate = LocalDate.now();
         this.accountType = AccountType.CREDIT_CARD;
     }
 

@@ -9,8 +9,6 @@ import java.util.List;
 
 @Repository
 public interface StudentCheckingRepository extends JpaRepository<StudentChecking, Integer> {
-    public List<StudentChecking> findBySecretKey(String secretKey);
-
     public List<StudentChecking> findByStatus(Status status);
 
 }

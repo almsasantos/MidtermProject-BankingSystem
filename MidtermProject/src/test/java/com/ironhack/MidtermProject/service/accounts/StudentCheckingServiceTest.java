@@ -4,7 +4,6 @@ import com.ironhack.MidtermProject.enums.Status;
 import com.ironhack.MidtermProject.model.classes.Money;
 import com.ironhack.MidtermProject.model.entities.accounts.StudentChecking;
 import com.ironhack.MidtermProject.repository.accounts.StudentCheckingRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,6 @@ class StudentCheckingServiceTest {
         studentCheckingList.add(studentChecking);
         when(studentCheckingRepository.findAll()).thenReturn(studentCheckingList);
         when(studentCheckingRepository.findById(studentChecking.getAccountId())).thenReturn(Optional.of(studentChecking));
-        when(studentCheckingRepository.findBySecretKey(studentChecking.getSecretKey())).thenReturn(studentCheckingList);
         when(studentCheckingRepository.findByStatus(studentChecking.getStatus())).thenReturn(studentCheckingList);
     }
 
@@ -51,11 +49,6 @@ class StudentCheckingServiceTest {
     @Test
     void findById() {
         assertEquals(studentChecking, studentCheckingService.findById(studentChecking.getAccountId()));
-    }
-
-    @Test
-    void findBySecretKey() {
-        assertEquals(studentCheckingList, studentCheckingService.findBySecretKey(studentChecking.getSecretKey()));
     }
 
     @Test

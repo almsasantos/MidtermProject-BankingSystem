@@ -22,7 +22,7 @@ public class AccountHolder extends Users {
     private String mailingAddress;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "primaryOwner")
+    @OneToMany(mappedBy = "primaryOwner", fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     private List<Account> accounts;
 

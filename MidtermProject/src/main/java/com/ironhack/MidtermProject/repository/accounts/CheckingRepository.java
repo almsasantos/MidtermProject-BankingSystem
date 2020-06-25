@@ -10,8 +10,6 @@ import java.util.List;
 
 @Repository
 public interface CheckingRepository extends JpaRepository<Checking, Integer> {
-    public List<Checking> findBySecretKey(String secretKey);
-
     public List<Checking> findByStatus(Status status);
 
     public List<Checking> findByMinimumBalance(BigDecimal minimumBalance);

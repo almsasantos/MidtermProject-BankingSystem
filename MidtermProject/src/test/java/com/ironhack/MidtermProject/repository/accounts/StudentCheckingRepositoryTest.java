@@ -32,11 +32,6 @@ class StudentCheckingRepositoryTest {
     }
 
     @Test
-    void findBySecretKey() {
-        assertEquals(1, studentCheckingRepository.findBySecretKey("000000").size());
-    }
-
-    @Test
     void findByStatus() {
         assertEquals(1, studentCheckingRepository.findByStatus(Status.ACTIVE).size());
     }

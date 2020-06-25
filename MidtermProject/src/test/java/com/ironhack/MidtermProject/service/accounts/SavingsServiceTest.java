@@ -43,7 +43,6 @@ class SavingsServiceTest {
 
         when(savingRepository.findAll()).thenReturn(savingList);
         when(savingRepository.findById(saving.getAccountId())).thenReturn(Optional.of(saving));
-        when(savingRepository.findBySecretKey(saving.getSecretKey())).thenReturn(savingList);
         when(savingRepository.findByStatus(saving.getStatus())).thenReturn(savingList);
         when(savingRepository.findByMinimumBalance(saving.getMinimumBalance())).thenReturn(savingList);
         when(savingRepository.findByInterestRate(saving.getInterestRate())).thenReturn(savingList);
@@ -58,11 +57,6 @@ class SavingsServiceTest {
     @Test
     void findById() {
         assertEquals(saving, savingsService.findById(saving.getAccountId()));
-    }
-
-    @Test
-    void findBySecretKey() {
-        assertEquals(savingList, savingsService.findBySecretKey(saving.getSecretKey()));
     }
 
     @Test

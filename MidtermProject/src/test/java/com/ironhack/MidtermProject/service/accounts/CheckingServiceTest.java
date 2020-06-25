@@ -4,7 +4,6 @@ import com.ironhack.MidtermProject.enums.Status;
 import com.ironhack.MidtermProject.model.classes.Money;
 import com.ironhack.MidtermProject.model.entities.accounts.Checking;
 import com.ironhack.MidtermProject.repository.accounts.CheckingRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +36,6 @@ class CheckingServiceTest {
 
         when(checkingRepository.findAll()).thenReturn(checkingList);
         when(checkingRepository.findById(checking.getAccountId())).thenReturn(Optional.of(checking));
-        when(checkingRepository.findBySecretKey(checking.getSecretKey())).thenReturn(checkingList);
         when(checkingRepository.findByStatus(checking.getStatus())).thenReturn(checkingList);
         when(checkingRepository.findByMinimumBalance(checking.getMinimumBalance())).thenReturn(checkingList);
         when(checkingRepository.findByMonthlyMaintenanceFee(checking.getMonthlyMaintenanceFee())).thenReturn(checkingList);
@@ -51,11 +49,6 @@ class CheckingServiceTest {
     @Test
     void findById() {
         assertEquals(checking, checkingService.findById(checking.getAccountId()));
-    }
-
-    @Test
-    void findBySecretKey() {
-        assertEquals(checkingList, checkingService.findBySecretKey(checking.getSecretKey()));
     }
 
     @Test

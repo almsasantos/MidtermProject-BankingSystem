@@ -59,7 +59,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // --- ADMIN CONTROLLER SECURITY ---
                 .mvcMatchers("/admins").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers("/admins/{id}").hasAuthority("ROLE_ADMIN")
-                .mvcMatchers("/admins_name/{name}").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/admins-name/{name}").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/admins/unfreeze-account").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers("/admin/balance").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers(HttpMethod.POST,"/admin").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers(HttpMethod.POST,"/third-party").hasAuthority("ROLE_ADMIN")
@@ -85,21 +86,30 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // --- STUDENT CHECKING CONTROLLER SECURITY ---
                 .mvcMatchers("/student_checking_accounts").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers("/student_checking_accounts/{id}").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/student-checking-accounts/status").hasAuthority("ROLE_ADMIN")
                 // endregion
 
                 // --- SAVING CONTROLLER SECURITY ---
                 .mvcMatchers("/savings").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers("/savings/{id}").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/savings/status").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/savings/minimum-balance").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/savings/interest-rate").hasAuthority("ROLE_ADMIN")
                 // endregion
 
                 // --- CREDIT CARD CONTROLLER SECURITY ---
                 .mvcMatchers("/credit_cards").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers("/credit_cards/{id}").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/credit-cards/credit-limit").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/credit-cards/interest-rate").hasAuthority("ROLE_ADMIN")
                 // endregion
 
                 // --- CHECKING CONTROLLER SECURITY ---
                 .mvcMatchers("/checking_accounts").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers("/checking_accounts/{id}").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/checking-accounts/status").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/checking-accounts/minimum-balance").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/checking-accounts/monthly-maintenance-fee").hasAuthority("ROLE_ADMIN")
                 // endregion
 
                 // --- ACCOUNT CONTROLLER SECURITY ---
