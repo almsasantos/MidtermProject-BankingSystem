@@ -41,26 +41,26 @@ public class AdminController {
 
     @GetMapping("/admins/unfreeze-account")
     @ResponseStatus(HttpStatus.OK)
-    public void unfreezeAccount(@RequestParam("adminId") Integer adminId, @RequestParam("accountId") Integer accountId){
+    public void unfreezeAccount(@RequestParam("admin_id") Integer adminId, @RequestParam("account_id") Integer accountId){
         adminService.unfreezeAccount(adminId, accountId);
     }
 
     @PatchMapping("/admins/login")
     @ResponseStatus(HttpStatus.OK)
-    public Admin loginAdmin(@RequestBody LoginAccount loginAccount){
+    public Admin loginAdmin(@RequestBody @Valid LoginAccount loginAccount){
         return adminService.loginAdmin(loginAccount);
     }
 
     @PatchMapping("/admins/logout")
     @ResponseStatus(HttpStatus.OK)
-    public Admin logoutAdmin(@RequestBody LoginAccount loginAccount){
+    public Admin logoutAdmin(@RequestBody @Valid LoginAccount loginAccount){
         return adminService.logOutAdmin(loginAccount);
     }
 
     // --- GET BALANCE FROM ANY ACCOUNT ---
     @GetMapping("/admin/balance")
     @ResponseStatus(HttpStatus.OK)
-    public BigDecimal checkAccountBalance(@RequestParam(value = "admin_id", required = true) Integer adminId, @RequestParam(value = "accountId", required = true) Integer accountId){
+    public BigDecimal checkAccountBalance(@RequestParam(value = "admin_id", required = true) Integer adminId, @RequestParam(value = "account_id", required = true) Integer accountId){
         return adminService.checkAccountBalance(adminId, accountId);
     }
 
@@ -99,13 +99,13 @@ public class AdminController {
     // --- DEBIT AND CREDIT BALANCE ---
     @PatchMapping("/debit-balance")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void debitBalance(@RequestParam("admin_id") Integer adminId, @RequestBody ChangeBalance changeBalance){
+    public void debitBalance(@RequestParam("admin_id") Integer adminId, @RequestBody @Valid ChangeBalance changeBalance){
         adminService.debitBalance(adminId, changeBalance);
     }
 
     @PatchMapping("/credit-balance")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void creditBalance(@RequestParam("admin_id") Integer adminId, @RequestBody ChangeBalance changeBalance){
+    public void creditBalance(@RequestParam("admin_id") Integer adminId, @RequestBody @Valid ChangeBalance changeBalance){
         adminService.creditBalance(adminId, changeBalance);
     }
 

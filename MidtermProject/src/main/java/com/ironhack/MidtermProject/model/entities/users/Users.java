@@ -54,12 +54,16 @@ public abstract class Users {
         this.password = password;
     }
 
+    public void setLogged(boolean logged) {
+        isLogged = logged;
+    }
+
     public void login(){
-        this.isLogged = true;
+        setLogged(true);
     }
 
     public void logOut(){
-        this.isLogged = false;
+        setLogged(false);
     }
 
     public boolean isLogged() {

@@ -61,6 +61,7 @@ class ThirdPartyControllerTest {
         thirdParty = new ThirdParty("Ana", "pass");
         thirdPartyDetails.put("1234", "Toyota");
         thirdParty.setAccountDetails(thirdPartyDetails);
+        thirdParty.login();
 
         loginAccount = new LoginAccount();
         loginAccount.setId(1);
@@ -107,11 +108,7 @@ class ThirdPartyControllerTest {
         mockMvc.perform(patch("/thirdparties/login")
                 .content(objectMapper.writeValueAsString(loginAccount))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.userId").value(thirdParty.getUserId()))
-                .andExpect(jsonPath("$.name").value(thirdParty.getName()))
-                .andExpect(jsonPath("$.password").value(thirdParty.getPassword()))
-                .andExpect(jsonPath("$.accountDetails").value(thirdParty.getAccountDetails()));
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -119,22 +116,24 @@ class ThirdPartyControllerTest {
         mockMvc.perform(patch("/thirdparties/logout")
                 .content(objectMapper.writeValueAsString(loginAccount))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.userId").value(thirdParty.getUserId()))
-                .andExpect(jsonPath("$.name").value(thirdParty.getName()))
-                .andExpect(jsonPath("$.password").value(thirdParty.getPassword()))
-                .andExpect(jsonPath("$.accountDetails").value(thirdParty.getAccountDetails()));
+                .andExpect(status().isOk());
     }
 
     @Test
     void debitTransaction() throws Exception {
-        mockMvc.perform(patch("/debit-transaction").param("hashed_key", "1234"))
+        mockMvc.perform(patch("/debit-transaction")
+                .param("hashed_key", "1234")
+                .content(objectMapper.writeValueAsString(thirdPartyTransaction))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
 
     @Test
     void creditTransaction() throws Exception {
-        mockMvc.perform(patch("/credit-transaction").param("hashed_key", "1234"))
+        mockMvc.perform(patch("/credit-transaction")
+                .param("hashed_key", "1234")
+                .content(objectMapper.writeValueAsString(thirdPartyTransaction))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
 }

@@ -10,7 +10,6 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "account_holders")
@@ -96,26 +95,6 @@ public class AccountHolder extends Users {
                 "dateOfBirth=" + dateOfBirth +
                 ", primaryAddress=" + primaryAddress +
                 ", mailingAddress='" + mailingAddress + '\'' +
-                ", accounts=" + accounts +
-                ", secondaryAccounts=" + secondaryAccounts +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        AccountHolder that = (AccountHolder) o;
-        return Objects.equals(dateOfBirth, that.dateOfBirth) &&
-                Objects.equals(primaryAddress, that.primaryAddress) &&
-                Objects.equals(mailingAddress, that.mailingAddress) &&
-                Objects.equals(accounts, that.accounts) &&
-                Objects.equals(secondaryAccounts, that.secondaryAccounts);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), dateOfBirth, primaryAddress, mailingAddress, accounts, secondaryAccounts);
     }
 }

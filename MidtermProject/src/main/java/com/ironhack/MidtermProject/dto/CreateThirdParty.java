@@ -1,8 +1,13 @@
 package com.ironhack.MidtermProject.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class CreateThirdParty {
+    @NotNull(message = "Please insert a third party name")
     private String name;
+    @NotNull(message = "Please insert the name of third's party company")
     private String hashedName;
+    @NotNull(message = "Please insert the password that allows third party to login")
     private String password;
 
     public String getName() {

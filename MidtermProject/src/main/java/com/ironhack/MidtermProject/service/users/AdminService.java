@@ -24,10 +24,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -66,32 +69,37 @@ public class AdminService {
 
     private static final Logger LOGGER = LogManager.getLogger(AdminService.class);
 
-    public List<Admin> findAll(){
+    public List<Admin> findAll() {
         LOGGER.info("Get all Admin users");
         return adminRepository.findAll();
     }
 
-    public Admin findById(Integer id){
+    public Admin findById(Integer id) {
         LOGGER.info("Get Admin user by " + id);
         return adminRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
     }
 
-    public List<Admin> findByName(String name){
+    public List<Admin> findByName(String name) {
         LOGGER.info("Get Admin user by " + name);
         return adminRepository.findByName(name);
     }
 
-    public void createNewAdmin(Admin admin){
+    public void createNewAdmin(Admin admin) {
         LOGGER.info("Create new Admin user");
         adminRepository.save(admin);
     }
 
-    public Admin loginAdmin(LoginAccount loginAccount){
+    public Admin loginAdmin(LoginAccount loginAccount) {
         LOGGER.info("[INIT] Login Admin " + loginAccount.getId());
         Admin admin = adminRepository.findById(loginAccount.getId()).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
 
+        LOGGER.info("Check if admin " + loginAccount.getId() + " is already logged in");
+        if(admin.isLogged()){
+            throw new DataNotFoundException("Admin is already logged in");
+        }
+
         LOGGER.info("Check if password provided belongs to respective admin");
-        if(!admin.getPassword().equals(loginAccount.getPassword())){
+        if (!admin.getPassword().equals(loginAccount.getPassword())) {
             throw new DataNotFoundException("Password incorrect, try again");
         }
 
@@ -101,12 +109,17 @@ public class AdminService {
         return admin;
     }
 
-    public Admin logOutAdmin(LoginAccount loginAccount){
+    public Admin logOutAdmin(LoginAccount loginAccount) {
         LOGGER.info("[INIT] Logout Admin " + loginAccount.getId());
         Admin admin = adminRepository.findById(loginAccount.getId()).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
 
+        LOGGER.info("Check if admin " + loginAccount.getId() + " is already logged out");
+        if(!admin.isLogged()){
+            throw new DataNotFoundException("Admin is already logged out");
+        }
+
         LOGGER.info("Check if password provided belongs to respective admin");
-        if(!admin.getPassword().equals(loginAccount.getPassword())){
+        if (!admin.getPassword().equals(loginAccount.getPassword())) {
             throw new DataNotFoundException("Password incorrect, try again");
         }
 
@@ -116,22 +129,22 @@ public class AdminService {
         return admin;
     }
 
-    public void adminIsLogged(Admin admin){
+    public void adminIsLogged(Admin admin) {
         LOGGER.info("Check if admin " + admin.getUserId() + " exists and if it's logged in");
-        if(admin.isLogged() == false){
+        if (admin.isLogged() == false) {
             throw new DataNotFoundException("Admin must be logged in");
         }
     }
 
     // --- CREATE ACCOUNTS ---
-    public void createNewSavingsAccount(Integer id, SavingViewModel savingViewModel){
+    public void createNewSavingsAccount(Integer id, SavingViewModel savingViewModel) {
         LOGGER.info("[INIT] Admin " + id + " creates new Savings Account");
 
         Admin admin = adminRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
         adminIsLogged(admin);
 
         LOGGER.info("Check if balance provided is positive");
-        if(savingViewModel.getBalance().compareTo(BigDecimal.ZERO) == -1){
+        if (savingViewModel.getBalance().compareTo(BigDecimal.ZERO) == -1) {
             throw new DataNotFoundException("Balance can't be less than zero");
         }
 
@@ -140,7 +153,7 @@ public class AdminService {
         AccountHolder secondaryOwner;
         Saving saving = new Saving();
 
-        if(savingViewModel.getSecondaryOwnerId() != null){
+        if (savingViewModel.getSecondaryOwnerId() != null) {
             LOGGER.info("Check that secondary owner " + savingViewModel.getSecondaryOwnerId() + " exists");
             secondaryOwner = accountsHolderRepository.findById(savingViewModel.getSecondaryOwnerId()).orElseThrow(() -> new DataNotFoundException("Secondary Owner id not found"));
             saving.setSecondaryOwner(secondaryOwner);
@@ -154,21 +167,21 @@ public class AdminService {
         saving.setPrimaryOwner(primaryOwner);
 
         LOGGER.info("Check that values of interest rate and minimum balance are correct");
-        if(savingViewModel.getInterestRate() != null){
+        if (savingViewModel.getInterestRate() != null) {
             saving.setInterestRate(savingViewModel.getInterestRate());
         }
-        if(savingViewModel.getMinimumBalance() != null) {
+        if (savingViewModel.getMinimumBalance() != null) {
             saving.setMinimumBalance(savingViewModel.getMinimumBalance());
         }
 
-        if(saving.getInterestRate().compareTo(new BigDecimal("0.5")) <= 0){
+        if (saving.getInterestRate().compareTo(new BigDecimal("0.5")) <= 0) {
             System.out.println("good");
-        } else{
+        } else {
             saving.setInterestRate(new BigDecimal("0.025"));
         }
-        if(saving.getMinimumBalance().intValueExact() <= 1000 && saving.getMinimumBalance().intValueExact() >= 100){
+        if (saving.getMinimumBalance().intValueExact() <= 1000 && saving.getMinimumBalance().intValueExact() >= 100) {
             System.out.println("minimum good");
-        } else{
+        } else {
             saving.setMinimumBalance(new BigDecimal("1000"));
         }
         primaryOwner.getAccounts().add(saving);
@@ -177,14 +190,14 @@ public class AdminService {
         LOGGER.info("[END] Admin " + id + " creates new Savings Account");
     }
 
-    public void createNewAccountDepAge(Integer id, AccountViewModel accountViewModel){
-        LOGGER.info("[INIT] Admin " + id +  " creates new Account based on user's age");
+    public void createNewAccountDepAge(Integer id, AccountViewModel accountViewModel) {
+        LOGGER.info("[INIT] Admin " + id + " creates new Account based on user's age");
 
         Admin admin = adminRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
         adminIsLogged(admin);
 
         LOGGER.info("Check if balance provided is positive");
-        if(accountViewModel.getBalance().compareTo(BigDecimal.ZERO) == -1){
+        if (accountViewModel.getBalance().compareTo(BigDecimal.ZERO) == -1) {
             throw new DataNotFoundException("Balance can't be less than zero");
         }
 
@@ -194,19 +207,19 @@ public class AdminService {
 
         LOGGER.info("Check that primary owner's age " + accountViewModel.getPrimaryOwnerId() + " to decide which type of account to create");
         Integer primaryOwnerAge = Period.between(primaryOwner.getDateOfBirth(), LocalDate.now()).getYears();
-        if(primaryOwnerAge<24){
+        if (primaryOwnerAge < 24) {
             createNewStudentChecking(primaryOwner, accountViewModel, secondaryOwner);
-        } else{
+        } else {
             createNewCheckingAccount(primaryOwner, accountViewModel, secondaryOwner);
         }
 
-        LOGGER.info("[END] Admin " + id +  " creates new Account based on user's age");
+        LOGGER.info("[END] Admin " + id + " creates new Account based on user's age");
     }
 
-    public void createNewStudentChecking(AccountHolder primaryOwner, AccountViewModel accountViewModel, AccountHolder secondaryOwner){
+    public void createNewStudentChecking(AccountHolder primaryOwner, AccountViewModel accountViewModel, AccountHolder secondaryOwner) {
         StudentChecking studentChecking = new StudentChecking(new Money(accountViewModel.getBalance()), accountViewModel.getSecretKey(), accountViewModel.getStatus());
         studentChecking.setPrimaryOwner(primaryOwner);
-        if(accountViewModel.getSecondaryOwnerId() != null){
+        if (accountViewModel.getSecondaryOwnerId() != null) {
             secondaryOwner = accountsHolderRepository.findById(accountViewModel.getSecondaryOwnerId()).orElseThrow(() -> new DataNotFoundException("Secondary Owner id not found"));
             studentChecking.setSecondaryOwner(secondaryOwner);
         }
@@ -215,9 +228,9 @@ public class AdminService {
         LOGGER.info("A new Student Checking account was created");
     }
 
-    public void createNewCheckingAccount(AccountHolder primaryOwner, AccountViewModel accountViewModel, AccountHolder secondaryOwner){
+    public void createNewCheckingAccount(AccountHolder primaryOwner, AccountViewModel accountViewModel, AccountHolder secondaryOwner) {
         Checking checking = new Checking();
-        if(accountViewModel.getSecondaryOwnerId() != null){
+        if (accountViewModel.getSecondaryOwnerId() != null) {
             secondaryOwner = accountsHolderRepository.findById(accountViewModel.getSecondaryOwnerId()).orElseThrow(() -> new DataNotFoundException("Secondary Owner id not found"));
             checking.setSecondaryOwner(secondaryOwner);
         }
@@ -231,14 +244,14 @@ public class AdminService {
     }
 
 
-    public void createNewCreditCardAccount(Integer id, CreditCardViewModel creditCardViewModel){
-        LOGGER.info("[INIT] Admin " + id +  " creates new Credit Card account");
+    public void createNewCreditCardAccount(Integer id, CreditCardViewModel creditCardViewModel) {
+        LOGGER.info("[INIT] Admin " + id + " creates new Credit Card account");
 
         Admin admin = adminRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
         adminIsLogged(admin);
 
         LOGGER.info("Check if balance provided is positive");
-        if(creditCardViewModel.getBalance().compareTo(BigDecimal.ZERO) == -1){
+        if (creditCardViewModel.getBalance().compareTo(BigDecimal.ZERO) == -1) {
             throw new DataNotFoundException("Balance can't be less than zero");
         }
 
@@ -247,7 +260,7 @@ public class AdminService {
         AccountHolder secondaryOwner;
         CreditCard creditCard = new CreditCard();
 
-        if(creditCardViewModel.getSecondaryOwnerId() != null){
+        if (creditCardViewModel.getSecondaryOwnerId() != null) {
             LOGGER.info("Check that secondary owner " + creditCardViewModel.getSecondaryOwnerId() + " exists");
             secondaryOwner = accountsHolderRepository.findById(creditCardViewModel.getPrimaryOwnerId()).orElseThrow(() -> new DataNotFoundException("Secondary Owner id not found"));
             creditCard.setSecondaryOwner(secondaryOwner);
@@ -258,32 +271,32 @@ public class AdminService {
         creditCard.setPrimaryOwner(primaryOwner);
 
         LOGGER.info("Check that values of interest rate and credit limit are correct");
-        if(creditCardViewModel.getCreditLimit() != null){
+        if (creditCardViewModel.getCreditLimit() != null) {
             creditCard.setCreditLimit(creditCardViewModel.getCreditLimit());
         }
-        if(creditCardViewModel.getInterestRate() != null){
+        if (creditCardViewModel.getInterestRate() != null) {
             creditCard.setInterestRate(creditCardViewModel.getInterestRate());
         }
 
-        if(creditCard.getCreditLimit().intValueExact()>=100 && creditCard.getCreditLimit().intValueExact()<=1000){
+        if (creditCard.getCreditLimit().intValueExact() >= 100 && creditCard.getCreditLimit().intValueExact() <= 1000) {
             System.out.println("good");
-        } else{
+        } else {
             creditCard.setCreditLimit(new BigDecimal("100"));
         }
-        if(creditCard.getInterestRate().compareTo(new BigDecimal("0.2")) == -1 && creditCard.getInterestRate().compareTo(new BigDecimal("0.1")) == 1){
+        if (creditCard.getInterestRate().compareTo(new BigDecimal("0.2")) == -1 && creditCard.getInterestRate().compareTo(new BigDecimal("0.1")) == 1) {
             System.out.println("interest good");
-        } else{
+        } else {
             creditCard.setInterestRate(new BigDecimal("0.2"));
         }
         creditCardRepository.save(creditCard);
 
-        LOGGER.info("[END] Admin " + id +  " creates new Credit Card account");
+        LOGGER.info("[END] Admin " + id + " creates new Credit Card account");
     }
 
     // --- CHECK BALANCE FROM ANY ACCOUNT ---
 
-    public BigDecimal checkAccountBalance(Integer adminId, Integer accountId){
-        LOGGER.info("[INIT] Admin " + adminId +  " checks balance from account " + accountId);
+    public BigDecimal checkAccountBalance(Integer adminId, Integer accountId) {
+        LOGGER.info("[INIT] Admin " + adminId + " checks balance from account " + accountId);
 
         LOGGER.info("Confirm if account with id " + accountId + " exists");
         Account account = accountRepository.findById(accountId).orElseThrow(() -> new DataNotFoundException("Account id not found"));
@@ -291,40 +304,85 @@ public class AdminService {
         Admin admin = adminRepository.findById(adminId).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
         adminIsLogged(admin);
 
-        LOGGER.info("[END] Admin " + adminId +  " checks balance from account " + accountId);
-        if(account.getAccountType().equals(AccountType.CHECKING)){
+        LOGGER.info("[END] Admin " + adminId + " checks balance from account " + accountId);
+        if (account.getAccountType().equals(AccountType.CHECKING)) {
             return adminRepository.checkCheckingBalance(accountId);
-        } else if(account.getAccountType().equals(AccountType.STUDENT_CHECKING)){
+        } else if (account.getAccountType().equals(AccountType.STUDENT_CHECKING)) {
             return adminRepository.checkStudentCheckingBalance(accountId);
-        } else if(account.getAccountType().equals(AccountType.SAVINGS)){
+        } else if (account.getAccountType().equals(AccountType.SAVINGS)) {
             savingsService.interestRateGain(accountId);
             return adminRepository.checkSavingsBalance(accountId);
-        } else{
+        } else {
             creditCardService.interestDateGainMonthly(accountId);
             return adminRepository.checkCreditCardBalance(accountId);
         }
     }
 
+    public void confirmDataIsCorrect(Account account, Integer ownerId, String ownerName, Integer ownerAccountId){
+        LOGGER.info("Confirm if owner with id " +  ownerId + " exists");
+        AccountHolder accountHolder = accountsHolderRepository.findById(ownerId).orElseThrow(() -> new DataNotFoundException("Owner id not found"));
+
+        LOGGER.info("Check if owner name and id provided are related with account to credit equals to the exact owner from the account " + ownerAccountId);
+        boolean primaryOwner = false;
+        boolean secondaryOwner = false;
+
+        if(account.getPrimaryOwner().getUserId().equals(accountHolder.getUserId())){
+            primaryOwner = true;
+        } else if (accountHolder.getSecondaryAccounts().size()>=1){
+            for(Account secondaryAccount: accountHolder.getSecondaryAccounts()){
+                if(secondaryAccount.getAccountId().equals(account.getAccountId())){
+                    secondaryOwner = true;
+                }
+            }
+        }
+
+        LOGGER.info("Check that names provided belong to the account");
+        List<String> accountOwnersName = new ArrayList<String>();
+        if(primaryOwner){
+            accountOwnersName.add(account.getPrimaryOwner().getName());
+        } else if (secondaryOwner){
+            accountOwnersName.add(account.getSecondaryOwner().getName());
+        }
+
+        List<Integer> accountHolderAccountsList = new ArrayList<Integer>();
+
+        if (accountOwnersName.contains(ownerName)) {
+            for (Account accountId : accountHolder.getAccounts()) {
+                accountHolderAccountsList.add(accountId.getAccountId());
+            }
+
+            for(Account accountId : accountHolder.getSecondaryAccounts()){
+                accountHolderAccountsList.add(accountId.getAccountId());
+            }
+        }
+
+        else {
+            throw new DataNotFoundException("User name provided is not associated with that account");
+        }
+
+        if (!accountHolderAccountsList.contains(ownerAccountId)) {
+            throw new DataNotFoundException("User doesn't have that account id");
+        }
+    }
+
+    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     // --- DEBIT THE BALANCE ---
-    public void debitBalance(Integer adminId, ChangeBalance changeBalance){
-        LOGGER.info("[INIT] Admin " + adminId +  " debits " + changeBalance.getAmount() + " amount in " + changeBalance.getAccountId() + " account");
+    public void debitBalance(Integer adminId, ChangeBalance changeBalance) {
+        LOGGER.info("[INIT] Admin " + adminId + " debits " + changeBalance.getAmount() + " amount in " + changeBalance.getAccountId() + " account");
         Admin admin = adminRepository.findById(adminId).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
         adminIsLogged(admin);
 
         LOGGER.info("Confirm if account with id " + changeBalance.getAccountId() + " exists");
         Account account = accountRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Account id not found"));
 
-        LOGGER.info("Check if primary owner related with account to debit equals to the exact owner from the account " + changeBalance.getAccountId());
-        if(!changeBalance.getAccountPrimaryOwnerName().equals(account.getPrimaryOwner().getName())){
-            throw new DataNotFoundException("User name is not associated with that account");
-        }
+        confirmDataIsCorrect(account, changeBalance.getOwnerId(), changeBalance.getAccountOwnerName(), changeBalance.getAccountId());
 
-        if(account.getAccountType().equals(AccountType.CHECKING)){
+        if (account.getAccountType().equals(AccountType.CHECKING)) {
             LOGGER.info("Confirm if account with id " + changeBalance.getAccountId() + " is from type checking");
             Checking checking = checkingRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Checking account id not found"));
             checking.setBalance(new Money(checking.getBalance().decreaseAmount(changeBalance.getAmount())));
-            if(checking.getBalance().getAmount().compareTo(checking.getMinimumBalance()) == -1){
-                if(checking.getLastPenalty() ==0){
+            if (checking.getBalance().getAmount().compareTo(checking.getMinimumBalance()) == -1) {
+                if (checking.getLastPenalty() == 0) {
                     checking.setBalance(new Money(checking.getBalance().decreaseAmount(checking.getPenaltyFee())));
                     checking.setLastPenalty(1);
                 }
@@ -333,12 +391,12 @@ public class AdminService {
             checkingRepository.save(checking);
         }
 
-        else if(account.getAccountType().equals(AccountType.SAVINGS)){
+        else if (account.getAccountType().equals(AccountType.SAVINGS)) {
             LOGGER.info("Confirm if account with id " + changeBalance.getAccountId() + " is from type savings");
             Saving saving = savingsRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Savings account id not found"));
             saving.setBalance(new Money(saving.getBalance().decreaseAmount(changeBalance.getAmount())));
-            if(saving.getBalance().getAmount().compareTo(saving.getMinimumBalance()) == -1){
-                if(saving.getLastPenalty() == 0){
+            if (saving.getBalance().getAmount().compareTo(saving.getMinimumBalance()) == -1) {
+                if (saving.getLastPenalty() == 0) {
                     saving.setBalance(new Money(saving.getBalance().decreaseAmount(saving.getPenaltyFee())));
                     saving.setLastPenalty(1);
                 }
@@ -347,7 +405,7 @@ public class AdminService {
             savingsRepository.save(saving);
         }
 
-        else if(account.getAccountType().equals(AccountType.CREDIT_CARD)){
+        else if (account.getAccountType().equals(AccountType.CREDIT_CARD)) {
             LOGGER.info("Confirm if account with id " + changeBalance.getAccountId() + " is from type credit card");
             CreditCard creditCard = creditCardRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Credit card account id not found"));
             creditCard.setBalance(new Money(creditCard.getBalance().decreaseAmount(changeBalance.getAmount())));
@@ -356,7 +414,7 @@ public class AdminService {
             creditCardRepository.save(creditCard);
         }
 
-        else if(account.getAccountType().equals(AccountType.STUDENT_CHECKING)){
+        else if (account.getAccountType().equals(AccountType.STUDENT_CHECKING)) {
             LOGGER.info("Confirm if account with id " + changeBalance.getAccountId() + " is from type student checking");
             StudentChecking studentChecking = studentCheckingRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Student checking account id not found"));
             studentChecking.setBalance(new Money(studentChecking.getBalance().decreaseAmount(changeBalance.getAmount())));
@@ -365,12 +423,13 @@ public class AdminService {
             studentCheckingRepository.save(studentChecking);
         }
 
-        LOGGER.info("[END] Admin " + adminId +  " debits " + changeBalance.getAmount() + " amount in " + changeBalance.getAccountId() + " account");
+        LOGGER.info("[END] Admin " + adminId + " debits " + changeBalance.getAmount() + " amount in " + changeBalance.getAccountId() + " account");
     }
 
+    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     // --- CREDIT THE BALANCE ---
-    public void creditBalance(Integer adminId, ChangeBalance changeBalance){
-        LOGGER.info("[INIT] Admin " + adminId +  " credits " + changeBalance.getAmount() + " amount in " + changeBalance.getAccountId() + " account");
+    public void creditBalance(Integer adminId, ChangeBalance changeBalance) {
+        LOGGER.info("[INIT] Admin " + adminId + " credits " + changeBalance.getAmount() + " amount in " + changeBalance.getAccountId() + " account");
 
         Admin admin = adminRepository.findById(adminId).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
         adminIsLogged(admin);
@@ -378,16 +437,13 @@ public class AdminService {
         LOGGER.info("Confirm if account with id " + changeBalance.getAccountId() + " exists");
         Account account = accountRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Account id not found"));
 
-        LOGGER.info("Check if primary owner related with account to credit equals to the exact owner from the account " + changeBalance.getAccountId());
-        if(!changeBalance.getAccountPrimaryOwnerName().equals(account.getPrimaryOwner().getName())){
-            throw new DataNotFoundException("User name is not associated with that account");
-        }
+        confirmDataIsCorrect(account, changeBalance.getOwnerId(), changeBalance.getAccountOwnerName(), changeBalance.getAccountId());
 
-        if(account.getAccountType().equals(AccountType.CHECKING)){
+        if (account.getAccountType().equals(AccountType.CHECKING)) {
             LOGGER.info("Confirm if account with id " + changeBalance.getAccountId() + " is from type checking");
             Checking checking = checkingRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Checking account id not found"));
             checking.setBalance(new Money(checking.getBalance().increaseAmount(changeBalance.getAmount())));
-            if(checking.getLastPenalty()==1 && checking.getBalance().getAmount().compareTo(checking.getMinimumBalance()) == 1){
+            if (checking.getLastPenalty() == 1 && checking.getBalance().getAmount().compareTo(checking.getMinimumBalance()) == 1) {
                 checking.setLastPenalty(0);
             }
 
@@ -395,11 +451,11 @@ public class AdminService {
             checkingRepository.save(checking);
         }
 
-        else if(account.getAccountType().equals(AccountType.SAVINGS)){
+        else if (account.getAccountType().equals(AccountType.SAVINGS)) {
             LOGGER.info("Confirm if account with id " + changeBalance.getAccountId() + " is from type savings");
             Saving saving = savingsRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Savings account id not found"));
             saving.setBalance(new Money(saving.getBalance().increaseAmount(changeBalance.getAmount())));
-            if(saving.getLastPenalty() == 1 && saving.getBalance().getAmount().compareTo(saving.getMinimumBalance()) == 1){
+            if (saving.getLastPenalty() == 1 && saving.getBalance().getAmount().compareTo(saving.getMinimumBalance()) == 1) {
                 saving.setLastPenalty(0);
             }
 
@@ -407,7 +463,7 @@ public class AdminService {
             savingsRepository.save(saving);
         }
 
-        else if(account.getAccountType().equals(AccountType.CREDIT_CARD)){
+        else if (account.getAccountType().equals(AccountType.CREDIT_CARD)) {
             LOGGER.info("Confirm if account with id " + changeBalance.getAccountId() + " is from type credit card");
             CreditCard creditCard = creditCardRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Credit card account id not found"));
             creditCard.setBalance(new Money(creditCard.getBalance().increaseAmount(changeBalance.getAmount())));
@@ -416,7 +472,7 @@ public class AdminService {
             creditCardRepository.save(creditCard);
         }
 
-        else if(account.getAccountType().equals(AccountType.STUDENT_CHECKING)){
+        else if (account.getAccountType().equals(AccountType.STUDENT_CHECKING)) {
             LOGGER.info("Confirm if account with id " + changeBalance.getAccountId() + " is from type student checking");
             StudentChecking studentChecking = studentCheckingRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Student checking account id not found"));
             studentChecking.setBalance(new Money(studentChecking.getBalance().increaseAmount(changeBalance.getAmount())));
@@ -425,13 +481,13 @@ public class AdminService {
             studentCheckingRepository.save(studentChecking);
         }
 
-        LOGGER.info("[END] Admin " + adminId +  " credits " + changeBalance.getAmount() + " amount in " + changeBalance.getAccountId() + " account");
+        LOGGER.info("[END] Admin " + adminId + " credits " + changeBalance.getAmount() + " amount in " + changeBalance.getAccountId() + " account");
     }
 
 
     // --- CREATE THIRD PARTY ---
 
-    public void createNewThirdParty(Integer adminId, CreateThirdParty createThirdParty){
+    public void createNewThirdParty(Integer adminId, CreateThirdParty createThirdParty) {
         LOGGER.info("[INIT] Admin " + adminId + " creates New Third Party");
 
         Admin admin = adminRepository.findById(adminId).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
@@ -452,21 +508,37 @@ public class AdminService {
 
     // --- UNFREEZE ACCOUNTS ---
 
-    public void unfreezeAccount(Integer adminId, Integer accountId){
+    public void unfreezeAccount(Integer adminId, Integer accountId) {
         LOGGER.info("[INIT] Admin " + adminId + " unfreeze account " + accountId);
         Admin admin = adminRepository.findById(adminId).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
         adminIsLogged(admin);
         Account account = accountRepository.findById(accountId).orElseThrow(() -> new DataNotFoundException("Account id not found"));
-        if(account.getAccountType().equals(AccountType.SAVINGS)){
+        if (account.getAccountType().equals(AccountType.SAVINGS)) {
             Saving saving = savingsRepository.findById(accountId).orElseThrow(() -> new DataNotFoundException("Saving id not found"));
+            LOGGER.info("Check status from savings account " + saving.getAccountId());
+            if(saving.getStatus().equals(Status.ACTIVE)){
+                throw new DataNotFoundException("Savings account Status is already Active");
+            }
             saving.setStatus(Status.ACTIVE);
             savingsRepository.save(saving);
-        } else if (account.getAccountType().equals(AccountType.CHECKING)){
-            Checking checking= checkingRepository.findById(accountId).orElseThrow(() -> new DataNotFoundException("Checking id not found"));
+        }
+
+        else if (account.getAccountType().equals(AccountType.CHECKING)) {
+            Checking checking = checkingRepository.findById(accountId).orElseThrow(() -> new DataNotFoundException("Checking id not found"));
+            LOGGER.info("Check status from checking account " + checking.getAccountId());
+            if(checking.getStatus().equals(Status.ACTIVE)){
+                throw new DataNotFoundException("Checking account Status is already Active");
+            }
             checking.setStatus(Status.ACTIVE);
             checkingRepository.save(checking);
-        } else if (account.getAccountType().equals(AccountType.STUDENT_CHECKING)){
+        }
+
+        else if (account.getAccountType().equals(AccountType.STUDENT_CHECKING)) {
             StudentChecking studentChecking = studentCheckingRepository.findById(accountId).orElseThrow(() -> new DataNotFoundException("Student checking id not found"));
+            LOGGER.info("Check status from student checking account " + studentChecking.getAccountId());
+            if(studentChecking.getStatus().equals(Status.ACTIVE)){
+                throw new DataNotFoundException("Student checking account Status is already Active");
+            }
             studentChecking.setStatus(Status.ACTIVE);
             studentCheckingRepository.save(studentChecking);
         }

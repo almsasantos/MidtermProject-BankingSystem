@@ -25,7 +25,7 @@ public class Checking extends Account {
     private BigDecimal minimumBalance;
     private BigDecimal monthlyMaintenanceFee;
     private Integer lastPenalty;
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection//(fetch = FetchType.EAGER)
     private List<LocalDateTime> transactionsMade;
 
     public Checking() {

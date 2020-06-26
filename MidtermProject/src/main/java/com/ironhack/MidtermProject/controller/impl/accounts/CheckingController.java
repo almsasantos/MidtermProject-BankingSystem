@@ -15,31 +15,31 @@ public class CheckingController {
     @Autowired
     private CheckingService checkingService;
 
-    @GetMapping("/checking-accounts")
+    @GetMapping("/checkings")
     @ResponseStatus(HttpStatus.OK)
     public List<Checking> findAll(){
         return checkingService.findAll();
     }
 
-    @GetMapping("/checking-accounts/{id}")
+    @GetMapping("/checkings/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Checking findById(@PathVariable("id") Integer id){
         return checkingService.findById(id);
     }
 
-    @GetMapping("/checking-accounts/status")
+    @GetMapping("/checkings/status")
     @ResponseStatus(HttpStatus.OK)
     public List<Checking> findByStatus(@RequestParam("status") Status status){
         return checkingService.findByStatus(status);
     }
 
-    @GetMapping("/checking-accounts/minimum-balance")
+    @GetMapping("/checkings/minimum-balance")
     @ResponseStatus(HttpStatus.OK)
     public List<Checking> findByMinimumBalance(@RequestParam("minimum_balance") BigDecimal minimumBalance){
         return checkingService.findByMinimumBalance(minimumBalance);
     }
 
-    @GetMapping("/checking-accounts/monthly-maintenance-fee")
+    @GetMapping("/checkings/monthly-maintenance-fee")
     @ResponseStatus(HttpStatus.OK)
     public List<Checking> findByMonthlyMaintenanceFee(@RequestParam("monthly_maintenance_fee") BigDecimal monthlyMaintenanceFee){
         return checkingService.findByMonthlyMaintenanceFee(monthlyMaintenanceFee);

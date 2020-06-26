@@ -9,6 +9,7 @@ import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "student_checking")
@@ -56,5 +57,21 @@ public class StudentChecking extends Account {
 
     public void setTransactionsMade(List<LocalDateTime> transactionsMade) {
         this.transactionsMade = transactionsMade;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        StudentChecking that = (StudentChecking) o;
+        return Objects.equals(secretKey, that.secretKey) &&
+                status == that.status &&
+                Objects.equals(transactionsMade, that.transactionsMade);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), secretKey, status, transactionsMade);
     }
 }

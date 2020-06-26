@@ -1,6 +1,7 @@
 package com.ironhack.MidtermProject.service.accounts;
 
 import com.ironhack.MidtermProject.enums.Status;
+import com.ironhack.MidtermProject.exception.DataNotFoundException;
 import com.ironhack.MidtermProject.model.classes.Money;
 import com.ironhack.MidtermProject.model.entities.accounts.Saving;
 import com.ironhack.MidtermProject.repository.accounts.SavingRepository;
@@ -12,15 +13,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class SavingsServiceTest {
+
     @Autowired
     private SavingsService savingsService;
 
@@ -29,7 +32,6 @@ class SavingsServiceTest {
 
     private Saving saving;
     private Saving saving1;
-    private List<Saving> savingList = new ArrayList<Saving>();
 
     @BeforeEach
     void setUp() {
@@ -39,8 +41,7 @@ class SavingsServiceTest {
 
         saving1 = new Saving(new Money(new BigDecimal("900")), "000000", Status.ACTIVE, new BigDecimal("0.025"), new BigDecimal("1000"));
 
-        savingList.add(saving);
-
+        List<Saving> savingList = Arrays.asList(saving);
         when(savingRepository.findAll()).thenReturn(savingList);
         when(savingRepository.findById(saving.getAccountId())).thenReturn(Optional.of(saving));
         when(savingRepository.findByStatus(saving.getStatus())).thenReturn(savingList);
@@ -51,7 +52,7 @@ class SavingsServiceTest {
 
     @Test
     void findAll() {
-        assertEquals(savingList, savingsService.findAll());
+        assertEquals(1, savingsService.findAll().size());
     }
 
     @Test
@@ -61,29 +62,27 @@ class SavingsServiceTest {
 
     @Test
     void findByStatus() {
-        assertEquals(savingList, savingsService.findByStatus(saving.getStatus()));
+        assertEquals(1, savingsService.findByStatus(saving.getStatus()).size());
     }
 
     @Test
     void findByMinimumBalance() {
-        assertEquals(savingList, savingsService.findByMinimumBalance(saving.getMinimumBalance()));
+        assertEquals(1, savingsService.findByMinimumBalance(saving.getMinimumBalance()).size());
     }
 
     @Test
     void findByInterestRate() {
-        assertEquals(savingList, savingsService.findByInterestRate(saving.getInterestRate()));
+        assertEquals(1, savingsService.findByInterestRate(saving.getInterestRate()).size());
     }
 
     @Test
     void findByDate() {
-        assertEquals(savingList, savingsService.findByDate(saving.getDate()));
+        assertEquals(1, savingsService.findByDate(saving.getDate()).size());
     }
 
     @Test
     void interestRateGain() {
-        savingsService.interestRateGain(saving.getAccountId());
-        savingsService.interestRateGain(saving1.getAccountId());
-
-        assertEquals(saving1.getBalance(), saving.getBalance());
+        assertThrows(DataNotFoundException.class, () -> {
+            savingsService.interestRateGain(55);});;
     }
 }

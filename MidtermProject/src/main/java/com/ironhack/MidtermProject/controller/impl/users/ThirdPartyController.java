@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -29,25 +30,25 @@ public class ThirdPartyController {
 
     @PatchMapping("/thirdparties/login")
     @ResponseStatus(HttpStatus.OK)
-    public ThirdParty loginThirdParty(@RequestBody LoginAccount loginAccount){
+    public ThirdParty loginThirdParty(@RequestBody @Valid LoginAccount loginAccount){
         return thirdPartyService.loginThirdParty(loginAccount);
     }
 
     @PatchMapping("/thirdparties/logout")
     @ResponseStatus(HttpStatus.OK)
-    public ThirdParty logoutThirdParty(@RequestBody LoginAccount loginAccount){
+    public ThirdParty logoutThirdParty(@RequestBody @Valid LoginAccount loginAccount){
         return thirdPartyService.logOutThirdParty(loginAccount);
     }
 
     @PatchMapping("/debit-transaction")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void debitTransaction(@RequestParam("hashed_key") String hashedKey, @RequestBody ThirdPartyTransaction thirdPartyTransaction){
+    public void debitTransaction(@RequestParam("hashed_key") String hashedKey, @RequestBody @Valid ThirdPartyTransaction thirdPartyTransaction){
         thirdPartyService.debitTransaction(hashedKey, thirdPartyTransaction);
     }
 
     @PatchMapping("/credit-transaction")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void creditTransaction(@RequestParam("hashed_key") String hashedKey, @RequestBody ThirdPartyTransaction thirdPartyTransaction){
+    public void creditTransaction(@RequestParam("hashed_key") String hashedKey, @RequestBody @Valid ThirdPartyTransaction thirdPartyTransaction){
         thirdPartyService.creditTransaction(hashedKey, thirdPartyTransaction);
     }
 

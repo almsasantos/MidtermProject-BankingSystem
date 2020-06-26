@@ -251,6 +251,7 @@ class ThirdPartyServiceTest {
         loginAccount.setId(thirdParty.getUserId());
         loginAccount.setPassword(thirdParty.getPassword());
         thirdPartyService.loginThirdParty(loginAccount);
+        thirdParty.login();
         assertEquals(true, thirdParty.isLogged());
     }
 
@@ -258,7 +259,10 @@ class ThirdPartyServiceTest {
     void logOutThirdParty() {
         loginAccount.setId(thirdParty.getUserId());
         loginAccount.setPassword(thirdParty.getPassword());
+        thirdParty.login();
+        thirdPartyRepository.save(thirdParty);
         thirdPartyService.logOutThirdParty(loginAccount);
+        thirdParty.logOut();
         assertEquals(false, thirdParty.isLogged());
     }
 }

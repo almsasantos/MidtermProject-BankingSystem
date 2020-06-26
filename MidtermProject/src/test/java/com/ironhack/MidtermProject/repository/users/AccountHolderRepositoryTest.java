@@ -95,11 +95,6 @@ class AccountHolderRepositoryTest {
     }
 
     @Test
-    void findByMailingAddress() {
-        assertEquals(accountHolder, accountHolderRepository.findByMailingAddress("alms@gmail.com"));
-    }
-
-    @Test
     void checkSavingsBalance() {
         assertEquals(new BigDecimal("900").setScale(2), accountHolderRepository.checkSavingsBalance(saving.getAccountId()));
     }

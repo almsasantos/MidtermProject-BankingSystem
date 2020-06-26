@@ -15,7 +15,7 @@ class ChangeBalanceTest {
     void setUp() {
         changeBalance = new ChangeBalance();
         changeBalance.setAccountId(1);
-        changeBalance.setAccountPrimaryOwnerName("Ana");
+        changeBalance.setAccountOwnerName("Ana");
         changeBalance.setAmount(new BigDecimal("1000"));
     }
 
@@ -36,6 +36,6 @@ class ChangeBalanceTest {
 
     @Test
     void getAccountPrimaryOwnerName() {
-        assertEquals("Ana", changeBalance.getAccountPrimaryOwnerName());
+        assertEquals("Ana", changeBalance.getAccountOwnerName());
     }
 }

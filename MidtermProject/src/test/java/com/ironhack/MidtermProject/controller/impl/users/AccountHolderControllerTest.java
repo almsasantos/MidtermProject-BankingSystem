@@ -2,12 +2,14 @@ package com.ironhack.MidtermProject.controller.impl.users;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ironhack.MidtermProject.dto.LoginAccount;
+import com.ironhack.MidtermProject.dto.Transference;
 import com.ironhack.MidtermProject.enums.Status;
 import com.ironhack.MidtermProject.model.classes.Money;
 import com.ironhack.MidtermProject.model.entities.Address;
 import com.ironhack.MidtermProject.model.entities.accounts.Account;
 import com.ironhack.MidtermProject.model.entities.accounts.StudentChecking;
 import com.ironhack.MidtermProject.model.entities.users.AccountHolder;
+import com.ironhack.MidtermProject.repository.accounts.StudentCheckingRepository;
 import com.ironhack.MidtermProject.repository.users.AccountHolderRepository;
 import com.ironhack.MidtermProject.service.users.AccountHolderService;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,12 +44,17 @@ class AccountHolderControllerTest {
     @Autowired
     private AccountHolderRepository accountHolderRepository;
 
+    @Autowired
+    private StudentCheckingRepository studentCheckingRepository;
+
     private MockMvc mockMvc;
     private AccountHolder accountHolder;
+    private AccountHolder accountHolder1;
     private Address address;
     private StudentChecking studentChecking;
     private List<Account> accounts = new ArrayList<Account>();
     private LoginAccount loginAccount;
+    private Transference transference = new Transference();
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -62,6 +69,7 @@ class AccountHolderControllerTest {
         address.setStreet("Calle Golfo de Salonica");
 
         accountHolder = new AccountHolder("Ana", "pass", LocalDate.of(1995, 8, 19), address, "alms@gmail.com");
+        accountHolder.login();
 
         studentChecking = new StudentChecking(new Money(new BigDecimal("100")), "000000", Status.ACTIVE);
         accounts.add(studentChecking);
@@ -71,6 +79,13 @@ class AccountHolderControllerTest {
         loginAccount.setPassword("pass");
 
         accountHolder.setAccounts(accounts);
+
+        transference.setUserId(accountHolder.getUserId());
+        transference.setSenderName(accountHolder.getName());
+        transference.setSenderAccountId(studentChecking.getAccountId());
+        transference.setReceiverName(accountHolder.getName());
+        transference.setReceiverAccountId(studentChecking.getAccountId());
+        transference.setAmountToTransfer(new BigDecimal("10"));
 
         List<AccountHolder> accountHolderList = Arrays.asList(accountHolder);
         when(accountHolderService.findAll()).thenReturn(accountHolderList);
@@ -86,29 +101,25 @@ class AccountHolderControllerTest {
                 .andExpect(jsonPath("$[0].userId").value(accountHolder.getUserId()))
                 .andExpect(jsonPath("$[0].name").value(accountHolder.getName()))
                 .andExpect(jsonPath("$[0].password").value(accountHolder.getPassword()))
-                //.andExpect(jsonPath("$[0].dateOfBirth").value(accountHolder.getDateOfBirth()))
                 .andExpect(jsonPath("$[0].mailingAddress").value(accountHolder.getMailingAddress()));
-                //.andExpect(jsonPath("$[0].primaryAddress").value(accountHolder.getPrimaryAddress()))
     }
 
     @Test
     void findById() throws Exception {
         mockMvc.perform(get("/accountholders/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].userId").value(accountHolder.getUserId()))
-                .andExpect(jsonPath("$[0].name").value(accountHolder.getName()))
-                .andExpect(jsonPath("$[0].password").value(accountHolder.getPassword()))
-                //.andExpect(jsonPath("$[0].dateOfBirth").value(accountHolder.getDateOfBirth()))
-                .andExpect(jsonPath("$[0].mailingAddress").value(accountHolder.getMailingAddress()));
+                .andExpect(jsonPath("$.userId").value(accountHolder.getUserId()))
+                .andExpect(jsonPath("$.name").value(accountHolder.getName()))
+                .andExpect(jsonPath("$.password").value(accountHolder.getPassword()))
+                .andExpect(jsonPath("$.mailingAddress").value(accountHolder.getMailingAddress()));
     }
 
     @Test
     void checkAccountBalance() throws Exception {
         mockMvc.perform(get("/accountholders/balance")
-                .param("account_id", String.valueOf(studentChecking.getAccountId()))
-                .param("user_id", String.valueOf(accountHolder.getUserId())))
+                .param("account_id", String.valueOf(2))
+                .param("user_id", String.valueOf(1)))
                 .andExpect(status().isOk());
-        //when(accountHolderService.checkAccountBalance(studentChecking.getAccountId(), accountHolder.getUserId()));
     }
 
     @Test
@@ -129,13 +140,18 @@ class AccountHolderControllerTest {
 
     @Test
     void createAccountHolder() throws Exception {
+        accountHolder1 = new AccountHolder("Ana Martins", "pass", LocalDate.of(1995, 8, 19), address);
         mockMvc.perform(post("/accountholder")
-                .content(objectMapper.writeValueAsString(accountHolder))
+                .content(objectMapper.writeValueAsString(accountHolder1))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
     }
 
     @Test
-    void transferAmount() {
+    void transferAmount() throws Exception {
+        mockMvc.perform(patch("/transference")
+                .content(objectMapper.writeValueAsString(transference))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
     }
 }

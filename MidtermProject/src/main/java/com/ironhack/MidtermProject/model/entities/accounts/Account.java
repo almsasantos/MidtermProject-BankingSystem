@@ -16,18 +16,15 @@ public abstract class Account {
     @GeneratedValue(strategy = GenerationType.TABLE)
     protected Integer accountId;
 
-    //@Digits(integer = 100, fraction = 4)
     @Embedded
     protected Money balance;
 
-    //@Digits(integer = 6, fraction = 4)
     protected BigDecimal penaltyFee;
 
     @ManyToOne
     @JoinColumn(name = "primary_owner_id", referencedColumnName = "userId")
     protected AccountHolder primaryOwner;
 
-    //@JsonIgnore
     @ManyToOne
     @JoinColumn(name = "secondary_owner_id", referencedColumnName = "userId")
     protected AccountHolder secondaryOwner;

@@ -37,13 +37,13 @@ public class AccountHolderController {
 
     @PatchMapping("/accountholders/login")
     @ResponseStatus(HttpStatus.OK)
-    public AccountHolder loginAccountHolder(@RequestBody LoginAccount loginAccount){
+    public AccountHolder loginAccountHolder(@RequestBody @Valid LoginAccount loginAccount){
         return accountsHolderService.loginAccountHolder(loginAccount);
     }
 
     @PatchMapping("/accountholders/logout")
     @ResponseStatus(HttpStatus.OK)
-    public AccountHolder logoutAccountHolder(@RequestBody LoginAccount loginAccount){
+    public AccountHolder logoutAccountHolder(@RequestBody @Valid LoginAccount loginAccount){
         return accountsHolderService.logOutAccountHolder(loginAccount);
     }
 
@@ -55,7 +55,7 @@ public class AccountHolderController {
 
     @PatchMapping("/transference")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void transferAmount(@RequestBody Transference transference) throws RuntimeException{
+    public void transferAmount(@RequestBody Transference transference){
         accountsHolderService.transferAmount(transference);
     }
 

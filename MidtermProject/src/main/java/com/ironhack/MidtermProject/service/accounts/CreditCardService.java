@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
@@ -41,7 +42,7 @@ public class CreditCardService {
         CreditCard creditCard = creditCardRepository.findById(accountId).orElseThrow(() -> new DataNotFoundException("Credit Card id not found"));
         Integer months = Period.between(LocalDate.now(), creditCard.getLastInterestDate()).getMonths();
         if (months >= 1) {
-                BigDecimal interest = creditCard.getInterestRate().divide(new BigDecimal("12")).multiply(creditCard.getBalance().getAmount());
+                BigDecimal interest = creditCard.getInterestRate().divide(new BigDecimal("12"), 5, RoundingMode.HALF_DOWN).multiply(creditCard.getBalance().getAmount());
                 creditCard.setBalance(new Money(creditCard.getBalance().increaseAmount(interest)));
                 creditCard.setLastInterestDate(LocalDate.now());
                 creditCardRepository.save(creditCard);

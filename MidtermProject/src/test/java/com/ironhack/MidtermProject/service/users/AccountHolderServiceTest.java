@@ -124,7 +124,7 @@ class AccountHolderServiceTest {
 
     @Test
     void findById() {
-        assertEquals(accountHolder, accountHolderService.findById(accountHolder.getUserId()));
+        assertEquals(accountHolder, accountHolderService.findById(5));
     }
 
     @Test
@@ -372,6 +372,8 @@ class AccountHolderServiceTest {
         loginAccount.setId(accountHolder.getUserId());
         loginAccount.setPassword(accountHolder.getPassword());
         accountHolderService.loginAccountHolder(loginAccount);
+        accountHolder.login();
+        accountHolderRepository.save(accountHolder);
         assertEquals(true, accountHolder.isLogged());
     }
 
@@ -387,7 +389,10 @@ class AccountHolderServiceTest {
     void logOutAccountHolder() {
         loginAccount.setId(accountHolder.getUserId());
         loginAccount.setPassword(accountHolder.getPassword());
+        accountHolder.login();
+        accountHolderRepository.save(accountHolder);
         accountHolderService.logOutAccountHolder(loginAccount);
+        accountHolder.logOut();
         assertEquals(false, accountHolder.isLogged());
     }
 

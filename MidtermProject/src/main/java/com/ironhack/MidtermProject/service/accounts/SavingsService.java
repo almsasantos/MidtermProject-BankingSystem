@@ -30,7 +30,6 @@ public class SavingsService {
     public Saving findById(Integer id){
         LOGGER.info("Get Savings account with id " + id);
         Saving saving = savingsRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Savings Account id not found"));
-        interestRateGain(saving.getAccountId());
         return saving;
     }
 
@@ -60,7 +59,7 @@ public class SavingsService {
         Saving saving = savingsRepository.findById(savingsId).orElseThrow(() -> new DataNotFoundException("Savings Account id not found"));
         Integer years = Period.between(LocalDate.now(), saving.getLastInterestDate()).getYears();
             if (years >= 1) {
-                BigDecimal interest = saving.getBalance().getAmount().multiply(saving.getInterestRate());
+                BigDecimal interest = saving.getBalance().getAmount().multiply(saving.getInterestRate()).setScale(2, BigDecimal.ROUND_HALF_DOWN);
                 LOGGER.info("Increment balance from " + savingsId + " account with " + interest + " since a year passed from last gained");
                 saving.setBalance(new Money(saving.getBalance().increaseAmount(interest)));
                 saving.setLastInterestDate(LocalDate.now());

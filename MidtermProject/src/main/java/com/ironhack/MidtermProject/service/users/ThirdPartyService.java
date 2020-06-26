@@ -55,6 +55,11 @@ public class ThirdPartyService {
         LOGGER.info("Third party with id " + loginAccount.getId() + " tried to login");
         ThirdParty thirdParty = thirdPartyRepository.findById(loginAccount.getId()).orElseThrow(() -> new DataNotFoundException("Third Party id not found"));
 
+        LOGGER.info("Check if third party " + loginAccount.getId() + " is already logged in");
+        if(thirdParty.isLogged()){
+            throw new DataNotFoundException("Third party is already logged in");
+        }
+
         LOGGER.info("Check if password provided belongs to respective third party");
         if(!thirdParty.getPassword().equals(loginAccount.getPassword())){
             throw new DataNotFoundException("Password incorrect, try again");
@@ -69,6 +74,11 @@ public class ThirdPartyService {
     public ThirdParty logOutThirdParty(LoginAccount loginAccount){
         LOGGER.info("Third party with id " + loginAccount.getId() + " tried to logout");
         ThirdParty thirdParty = thirdPartyRepository.findById(loginAccount.getId()).orElseThrow(() -> new DataNotFoundException("Third Party id not found"));
+
+        LOGGER.info("Check if third party " + loginAccount.getId() + " is already logged out");
+        if(!thirdParty.isLogged()){
+            throw new DataNotFoundException("Third party is already logged out");
+        }
 
         LOGGER.info("Check if password provided belongs to respective third party");
         if(!thirdParty.getPassword().equals(loginAccount.getPassword())){

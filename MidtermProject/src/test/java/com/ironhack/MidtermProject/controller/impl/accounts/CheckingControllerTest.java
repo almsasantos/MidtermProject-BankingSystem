@@ -55,16 +55,15 @@ class CheckingControllerTest {
 
     @Test
     void findAll() throws Exception {
-        mockMvc.perform(get("/checking-accounts"))
+        mockMvc.perform(get("/checkings"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].accountId").value(checking.getAccountId()))
                 .andExpect(jsonPath("$[0].secretKey").value(checking.getSecretKey()))
-                //.andExpect(jsonPath("$[0].status").value(checking.getStatus()))
-                //.andExpect(jsonPath("$[0].accountType").value(checking.getAccountType()))
+
                 .andExpect(jsonPath("$[0].transactionsMade").value(checking.getTransactionsMade()))
                 .andExpect(jsonPath("$[0].primaryOwner").value(checking.getPrimaryOwner()))
                 .andExpect(jsonPath("$[0].secondaryOwner").value(checking.getSecondaryOwner()))
-                //.andExpect(jsonPath("$[0].balance").value(checking.getBalance()))
+
                 .andExpect(jsonPath("$[0].maxTransferencesInADay").value(checking.getMaxTransferencesInADay()))
                 .andExpect(jsonPath("$[0].penaltyFee").value(checking.getPenaltyFee()))
                 .andExpect(jsonPath("$[0].minimumBalance").value(checking.getMinimumBalance()))
@@ -73,16 +72,15 @@ class CheckingControllerTest {
 
     @Test
     void findById() throws Exception {
-        mockMvc.perform(get("/checking-accounts/1"))
+        mockMvc.perform(get("/checkings/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.accountId").value(checking.getAccountId()))
                 .andExpect(jsonPath("$.secretKey").value(checking.getSecretKey()))
-                //.andExpect(jsonPath("$.status").value(checking.getStatus()))
-                //.andExpect(jsonPath("$.accountType").value(checking.getAccountType()))
+
                 .andExpect(jsonPath("$.transactionsMade").value(checking.getTransactionsMade()))
                 .andExpect(jsonPath("$.primaryOwner").value(checking.getPrimaryOwner()))
                 .andExpect(jsonPath("$.secondaryOwner").value(checking.getSecondaryOwner()))
-                //.andExpect(jsonPath("$.balance").value(checking.getBalance()))
+
                 .andExpect(jsonPath("$.maxTransferencesInADay").value(checking.getMaxTransferencesInADay()))
                 .andExpect(jsonPath("$.penaltyFee").value(checking.getPenaltyFee()))
                 .andExpect(jsonPath("$.minimumBalance").value(checking.getMinimumBalance()))
@@ -91,21 +89,21 @@ class CheckingControllerTest {
 
     @Test
     void findByStatus() throws Exception {
-        mockMvc.perform(get("/checking-accounts/status")
+        mockMvc.perform(get("/checkings/status")
                 .param("status", String.valueOf("ACTIVE")))
                 .andExpect(status().isOk());
     }
 
     @Test
     void findByMinimumBalance() throws Exception {
-        mockMvc.perform(get("/checking-accounts/minimum-balance")
+        mockMvc.perform(get("/checkings/minimum-balance")
                 .param("minimum_balance", String.valueOf(checking.getMinimumBalance())))
                 .andExpect(status().isOk());
     }
 
     @Test
     void findByMonthlyMaintenanceFee() throws Exception {
-        mockMvc.perform(get("/checking-accounts/monthly-maintenance-fee")
+        mockMvc.perform(get("/checkings/monthly-maintenance-fee")
                 .param("monthly_maintenance_fee", String.valueOf(checking.getMonthlyMaintenanceFee())))
                 .andExpect(status().isOk());
     }

@@ -16,13 +16,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class AccountHolderService {
@@ -51,6 +52,9 @@ public class AccountHolderService {
     @Autowired
     private StudentCheckingRepository studentCheckingRepository;
 
+    @Autowired
+    private AdminService adminService;
+
     private static final Logger LOGGER = LogManager.getLogger(AccountHolderService.class);
 
     public List<AccountHolder> findAll() {
@@ -70,8 +74,12 @@ public class AccountHolderService {
 
     public AccountHolder loginAccountHolder(LoginAccount loginAccount) {
         LOGGER.info("[INIT] Login AccountHolder " + loginAccount.getId());
-
         AccountHolder accountHolder = accountsHolderRepository.findById(loginAccount.getId()).orElseThrow(() -> new DataNotFoundException("Account Holder id not found"));
+
+        LOGGER.info("Check if user " + loginAccount.getId() + " is already logged in");
+        if(accountHolder.isLogged()){
+            throw new DataNotFoundException("User is already logged in");
+        }
 
         LOGGER.info("Check if password provided belongs to respective account holder");
         if (!accountHolder.getPassword().equals(loginAccount.getPassword())) {
@@ -86,8 +94,12 @@ public class AccountHolderService {
 
     public AccountHolder logOutAccountHolder(LoginAccount loginAccount) {
         LOGGER.info("[INIT] Logout AccountHolder " + loginAccount.getId());
-
         AccountHolder accountHolder = accountsHolderRepository.findById(loginAccount.getId()).orElseThrow(() -> new DataNotFoundException("Account Holder id not found"));
+
+        LOGGER.info("Check if user " + loginAccount.getId() + " is already logged out");
+        if(!accountHolder.isLogged()){
+            throw new DataNotFoundException("User is already logged out");
+        }
 
         LOGGER.info("Check if password provided belongs to respective account holder");
         if (!accountHolder.getPassword().equals(loginAccount.getPassword())) {
@@ -100,33 +112,46 @@ public class AccountHolderService {
         return accountHolder;
     }
 
-    public BigDecimal checkAccountBalance(Integer accountId, Integer primaryOwnerId) {
-        LOGGER.info("Account Holder " + primaryOwnerId + " checks balance from account " + accountId);
+    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+    public BigDecimal checkAccountBalance(Integer accountId, Integer ownerId) {
+        LOGGER.info("Account Holder " + ownerId + " checks balance from account " + accountId);
         Account account = accountRepository.findById(accountId).orElseThrow(() -> new DataNotFoundException("Account id not found"));
-        if (account.getPrimaryOwner().getUserId() == primaryOwnerId) {
-            if (account.getPrimaryOwner().isLogged() == false) {
-                throw new DataNotFoundException("User must be logged in");
-            }
 
-            if (account.getAccountType().equals(AccountType.CHECKING)) {
-                LOGGER.info("Account Holder check balance from own Checking account");
-                return accountsHolderRepository.checkCheckingBalance(accountId);
-            } else if (account.getAccountType().equals(AccountType.STUDENT_CHECKING)) {
-                LOGGER.info("Account Holder check balance from own Student Checking account");
-                return accountsHolderRepository.checkStudentCheckingBalance(accountId);
-            } else if (account.getAccountType().equals(AccountType.SAVINGS)) {
-                savingsService.interestRateGain(accountId);
-                LOGGER.info("Account Holder check balance from own Savings account");
-                return accountsHolderRepository.checkSavingsBalance(accountId);
-            } else {
-                creditCardService.interestDateGainMonthly(accountId);
-                LOGGER.info("Account Holder check balance from own Credit Card account");
-                return accountsHolderRepository.checkCreditCardBalance(accountId);
-            }
-        } else {
+        AccountHolder accountHolder = accountsHolderRepository.findById(ownerId).orElseThrow(() -> new DataNotFoundException("User id not found"));
+
+        if (accountHolder.isLogged() == false) {
+            throw new DataNotFoundException("User must be logged in");
+        }
+
+        List<Integer> totalAccounts = new ArrayList<Integer>();
+        for (Account a : accountHolder.getAccounts()) {
+            totalAccounts.add(a.getAccountId());
+        }
+        for (Account a1 : accountHolder.getSecondaryAccounts()) {
+            totalAccounts.add(a1.getAccountId());
+        }
+
+        if (!totalAccounts.contains(accountId)) {
             throw new DataNotFoundException("User doesn't have access to this account.");
         }
+
+        if (account.getAccountType().equals(AccountType.CHECKING)) {
+            LOGGER.info("Account Holder check balance from own Checking account");
+            return accountsHolderRepository.checkCheckingBalance(accountId);
+        } else if (account.getAccountType().equals(AccountType.STUDENT_CHECKING)) {
+            LOGGER.info("Account Holder check balance from own Student Checking account");
+            return accountsHolderRepository.checkStudentCheckingBalance(accountId);
+        } else if (account.getAccountType().equals(AccountType.SAVINGS)) {
+            savingsService.interestRateGain(accountId);
+            LOGGER.info("Account Holder check balance from own Savings account");
+            return accountsHolderRepository.checkSavingsBalance(accountId);
+        } else {
+            creditCardService.interestDateGainMonthly(accountId);
+            LOGGER.info("Account Holder check balance from own Credit Card account");
+            return accountsHolderRepository.checkCreditCardBalance(accountId);
+        }
     }
+
 
     public void transferAmount(Transference transference) {
         LOGGER.info("[INIT] Account Holder " + transference.getUserId() + " makes a transference of " + transference.getAmountToTransfer());
@@ -141,32 +166,7 @@ public class AccountHolderService {
         Account sender = accountRepository.findById(transference.getSenderAccountId()).orElseThrow(() -> new DataNotFoundException("Sender account id not found"));
         Account receiver = accountRepository.findById(transference.getReceiverAccountId()).orElseThrow(() -> new DataNotFoundException("Receiver account id not found"));
 
-        LOGGER.info(" Check sender has enough amount to transfer");
-        if (sender.getBalance().getAmount().compareTo(BigDecimal.ZERO) == -1) {
-            throw new DataNotFoundException("To make a transference sender balance must be positive");
-        }
-
-        LOGGER.info("Check that names provided belong to the sender account");
-        List<String> primaryOwnerName = accountHolder.getAccounts().stream().map(account -> account.getPrimaryOwner().getName()).collect(Collectors.toList());
-
-        List<String> secondaryOwnerName = new ArrayList<String>();
-        if (sender.getSecondaryOwner() != null) {
-            secondaryOwnerName = accountHolder.getAccounts().stream().map(account -> account.getSecondaryOwner().getName()).collect(Collectors.toList());
-        }
-
-        List<Integer> accountHolderAccountsList = new ArrayList<Integer>();
-
-        if (primaryOwnerName.contains(transference.getSenderName()) || secondaryOwnerName.contains(transference.getSenderName())) {
-            for (Account accountId : accountHolder.getAccounts()) {
-                accountHolderAccountsList.add(accountId.getAccountId());
-            }
-        } else {
-            throw new DataNotFoundException("Sender user is not associated with that sender account");
-        }
-
-        if (!accountHolderAccountsList.contains(transference.getSenderAccountId())) {
-            throw new DataNotFoundException("Sender user doesn't have that account id");
-        }
+        adminService.confirmDataIsCorrect(sender, transference.getUserId(), transference.getSenderName(), transference.getSenderAccountId());
 
         LOGGER.info("Check that names provided belong to the receiver account");
         List<String> receiverPrimaryAndSecondaryOwner = new ArrayList<String>();
@@ -203,9 +203,7 @@ public class AccountHolderService {
                 receiverChecking.setLastPenalty(0);
             }
             checkingRepository.save(receiverChecking);
-        }
-
-        else if (receiver.getAccountType().equals(AccountType.SAVINGS)) {
+        } else if (receiver.getAccountType().equals(AccountType.SAVINGS)) {
             LOGGER.info("Receiver's account " + transference.getReceiverAccountId() + " is from type Savings");
             Saving receiverSaving = savingRepository.findById(transference.getReceiverAccountId()).orElseThrow(() -> new DataNotFoundException("Saving account id not found"));
             receiverSaving.setBalance(new Money(receiverSaving.getBalance().increaseAmount(transference.getAmountToTransfer())));
@@ -213,9 +211,7 @@ public class AccountHolderService {
                 receiverSaving.setLastPenalty(0);
             }
             savingRepository.save(receiverSaving);
-        }
-
-        else {
+        } else {
             LOGGER.info("Receiver's account " + transference.getReceiverAccountId());
             receiver.setBalance(new Money(receiver.getBalance().increaseAmount(transference.getAmountToTransfer())));
             accountRepository.save(receiver);
@@ -244,21 +240,21 @@ public class AccountHolderService {
             for (LocalDateTime dateTime : studentCheckingSender.getTransactionsMade()) {
                 if (Duration.between(dateTime, LocalDateTime.now()).toHours() > 24 && Duration.between(dateTime, LocalDateTime.now()).toHours() <= 48) {
                     lastDayTransactions.add(dateTime);
-                } else if (Duration.between(dateTime, LocalDateTime.now()).toHours() <= 24){
+                } else if (Duration.between(dateTime, LocalDateTime.now()).toHours() <= 24) {
                     todayTransactions.add(dateTime);
                 }
             }
 
-            if(lastDayTransactions.size()> studentCheckingSender.getMaxTransferencesInADay()){
+            if (lastDayTransactions.size() > studentCheckingSender.getMaxTransferencesInADay()) {
                 studentCheckingSender.setMaxTransferencesInADay(lastDayTransactions.size());
                 studentCheckingRepository.save(studentCheckingSender);
             }
 
             if (studentCheckingSender.getMaxTransferencesInADay() < todayTransactions.size()) {
                 double division = (double) todayTransactions.size() / studentCheckingSender.getMaxTransferencesInADay() * 100;
-                if (division> 150.0f) {
+                if (division > 150.0f) {
                     studentCheckingSender.setStatus(Status.FROZEN);
-                    studentCheckingSender.setMaxTransferencesInADay(todayTransactions.size()-1);
+                    studentCheckingSender.setMaxTransferencesInADay(todayTransactions.size() - 1);
                     studentCheckingSender.getTransactionsMade().remove(studentCheckingSender.getTransactionsMade().size() - 1);
                     studentCheckingRepository.save(studentCheckingSender);
                     LOGGER.info("Daily transactions exceeded 150% of the maximum ever done in 24h " + studentCheckingSender.getAccountId() + " is now frozen");
@@ -290,28 +286,29 @@ public class AccountHolderService {
             for (LocalDateTime dateTime : checkingSender.getTransactionsMade()) {
                 if (Duration.between(dateTime, LocalDateTime.now()).toHours() > 24 && Duration.between(dateTime, LocalDateTime.now()).toHours() <= 48) {
                     lastDayTransactions.add(dateTime);
-                } else if (Duration.between(dateTime, LocalDateTime.now()).toHours() <= 24){
+                } else if (Duration.between(dateTime, LocalDateTime.now()).toHours() <= 24) {
                     todayTransactions.add(dateTime);
                 }
             }
 
-            if(lastDayTransactions.size()> checkingSender.getMaxTransferencesInADay()){
+            if (lastDayTransactions.size() > checkingSender.getMaxTransferencesInADay()) {
                 checkingSender.setMaxTransferencesInADay(lastDayTransactions.size());
                 checkingRepository.save(checkingSender);
             }
 
             if (checkingSender.getMaxTransferencesInADay() < todayTransactions.size()) {
                 double division = (double) todayTransactions.size() / checkingSender.getMaxTransferencesInADay() * 100;
-                if (division> 150.0f) {
+                if (division > 150.0f) {
                     checkingSender.setStatus(Status.FROZEN);
-                    checkingSender.setMaxTransferencesInADay(todayTransactions.size()-1);
+                    checkingSender.setMaxTransferencesInADay(todayTransactions.size() - 1);
                     checkingSender.getTransactionsMade().remove(checkingSender.getTransactionsMade().size() - 1);
                     checkingRepository.save(checkingSender);
                     LOGGER.info("Daily transactions exceeded 150% of the maximum ever done in 24h " + checkingSender.getAccountId() + " is now frozen");
                     throw new DataNotFoundException("Checking account status is frozen");
                 }
             }
-        } LOGGER.info("[END] Fraud detection of checking " + checkingSender.getAccountId());
+        }
+        LOGGER.info("[END] Fraud detection of checking " + checkingSender.getAccountId());
     }
 
     public void fraudDetectionSavings(Saving savingSender) {
@@ -335,28 +332,29 @@ public class AccountHolderService {
             for (LocalDateTime dateTime : savingSender.getTransactionsMade()) {
                 if (Duration.between(dateTime, LocalDateTime.now()).toHours() > 24 && Duration.between(dateTime, LocalDateTime.now()).toHours() <= 48) {
                     lastDayTransactions.add(dateTime);
-                } else if (Duration.between(dateTime, LocalDateTime.now()).toHours() <= 24){
+                } else if (Duration.between(dateTime, LocalDateTime.now()).toHours() <= 24) {
                     todayTransactions.add(dateTime);
                 }
             }
 
-            if(lastDayTransactions.size()> savingSender.getMaxTransferencesInADay()){
+            if (lastDayTransactions.size() > savingSender.getMaxTransferencesInADay()) {
                 savingSender.setMaxTransferencesInADay(lastDayTransactions.size());
                 savingRepository.save(savingSender);
             }
 
             if (savingSender.getMaxTransferencesInADay() < todayTransactions.size()) {
                 double division = (double) todayTransactions.size() / savingSender.getMaxTransferencesInADay() * 100;
-                if (division> 150.0f) {
+                if (division > 150.0f) {
                     savingSender.setStatus(Status.FROZEN);
-                    savingSender.setMaxTransferencesInADay(todayTransactions.size()-1);
+                    savingSender.setMaxTransferencesInADay(todayTransactions.size() - 1);
                     savingSender.getTransactionsMade().remove(savingSender.getTransactionsMade().size() - 1);
                     savingRepository.save(savingSender);
                     LOGGER.info("Daily transactions exceeded 150% of the maximum ever done in 24h " + savingSender.getAccountId() + " is now frozen");
                     throw new DataNotFoundException("Saving account status is frozen");
                 }
             }
-        } LOGGER.info("[END] Fraud detection of savings " + savingSender.getAccountId());
+        }
+        LOGGER.info("[END] Fraud detection of savings " + savingSender.getAccountId());
     }
 
     public void transferAmountSenderSaving(Transference transference) {
