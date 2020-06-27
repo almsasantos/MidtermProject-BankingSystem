@@ -40,7 +40,6 @@ class CheckingServiceTest {
         when(checkingRepository.findByMinimumBalance(checking.getMinimumBalance())).thenReturn(checkingList);
         when(checkingRepository.findByMonthlyMaintenanceFee(checking.getMonthlyMaintenanceFee())).thenReturn(checkingList);
     }
-
     @Test
     void findAll() {
         assertEquals(checkingList, checkingService.findAll());

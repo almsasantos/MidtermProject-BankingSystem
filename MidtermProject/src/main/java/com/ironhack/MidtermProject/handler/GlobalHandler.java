@@ -10,6 +10,12 @@ import java.io.IOException;
 @ControllerAdvice
 public class GlobalHandler {
 
+    /**
+     * Exception Handler to handle exceptions.
+     * @param e Receives an Exception.
+     * @param response Receives an HTTP Response.
+     * @throws IOException
+     */
     @ExceptionHandler(DataNotFoundException.class)
     public void handleDataIdNotFoundException(DataNotFoundException e, HttpServletResponse response) throws IOException{
 

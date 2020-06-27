@@ -18,6 +18,7 @@ import com.ironhack.MidtermProject.repository.accounts.*;
 import com.ironhack.MidtermProject.repository.users.AccountHolderRepository;
 import com.ironhack.MidtermProject.repository.users.AdminRepository;
 import com.ironhack.MidtermProject.repository.users.ThirdPartyRepository;
+import com.ironhack.MidtermProject.repository.users.UsersRepository;
 import com.ironhack.MidtermProject.service.accounts.CreditCardService;
 import com.ironhack.MidtermProject.service.accounts.SavingsService;
 import org.apache.logging.log4j.LogManager;
@@ -41,13 +42,16 @@ public class AdminService {
     private AdminRepository adminRepository;
 
     @Autowired
+    private UsersRepository usersRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
+
+    @Autowired
     private AccountHolderRepository accountsHolderRepository;
 
     @Autowired
     private ThirdPartyRepository thirdPartyRepository;
-
-    @Autowired
-    private AccountRepository accountRepository;
 
     @Autowired
     private CheckingRepository checkingRepository;
@@ -69,26 +73,49 @@ public class AdminService {
 
     private static final Logger LOGGER = LogManager.getLogger(AdminService.class);
 
+    /**
+     * Find all Admin created.
+     * @return a list of admin users.
+     */
     public List<Admin> findAll() {
         LOGGER.info("Get all Admin users");
         return adminRepository.findAll();
     }
 
+    /**
+     * Find Admin by id.
+     * @param id receives an integer id of user.
+     * @return an admin user corresponding to that id.
+     */
     public Admin findById(Integer id) {
         LOGGER.info("Get Admin user by " + id);
         return adminRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
     }
 
+    /**
+     * Find Admin by name.
+     * @param name receives a string with a name.
+     * @return a list of admin users.
+     */
     public List<Admin> findByName(String name) {
         LOGGER.info("Get Admin user by " + name);
         return adminRepository.findByName(name);
     }
 
+    /**
+     * Creates a new admin
+     * @param admin receives an admin with name and password defined.
+     */
     public void createNewAdmin(Admin admin) {
         LOGGER.info("Create new Admin user");
         adminRepository.save(admin);
     }
 
+    /**
+     * Allows admin users to login into their accounts.
+     * @param loginAccount receives a LoginAccount where the user enters their id and corresponding password.
+     * @return an admin logged in.
+     */
     public Admin loginAdmin(LoginAccount loginAccount) {
         LOGGER.info("[INIT] Login Admin " + loginAccount.getId());
         Admin admin = adminRepository.findById(loginAccount.getId()).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
@@ -109,6 +136,11 @@ public class AdminService {
         return admin;
     }
 
+    /**
+     * Allows admin users to logout from their accounts.
+     * @param loginAccount receives a LoginAccount where the user enters their id and corresponding password.
+     * @return an admin logged out.
+     */
     public Admin logOutAdmin(LoginAccount loginAccount) {
         LOGGER.info("[INIT] Logout Admin " + loginAccount.getId());
         Admin admin = adminRepository.findById(loginAccount.getId()).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
@@ -129,6 +161,10 @@ public class AdminService {
         return admin;
     }
 
+    /**
+     * Check if admin is logged in into their accounts.
+     * @param admin receives an admin with name and password defined.
+     */
     public void adminIsLogged(Admin admin) {
         LOGGER.info("Check if admin " + admin.getUserId() + " exists and if it's logged in");
         if (admin.isLogged() == false) {
@@ -137,6 +173,12 @@ public class AdminService {
     }
 
     // --- CREATE ACCOUNTS ---
+
+    /**
+     * Creates new savings account.
+     * @param id receives an integer with id from admin.
+     * @param savingViewModel receives a SavingViewModel that will allow a savings account to be created.
+     */
     public void createNewSavingsAccount(Integer id, SavingViewModel savingViewModel) {
         LOGGER.info("[INIT] Admin " + id + " creates new Savings Account");
 
@@ -190,6 +232,11 @@ public class AdminService {
         LOGGER.info("[END] Admin " + id + " creates new Savings Account");
     }
 
+    /**
+     * Creates new checking or student checking account depending on the age of primary owner.
+     * @param id receives an integer with id from admin.
+     * @param accountViewModel receives an AccountViewModel that will allow any of both accounts to be created.
+     */
     public void createNewAccountDepAge(Integer id, AccountViewModel accountViewModel) {
         LOGGER.info("[INIT] Admin " + id + " creates new Account based on user's age");
 
@@ -216,6 +263,12 @@ public class AdminService {
         LOGGER.info("[END] Admin " + id + " creates new Account based on user's age");
     }
 
+    /**
+     * Creates new student checking account.
+     * @param primaryOwner receives an AccountHolder with information from the primaryOwner of that account.
+     * @param accountViewModel receives an AccountViewModel that will allow a student checking account to be created.
+     * @param secondaryOwner receives an optional AccountHolder with information from the secondaryOwner of that account.
+     */
     public void createNewStudentChecking(AccountHolder primaryOwner, AccountViewModel accountViewModel, AccountHolder secondaryOwner) {
         StudentChecking studentChecking = new StudentChecking(new Money(accountViewModel.getBalance()), accountViewModel.getSecretKey(), accountViewModel.getStatus());
         studentChecking.setPrimaryOwner(primaryOwner);
@@ -228,6 +281,12 @@ public class AdminService {
         LOGGER.info("A new Student Checking account was created");
     }
 
+    /**
+     * Creates new checking account.
+     * @param primaryOwner receives an AccountHolder with information from the primaryOwner of that account.
+     * @param accountViewModel receives an AccountViewModel that will allow a checking account to be created.
+     * @param secondaryOwner receives an optional AccountHolder with information from the secondaryOwner of that account.
+     */
     public void createNewCheckingAccount(AccountHolder primaryOwner, AccountViewModel accountViewModel, AccountHolder secondaryOwner) {
         Checking checking = new Checking();
         if (accountViewModel.getSecondaryOwnerId() != null) {
@@ -243,7 +302,11 @@ public class AdminService {
         LOGGER.info("A new Checking account was created");
     }
 
-
+    /**
+     * Creates new credit card account.
+     * @param id receives an integer with id from admin.
+     * @param creditCardViewModel receives a creditCardViewModel that will allow a credit card account to be created.
+     */
     public void createNewCreditCardAccount(Integer id, CreditCardViewModel creditCardViewModel) {
         LOGGER.info("[INIT] Admin " + id + " creates new Credit Card account");
 
@@ -295,6 +358,12 @@ public class AdminService {
 
     // --- CHECK BALANCE FROM ANY ACCOUNT ---
 
+    /**
+     * Allows admin to check the balance from any account.
+     * @param adminId receives an integer with id from admin.
+     * @param accountId receives an integer with id from account.
+     * @return a BigDecimal with the balance from that account.
+     */
     public BigDecimal checkAccountBalance(Integer adminId, Integer accountId) {
         LOGGER.info("[INIT] Admin " + adminId + " checks balance from account " + accountId);
 
@@ -318,6 +387,13 @@ public class AdminService {
         }
     }
 
+    /**
+     * Confirm that data involved in debit and credit amount are correct.
+     * @param account receives an Account.
+     * @param ownerId receives the id from primary or secondary owner from that specific account.
+     * @param ownerName receives the name from primary or secondary owner from that specific account.
+     * @param ownerAccountId receives the id from account.
+     */
     public void confirmDataIsCorrect(Account account, Integer ownerId, String ownerName, Integer ownerAccountId){
         LOGGER.info("Confirm if owner with id " +  ownerId + " exists");
         AccountHolder accountHolder = accountsHolderRepository.findById(ownerId).orElseThrow(() -> new DataNotFoundException("Owner id not found"));
@@ -365,6 +441,11 @@ public class AdminService {
         }
     }
 
+    /**
+     * Allows admin to debit amount in any account.
+     * @param adminId receives an integer with id from admin.
+     * @param changeBalance receives ChangeBalance that will allow the transaction.
+     */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     // --- DEBIT THE BALANCE ---
     public void debitBalance(Integer adminId, ChangeBalance changeBalance) {
@@ -426,6 +507,11 @@ public class AdminService {
         LOGGER.info("[END] Admin " + adminId + " debits " + changeBalance.getAmount() + " amount in " + changeBalance.getAccountId() + " account");
     }
 
+    /**
+     * Allows admin to credit amount in any account.
+     * @param adminId receives an integer with id from admin.
+     * @param changeBalance receives ChangeBalance that will allow the transaction.
+     */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     // --- CREDIT THE BALANCE ---
     public void creditBalance(Integer adminId, ChangeBalance changeBalance) {
@@ -487,6 +573,11 @@ public class AdminService {
 
     // --- CREATE THIRD PARTY ---
 
+    /**
+     * Allows admin users to create a new ThirdParty user.
+     * @param adminId receives an integer with id from admin.
+     * @param createThirdParty receives a createThirdParty with allow information needed to create that user.
+     */
     public void createNewThirdParty(Integer adminId, CreateThirdParty createThirdParty) {
         LOGGER.info("[INIT] Admin " + adminId + " creates New Third Party");
 
@@ -508,6 +599,11 @@ public class AdminService {
 
     // --- UNFREEZE ACCOUNTS ---
 
+    /**
+     * Allow admins to unfreeze accounts with status frozen.
+     * @param adminId receives an integer with id from admin.
+     * @param accountId receives an integer with id from account.
+     */
     public void unfreezeAccount(Integer adminId, Integer accountId) {
         LOGGER.info("[INIT] Admin " + adminId + " unfreeze account " + accountId);
         Admin admin = adminRepository.findById(adminId).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
@@ -543,5 +639,16 @@ public class AdminService {
             studentCheckingRepository.save(studentChecking);
         }
         LOGGER.info("[END] Admin " + adminId + " unfreeze account " + accountId);
+    }
+
+    /**
+     * Allow admins to delete any type of account.
+     * @param accountId receives an integer with id from account.
+     * @param adminId receives an integer with id from admin.
+     */
+    public void deleteAccount(Integer accountId, Integer adminId){
+        adminRepository.findById(adminId).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
+        Account account = accountRepository.findById(accountId).orElseThrow(() -> new DataNotFoundException("Account id not found"));
+        accountRepository.delete(account);
     }
 }

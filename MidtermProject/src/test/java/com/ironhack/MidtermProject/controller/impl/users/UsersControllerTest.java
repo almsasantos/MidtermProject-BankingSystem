@@ -3,7 +3,7 @@ package com.ironhack.MidtermProject.controller.impl.users;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ironhack.MidtermProject.model.entities.users.Admin;
 import com.ironhack.MidtermProject.model.entities.users.Users;
-import com.ironhack.MidtermProject.service.users.UserService;
+import com.ironhack.MidtermProject.service.users.UsersService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +22,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
-class UserControllerTest {
+class UsersControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
     @MockBean
-    private UserService userService;
+    private UsersService userService;
 
     private MockMvc mockMvc;
     private Admin admin;

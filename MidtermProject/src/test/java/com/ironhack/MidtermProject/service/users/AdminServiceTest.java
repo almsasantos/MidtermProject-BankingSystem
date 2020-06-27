@@ -14,14 +14,11 @@ import com.ironhack.MidtermProject.model.entities.users.ThirdParty;
 import com.ironhack.MidtermProject.model.viewmodel.AccountViewModel;
 import com.ironhack.MidtermProject.model.viewmodel.CreditCardViewModel;
 import com.ironhack.MidtermProject.model.viewmodel.SavingViewModel;
-import com.ironhack.MidtermProject.repository.accounts.CheckingRepository;
-import com.ironhack.MidtermProject.repository.accounts.CreditCardRepository;
-import com.ironhack.MidtermProject.repository.accounts.SavingRepository;
-import com.ironhack.MidtermProject.repository.accounts.StudentCheckingRepository;
-import com.ironhack.MidtermProject.repository.security.UserRepository;
+import com.ironhack.MidtermProject.repository.accounts.*;
 import com.ironhack.MidtermProject.repository.users.AccountHolderRepository;
 import com.ironhack.MidtermProject.repository.users.AdminRepository;
 import com.ironhack.MidtermProject.repository.users.ThirdPartyRepository;
+import com.ironhack.MidtermProject.repository.users.UsersRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -42,10 +39,13 @@ class AdminServiceTest {
     private AdminService adminService;
 
     @Autowired
+    private AccountRepository accountRepository;
+
+    @Autowired
     private AdminRepository adminRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UsersRepository usersRepository;
 
     @Autowired
     private AccountHolderRepository accountHolderRepository;
@@ -86,16 +86,16 @@ class AdminServiceTest {
         admin = new Admin("Mickael Mickael", "pass");
         adminRepository.save(admin);
 
-        saving = new Saving(new Money(new BigDecimal("900")), "000000", Status.ACTIVE, new BigDecimal("0.025"), new BigDecimal("1000"));
+        saving = new Saving(new Money(new BigDecimal("900")), "000000", Status.FROZEN, new BigDecimal("0.025"), new BigDecimal("1000"));
         savingRepository.save(saving);
 
-        checking = new Checking(new Money(new BigDecimal("900")), "000000", Status.ACTIVE, new BigDecimal("250"), new BigDecimal("12"));
+        checking = new Checking(new Money(new BigDecimal("900")), "000000", Status.FROZEN, new BigDecimal("250"), new BigDecimal("12"));
         checkingRepository.save(checking);
 
         creditCard = new CreditCard(new Money(new BigDecimal("900")), new BigDecimal("100"), new BigDecimal("0.2"));
         creditCardRepository.save(creditCard);
 
-        studentChecking = new StudentChecking(new Money(new BigDecimal("100")), "000000", Status.ACTIVE);
+        studentChecking = new StudentChecking(new Money(new BigDecimal("100")), "000000", Status.FROZEN);
         studentCheckingRepository.save(studentChecking);
 
         changeBalance = new ChangeBalance();
@@ -131,7 +131,7 @@ class AdminServiceTest {
         creditCardRepository.deleteAll();
         studentCheckingRepository.deleteAll();
         accountHolderRepository.deleteAll();
-        userRepository.deleteAll();
+        usersRepository.deleteAll();
         loginAccount = null;
         address = null;
     }
@@ -421,5 +421,30 @@ class AdminServiceTest {
         createThirdParty.setPassword("gaby");
         adminService.createNewThirdParty(admin.getUserId(), createThirdParty);
         assertEquals(1, thirdPartyRepository.findAll().size());
+    }
+
+    @Test
+    void deleteAccount() {
+        loginAccount.setId(admin.getUserId());
+        loginAccount.setPassword(admin.getPassword());
+        adminService.loginAdmin(loginAccount);
+
+        adminService.deleteAccount(saving.getAccountId(), admin.getUserId());
+        assertEquals(3, accountRepository.findAll().size());
+    }
+
+    @Test
+    void unfreezeAccount(){
+        loginAccount.setId(admin.getUserId());
+        loginAccount.setPassword(admin.getPassword());
+        adminService.loginAdmin(loginAccount);
+
+        adminService.unfreezeAccount(admin.getUserId(), saving.getAccountId());
+        adminService.unfreezeAccount(admin.getUserId(), checking.getAccountId());
+        adminService.unfreezeAccount(admin.getUserId(), studentChecking.getAccountId());
+
+        assertEquals(Status.FROZEN, saving.getStatus());
+        assertEquals(Status.FROZEN, checking.getStatus());
+        assertEquals(Status.FROZEN, studentChecking.getStatus());
     }
 }

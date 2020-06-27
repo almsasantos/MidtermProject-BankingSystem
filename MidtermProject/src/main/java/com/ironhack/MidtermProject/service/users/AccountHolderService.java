@@ -8,8 +8,10 @@ import com.ironhack.MidtermProject.exception.DataNotFoundException;
 import com.ironhack.MidtermProject.model.classes.Money;
 import com.ironhack.MidtermProject.model.entities.accounts.*;
 import com.ironhack.MidtermProject.model.entities.users.AccountHolder;
+import com.ironhack.MidtermProject.model.entities.users.Admin;
 import com.ironhack.MidtermProject.repository.accounts.*;
 import com.ironhack.MidtermProject.repository.users.AccountHolderRepository;
+import com.ironhack.MidtermProject.repository.users.AdminRepository;
 import com.ironhack.MidtermProject.service.accounts.CreditCardService;
 import com.ironhack.MidtermProject.service.accounts.SavingsService;
 import org.apache.logging.log4j.LogManager;
@@ -30,6 +32,9 @@ public class AccountHolderService {
 
     @Autowired
     private AccountHolderRepository accountsHolderRepository;
+
+    @Autowired
+    private AdminRepository adminRepository;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -57,21 +62,42 @@ public class AccountHolderService {
 
     private static final Logger LOGGER = LogManager.getLogger(AccountHolderService.class);
 
+    /**
+     * Find all AccountHolder users created.
+     * @return a list of account holder users.
+     */
     public List<AccountHolder> findAll() {
         LOGGER.info("Get all Account Holder users");
         return accountsHolderRepository.findAll();
     }
 
+    /**
+     * Find AccountHolder by id.
+     * @param id receives an integer id of user.
+     * @return an AccountHolder user corresponding to that id.
+     */
     public AccountHolder findById(Integer id) {
         LOGGER.info("Get Account Holder with id " + id);
         return accountsHolderRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Account Holder id not found"));
     }
 
-    public void createAccountHolder(AccountHolder accountHolder) {
+    /**
+     * Allows admins to create new account holders.
+     * @param adminId receives an integer with id from admin.
+     * @param accountHolder receives an AccountHolder with personal information needed to create that user.
+     */
+    public void createAccountHolder(Integer adminId, AccountHolder accountHolder) {
         LOGGER.info("Create a new Account Holder");
+        Admin admin = adminRepository.findById(adminId).orElseThrow(() -> new DataNotFoundException("Admin id not found"));
+        adminService.adminIsLogged(admin);
         accountsHolderRepository.save(accountHolder);
     }
 
+    /**
+     * Allows AccountHolder users to login into their accounts.
+     * @param loginAccount receives a LoginAccount where the user enters their id and corresponding password.
+     * @return an AccountHolder logged in.
+     */
     public AccountHolder loginAccountHolder(LoginAccount loginAccount) {
         LOGGER.info("[INIT] Login AccountHolder " + loginAccount.getId());
         AccountHolder accountHolder = accountsHolderRepository.findById(loginAccount.getId()).orElseThrow(() -> new DataNotFoundException("Account Holder id not found"));
@@ -92,6 +118,11 @@ public class AccountHolderService {
         return accountHolder;
     }
 
+    /**
+     * Allows AccountHolder users to logout from their accounts.
+     * @param loginAccount receives a LoginAccount where the user enters their id and corresponding password.
+     * @return an AccountHolder logged out.
+     */
     public AccountHolder logOutAccountHolder(LoginAccount loginAccount) {
         LOGGER.info("[INIT] Logout AccountHolder " + loginAccount.getId());
         AccountHolder accountHolder = accountsHolderRepository.findById(loginAccount.getId()).orElseThrow(() -> new DataNotFoundException("Account Holder id not found"));
@@ -112,6 +143,12 @@ public class AccountHolderService {
         return accountHolder;
     }
 
+    /**
+     * Allows AccountHolder users to check balance from their accounts.
+     * @param accountId receives an integer with id from account.
+     * @param ownerId receives an integer with id from account holder.
+     * @return a BigDecimal with balance from account.
+     */
     @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     public BigDecimal checkAccountBalance(Integer accountId, Integer ownerId) {
         LOGGER.info("Account Holder " + ownerId + " checks balance from account " + accountId);
@@ -152,7 +189,11 @@ public class AccountHolderService {
         }
     }
 
-
+    /**
+     * Allows account holder users to transfer money from their accounts to others.
+     * @param transference receives a Transference with all information needed to make that transaction.
+     */
+    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     public void transferAmount(Transference transference) {
         LOGGER.info("[INIT] Account Holder " + transference.getUserId() + " makes a transference of " + transference.getAmountToTransfer());
 
@@ -219,6 +260,11 @@ public class AccountHolderService {
         LOGGER.info("[END] Account Holder " + transference.getUserId() + " makes a transference of " + transference.getAmountToTransfer());
     }
 
+    /**
+     * Detects fraud detections if transactions are done within certain period of time.
+     * @param studentCheckingSender receives a studend checking account.
+     */
+    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     public void fraudDetectionStudentChecking(StudentChecking studentCheckingSender) {
         LOGGER.info("[INIT] Fraud detection of student checking " + studentCheckingSender.getAccountId());
         if (studentCheckingSender.getTransactionsMade().size() >= 3) {
@@ -265,6 +311,11 @@ public class AccountHolderService {
         LOGGER.info("[END] Fraud detection of student checking " + studentCheckingSender.getAccountId());
     }
 
+    /**
+     * Detects fraud detections if transactions are done within certain period of time.
+     * @param checkingSender receives a checking account.
+     */
+    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     public void fraudDetectionChecking(Checking checkingSender) {
         LOGGER.info("[INIT] Fraud detection of checking " + checkingSender.getAccountId());
         if (checkingSender.getTransactionsMade().size() >= 3) {
@@ -311,6 +362,11 @@ public class AccountHolderService {
         LOGGER.info("[END] Fraud detection of checking " + checkingSender.getAccountId());
     }
 
+    /**
+     * Detects fraud detections if transactions are done within certain period of time.
+     * @param savingSender receives a savings account.
+     */
+    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     public void fraudDetectionSavings(Saving savingSender) {
         LOGGER.info("[INIT] Fraud detection of savings " + savingSender.getAccountId());
         if (savingSender.getTransactionsMade().size() >= 3) {
@@ -357,6 +413,11 @@ public class AccountHolderService {
         LOGGER.info("[END] Fraud detection of savings " + savingSender.getAccountId());
     }
 
+    /**
+     * Allows transfers having sender account type as savings.
+     * @param transference receives a Transference with all information needed to make that transaction.
+     */
+    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     public void transferAmountSenderSaving(Transference transference) {
         LOGGER.info("Sender's account is from type Savings");
 
@@ -379,6 +440,11 @@ public class AccountHolderService {
         LOGGER.info("The transference from " + transference.getSenderAccountId() + " to " + transference.getReceiverAccountId() + " done successfully");
     }
 
+    /**
+     * Allows transfers having sender account type as checking.
+     * @param transference receives a Transference with all information needed to make that transaction.
+     */
+    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     public void transferAmountSenderChecking(Transference transference) {
         LOGGER.info("Sender's account is from type Checking");
         Checking checkingSender = checkingRepository.findById(transference.getSenderAccountId()).orElseThrow(() -> new DataNotFoundException("Sender checking account id not found"));
@@ -400,6 +466,11 @@ public class AccountHolderService {
         LOGGER.info("The transference from " + transference.getSenderAccountId() + " to " + transference.getReceiverAccountId() + " done successfully");
     }
 
+    /**
+     * Allows transfers having sender account type as credit card.
+     * @param transference receives a Transference with all information needed to make that transaction.
+     */
+    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     public void transferAmountSenderCreditCard(Transference transference) {
         LOGGER.info("Sender's account is from type Credit Card");
         CreditCard creditCardSender = creditCardRepository.findById(transference.getSenderAccountId()).orElseThrow(() -> new DataNotFoundException("Sender credit card account id not found"));
@@ -411,6 +482,11 @@ public class AccountHolderService {
         LOGGER.info("The transference from " + transference.getSenderAccountId() + " to " + transference.getReceiverAccountId() + " done successfully");
     }
 
+    /**
+     * Allows transfers having sender account type as student checking.
+     * @param transference receives a Transference with all information needed to make that transaction.
+     */
+    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
     public void transferAmountSenderStudentChecking(Transference transference) {
         LOGGER.info("Sender's account is from type Student Checking");
         StudentChecking studentCheckingSender = studentCheckingRepository.findById(transference.getSenderAccountId()).orElseThrow(() -> new DataNotFoundException("Sender student checking account id not found"));

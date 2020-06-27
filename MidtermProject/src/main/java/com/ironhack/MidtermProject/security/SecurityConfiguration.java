@@ -71,21 +71,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .mvcMatchers(HttpMethod.POST,"/account/depending-age").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers(HttpMethod.PATCH,"/debit-balance").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers(HttpMethod.PATCH,"/credit-balance").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers(HttpMethod.DELETE,"/user").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers(HttpMethod.DELETE,"/account").hasAuthority("ROLE_ADMIN")
                 // endregion
 
                 // --- ACCOUNT HOLDER CONTROLLER SECURITY ---
                 .mvcMatchers("/accountholders/balance").hasAuthority("ROLE_ACCOUNTHOLDER")
                 .mvcMatchers(HttpMethod.PATCH,"/accountholders/login").hasAuthority("ROLE_ACCOUNTHOLDER")
                 .mvcMatchers(HttpMethod.PATCH,"/accountholders/logout").hasAuthority("ROLE_ACCOUNTHOLDER")
-                .mvcMatchers(HttpMethod.POST,"/accountholder").hasAuthority("ROLE_ACCOUNTHOLDER")
                 .mvcMatchers(HttpMethod.PATCH,"/transference").hasAuthority("ROLE_ACCOUNTHOLDER")
+                .mvcMatchers(HttpMethod.POST,"/accountholder").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers("/accountholders").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers("/accountholders/{id}").hasAuthority("ROLE_ADMIN")
                 // endregion
 
                 // --- STUDENT CHECKING CONTROLLER SECURITY ---
-                .mvcMatchers("/student_checking_accounts").hasAuthority("ROLE_ADMIN")
-                .mvcMatchers("/student_checking_accounts/{id}").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/student-checking-accounts").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/student-checking-accounts/{id}").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers("/student-checking-accounts/status").hasAuthority("ROLE_ADMIN")
                 // endregion
 
@@ -98,18 +100,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // endregion
 
                 // --- CREDIT CARD CONTROLLER SECURITY ---
-                .mvcMatchers("/credit_cards").hasAuthority("ROLE_ADMIN")
-                .mvcMatchers("/credit_cards/{id}").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/credit-cards").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/credit-cards/{id}").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers("/credit-cards/credit-limit").hasAuthority("ROLE_ADMIN")
                 .mvcMatchers("/credit-cards/interest-rate").hasAuthority("ROLE_ADMIN")
                 // endregion
 
                 // --- CHECKING CONTROLLER SECURITY ---
-                .mvcMatchers("/checking_accounts").hasAuthority("ROLE_ADMIN")
-                .mvcMatchers("/checking_accounts/{id}").hasAuthority("ROLE_ADMIN")
-                .mvcMatchers("/checking-accounts/status").hasAuthority("ROLE_ADMIN")
-                .mvcMatchers("/checking-accounts/minimum-balance").hasAuthority("ROLE_ADMIN")
-                .mvcMatchers("/checking-accounts/monthly-maintenance-fee").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/checkings").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/checkings/{id}").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/checkings/status").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/checkings/minimum-balance").hasAuthority("ROLE_ADMIN")
+                .mvcMatchers("/checkings/monthly-maintenance-fee").hasAuthority("ROLE_ADMIN")
                 // endregion
 
                 // --- ACCOUNT CONTROLLER SECURITY ---

@@ -15,6 +15,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * This method found a match between login user and user from data base
+     * @param username a String value
+     * @return a userDetails element
+     * @throws UsernameNotFoundException If there isn't a match
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {

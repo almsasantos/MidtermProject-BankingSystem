@@ -249,4 +249,12 @@ class AdminControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
     }
+
+    @Test
+    void deleteAccount() throws Exception {
+        mockMvc.perform(delete("/account")
+                .param("account_id", String.valueOf(3))
+                .param("admin_id", String.valueOf(1)))
+                .andExpect(status().isNoContent());
+    }
 }

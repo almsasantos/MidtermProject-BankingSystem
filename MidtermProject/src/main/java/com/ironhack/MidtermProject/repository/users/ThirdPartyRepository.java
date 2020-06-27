@@ -8,5 +8,10 @@ import java.util.List;
 
 @Repository
 public interface ThirdPartyRepository extends JpaRepository<ThirdParty, Integer> {
+    /**
+     * Find ThirdParty users based on the name.
+     * @param name receives a string name.
+     * @return a list of ThirdParty that share that name.
+     */
     public List<ThirdParty> findByName(String name);
 }

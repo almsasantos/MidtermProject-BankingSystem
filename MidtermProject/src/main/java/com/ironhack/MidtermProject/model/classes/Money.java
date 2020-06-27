@@ -32,6 +32,9 @@ public class Money implements Transactional{
         this(balance, USD, DEFAULT_ROUNDING);
     }
 
+    /**
+     * Void constructor
+     */
     public Money() {
         this.currency = USD;
     }
@@ -72,10 +75,5 @@ public class Money implements Transactional{
         Money money = (Money) o;
         return Objects.equals(currency, money.currency) &&
                 Objects.equals(balance, money.balance);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(currency, balance);
     }
 }

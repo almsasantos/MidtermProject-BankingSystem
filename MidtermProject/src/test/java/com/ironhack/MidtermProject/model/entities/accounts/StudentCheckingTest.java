@@ -48,4 +48,11 @@ class StudentCheckingTest {
 
         assertEquals(0, studentChecking.getTransactionsMade().size());
     }
+
+    @Test
+    void getMaxTransferencesInADay() {
+        studentChecking.setMaxTransferencesInADay(2);
+
+        assertEquals(2, studentChecking.getMaxTransferencesInADay());
+    }
 }

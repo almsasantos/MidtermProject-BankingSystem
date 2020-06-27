@@ -8,8 +8,10 @@ import com.ironhack.MidtermProject.model.classes.Money;
 import com.ironhack.MidtermProject.model.entities.Address;
 import com.ironhack.MidtermProject.model.entities.accounts.*;
 import com.ironhack.MidtermProject.model.entities.users.AccountHolder;
+import com.ironhack.MidtermProject.model.entities.users.Admin;
 import com.ironhack.MidtermProject.repository.accounts.*;
 import com.ironhack.MidtermProject.repository.users.AccountHolderRepository;
+import com.ironhack.MidtermProject.repository.users.AdminRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,11 +50,15 @@ class AccountHolderServiceTest {
     @Autowired
     private StudentCheckingRepository studentCheckingRepository;
 
+    @Autowired
+    private AdminRepository adminRepository;
+
     private AccountHolder accountHolder;
     private LoginAccount loginAccount;
     private Address address;
     private Checking checking;
     private Saving saving;
+    private Admin admin;
     private CreditCard creditCard;
     private StudentChecking studentChecking;
     private Transference transference;
@@ -88,6 +94,10 @@ class AccountHolderServiceTest {
         accountHolder.setAccounts(accountsHolderList);
         accountHolderRepository.save(accountHolder);
 
+        admin = new Admin("Gabriel Mars", "pass");
+        admin.login();
+        adminRepository.save(admin);
+
         saving.setPrimaryOwner(accountHolder);
         savingRepository.save(saving);
 
@@ -112,6 +122,7 @@ class AccountHolderServiceTest {
         savingRepository.deleteAll();
         creditCardRepository.deleteAll();
         studentCheckingRepository.deleteAll();
+        adminRepository.deleteAll();
         transference = null;
         loginAccount = null;
         address = null;
@@ -124,13 +135,13 @@ class AccountHolderServiceTest {
 
     @Test
     void findById() {
-        assertEquals(accountHolder, accountHolderService.findById(5));
+        assertEquals(accountHolder, accountHolderService.findById(accountHolder.getUserId()));
     }
 
     @Test
     void createAccountHolder() {
         AccountHolder accountHolder1 = new AccountHolder("Mary Santos", "pass", LocalDate.of(1989, 8, 19), address);
-        accountHolderService.createAccountHolder(accountHolder1);
+        accountHolderService.createAccountHolder(admin.getUserId(), accountHolder1);
         assertEquals(2, accountHolderRepository.findAll().size());
     }
 
@@ -295,19 +306,21 @@ class AccountHolderServiceTest {
     @Test
     void fraudDetectionSavings() {
         transference.setUserId(accountHolder.getUserId());
-        transference.setSenderName(accountHolder.getName());
-        transference.setSenderAccountId(accountHolder.getAccounts().get(2).getAccountId());
-        transference.setReceiverName(accountHolder.getName());
-        transference.setReceiverAccountId(accountHolder.getAccounts().get(0).getAccountId());
+        transference.setSenderName("Ana Santos");
+        transference.setSenderAccountId(3);
+        transference.setReceiverName("Ana Santos");
+        transference.setReceiverAccountId(3);
         transference.setAmountToTransfer(new BigDecimal("10"));
 
         loginAccount.setId(accountHolder.getUserId());
-        loginAccount.setPassword(accountHolder.getPassword());
+        loginAccount.setPassword("pass");
         accountHolderService.loginAccountHolder(loginAccount);
 
-        accountHolderService.transferAmount(transference);
-        accountHolderService.transferAmount(transference);
-        accountHolderService.transferAmount(transference);
+        saving.getTransactionsMade().add(LocalDateTime.now());
+        saving.getTransactionsMade().add(LocalDateTime.now());
+        saving.getTransactionsMade().add(LocalDateTime.now());
+        savingRepository.save(saving);
+
 
         assertThrows(DataNotFoundException.class, () -> {
             accountHolderService.fraudDetectionSavings(saving);});
@@ -329,9 +342,10 @@ class AccountHolderServiceTest {
         loginAccount.setPassword(accountHolder.getPassword());
         accountHolderService.loginAccountHolder(loginAccount);
 
-        accountHolderService.transferAmount(transference);
-        accountHolderService.transferAmount(transference);
-        accountHolderService.transferAmount(transference);
+        checking.getTransactionsMade().add(LocalDateTime.now());
+        checking.getTransactionsMade().add(LocalDateTime.now());
+        checking.getTransactionsMade().add(LocalDateTime.now());
+        checkingRepository.save(checking);
 
         assertThrows(DataNotFoundException.class, () -> {
             accountHolderService.fraudDetectionChecking(checking);});
@@ -351,9 +365,10 @@ class AccountHolderServiceTest {
         loginAccount.setPassword(accountHolder.getPassword());
         accountHolderService.loginAccountHolder(loginAccount);
 
-        accountHolderService.transferAmount(transference);
-        accountHolderService.transferAmount(transference);
-        accountHolderService.transferAmount(transference);
+        studentChecking.getTransactionsMade().add(LocalDateTime.now());
+        studentChecking.getTransactionsMade().add(LocalDateTime.now());
+        studentChecking.getTransactionsMade().add(LocalDateTime.now());
+        studentCheckingRepository.save(studentChecking);
 
         assertThrows(DataNotFoundException.class, () -> {
             accountHolderService.fraudDetectionStudentChecking(studentChecking);});

@@ -17,12 +17,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-class UserServiceTest {
+class UsersServiceTest {
     @Autowired
-    private UserService userService;
+    private UsersService userService;
 
     @MockBean
-    private UsersRepository userRepository;
+    private UsersRepository usersRepository;
 
     private Admin admin;
 
@@ -31,8 +31,8 @@ class UserServiceTest {
         admin = new Admin("Ana Santos", "pass");
 
         List<Users> users = Arrays.asList(admin);
-        when(userRepository.findAll()).thenReturn(users);
-        when(userRepository.findById(admin.getUserId())).thenReturn(Optional.of(admin));
+        when(usersRepository.findAll()).thenReturn(users);
+        when(usersRepository.findById(admin.getUserId())).thenReturn(Optional.of(admin));
     }
 
     @Test

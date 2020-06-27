@@ -16,6 +16,10 @@ public class AccountService {
 
     private static final Logger LOGGER = LogManager.getLogger(AccountService.class);
 
+    /**
+     * Find all Accounts created.
+     * @return a list of all types of accounts.
+     */
     public List<Account> findAll(){
         LOGGER.info("Get all Accounts");
         return accountRepository.findAll();

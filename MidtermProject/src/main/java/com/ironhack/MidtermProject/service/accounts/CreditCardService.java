@@ -22,12 +22,20 @@ public class CreditCardService {
 
     private static final Logger LOGGER = LogManager.getLogger(CreditCardService.class);
 
-
+    /**
+     * Find all CreditCard accounts.
+     * @return a list of credit credit accounts.
+     */
     public List<CreditCard> findAll(){
         LOGGER.info("Get all Credit Card accounts");
         return creditCardRepository.findAll();
     }
 
+    /**
+     * Find CreditCard accounts by Id.
+     * @param id receives an integer id of account.
+     * @return a credit credit account corresponding to that id.
+     */
     public CreditCard findById(Integer id){
         LOGGER.info("Get Credit Card account with id " + id);
         CreditCard creditCard = creditCardRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Credit Card id not found"));
@@ -35,6 +43,10 @@ public class CreditCardService {
         return creditCard;
     }
 
+    /**
+     * Applies interest rate gain if a month has passed since the creation of account or since the last update of the interest.
+     * @param accountId receives an integer id of account.
+     */
     public void interestDateGainMonthly(Integer accountId) {
         LOGGER.info("[INIT] Interest Rate Gain in account " + accountId);
 
@@ -52,16 +64,31 @@ public class CreditCardService {
         LOGGER.info("[END] Interest Rate Gain in account " + accountId);
     }
 
+    /**
+     * Find all CreditCard accounts based on the creditLimit.
+     * @param creditLimit receives a BigDecimal which corresponds to the creditLimit.
+     * @return a list of credit credit accounts.
+     */
     public List<CreditCard> findByCreditLimit(BigDecimal creditLimit){
         LOGGER.info("Get Credit Card account with credit limit of " + creditLimit);
         return creditCardRepository.findByCreditLimit(creditLimit);
     }
 
+    /**
+     * Find all CreditCard accounts based on the interestRate.
+     * @param interestRate receives a BigDecimal which corresponds to the interestRate.
+     * @return a list of credit credit accounts.
+     */
     public List<CreditCard> findByInterestRate(BigDecimal interestRate){
         LOGGER.info("Get Credit Card account with interest rate of " + interestRate);
         return creditCardRepository.findByInterestRate(interestRate);
     }
 
+    /**
+     * Find all CreditCard accounts based on the date of creation.
+     * @param date receives a LocalDate which corresponds to the date.
+     * @return a list of credit credit accounts.
+     */
     public List<CreditCard> findByDate(LocalDate date){
         LOGGER.info("Get Credit Card account with created in " + date);
         return creditCardRepository.findByDate(date);

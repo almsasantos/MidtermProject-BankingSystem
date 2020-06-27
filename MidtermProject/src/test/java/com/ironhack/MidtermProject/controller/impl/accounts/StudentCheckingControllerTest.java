@@ -57,12 +57,9 @@ class StudentCheckingControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].accountId").value(studentChecking.getAccountId()))
                 .andExpect(jsonPath("$[0].secretKey").value(studentChecking.getSecretKey()))
-                //.andExpect(jsonPath("$[0].status").value(studentChecking.getStatus()))
-                //.andExpect(jsonPath("$[0].accountType").value(studentChecking.getAccountType()))
                 .andExpect(jsonPath("$[0].transactionsMade").value(studentChecking.getTransactionsMade()))
                 .andExpect(jsonPath("$[0].primaryOwner").value(studentChecking.getPrimaryOwner()))
                 .andExpect(jsonPath("$[0].secondaryOwner").value(studentChecking.getSecondaryOwner()))
-                //.andExpect(jsonPath("$[0].balance").value(studentChecking.getBalance()))
                 .andExpect(jsonPath("$[0].maxTransferencesInADay").value(studentChecking.getMaxTransferencesInADay()))
                 .andExpect(jsonPath("$[0].penaltyFee").value(studentChecking.getPenaltyFee()));
     }
@@ -73,12 +70,9 @@ class StudentCheckingControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.accountId").value(studentChecking.getAccountId()))
                 .andExpect(jsonPath("$.secretKey").value(studentChecking.getSecretKey()))
-                //.andExpect(jsonPath("$.status").value(studentChecking.getStatus()))
-                //.andExpect(jsonPath("$.accountType").value(studentChecking.getAccountType()))
                 .andExpect(jsonPath("$.transactionsMade").value(studentChecking.getTransactionsMade()))
                 .andExpect(jsonPath("$.primaryOwner").value(studentChecking.getPrimaryOwner()))
                 .andExpect(jsonPath("$.secondaryOwner").value(studentChecking.getSecondaryOwner()))
-                //.andExpect(jsonPath("$.balance").value(studentChecking.getBalance()))
                 .andExpect(jsonPath("$.maxTransferencesInADay").value(studentChecking.getMaxTransferencesInADay()))
                 .andExpect(jsonPath("$.penaltyFee").value(studentChecking.getPenaltyFee()));
     }

@@ -70,9 +70,6 @@ class ThirdPartyControllerTest {
         checking = new Checking(new Money(new BigDecimal("900")), "000000", Status.ACTIVE, new BigDecimal("250"), new BigDecimal("12"));
 
         thirdPartyTransaction = new ThirdPartyTransaction();
-        thirdPartyTransaction.setAccountId(checking.getAccountId());
-        thirdPartyTransaction.setSecretKey(checking.getSecretKey());
-        thirdPartyTransaction.setAmount(new BigDecimal("10"));
 
         List<ThirdParty> thirdPartyList = Arrays.asList(thirdParty);
         when(thirdPartyService.findAll()).thenReturn(thirdPartyList);
@@ -121,6 +118,10 @@ class ThirdPartyControllerTest {
 
     @Test
     void debitTransaction() throws Exception {
+        thirdPartyTransaction.setAccountId(2);
+        thirdPartyTransaction.setSecretKey("000000");
+        thirdPartyTransaction.setAmount(new BigDecimal("10"));
+
         mockMvc.perform(patch("/debit-transaction")
                 .param("hashed_key", "1234")
                 .content(objectMapper.writeValueAsString(thirdPartyTransaction))
@@ -130,6 +131,10 @@ class ThirdPartyControllerTest {
 
     @Test
     void creditTransaction() throws Exception {
+        thirdPartyTransaction.setAccountId(2);
+        thirdPartyTransaction.setSecretKey("000000");
+        thirdPartyTransaction.setAmount(new BigDecimal("10"));
+
         mockMvc.perform(patch("/credit-transaction")
                 .param("hashed_key", "1234")
                 .content(objectMapper.writeValueAsString(thirdPartyTransaction))

@@ -71,7 +71,6 @@ class SavingTest {
 
     @Test
     void getDate() {
-        saving.setDate(LocalDate.now());
 
         assertEquals(LocalDate.now(), saving.getDate());
     }

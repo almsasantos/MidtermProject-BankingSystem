@@ -5,49 +5,44 @@ import com.ironhack.MidtermProject.exception.DataNotFoundException;
 import com.ironhack.MidtermProject.model.classes.Money;
 import com.ironhack.MidtermProject.model.entities.accounts.Saving;
 import com.ironhack.MidtermProject.repository.accounts.SavingRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class SavingsServiceTest {
 
     @Autowired
-    private SavingsService savingsService;
-
-    @MockBean
     private SavingRepository savingRepository;
 
+    @Autowired
+    private SavingsService savingsService;
+
     private Saving saving;
-    private Saving saving1;
+
+    private List<Saving> savingList = new ArrayList<Saving>();
 
     @BeforeEach
     void setUp() {
-        saving = new Saving(new Money(new BigDecimal("900")), "000000", Status.ACTIVE, new BigDecimal("0.025"), new BigDecimal("1000"));
-        saving.setDate(LocalDate.of(2019, 03, 03));
+        saving = new Saving(new Money(new BigDecimal("900")), "000000", Status.ACTIVE, new BigDecimal("0.0250"), new BigDecimal("1000.0000"));
         saving.setLastInterestDate(null);
+        savingRepository.save(saving);
 
-        saving1 = new Saving(new Money(new BigDecimal("900")), "000000", Status.ACTIVE, new BigDecimal("0.025"), new BigDecimal("1000"));
+        savingList.add(saving);
+    }
 
-        List<Saving> savingList = Arrays.asList(saving);
-        when(savingRepository.findAll()).thenReturn(savingList);
-        when(savingRepository.findById(saving.getAccountId())).thenReturn(Optional.of(saving));
-        when(savingRepository.findByStatus(saving.getStatus())).thenReturn(savingList);
-        when(savingRepository.findByMinimumBalance(saving.getMinimumBalance())).thenReturn(savingList);
-        when(savingRepository.findByInterestRate(saving.getInterestRate())).thenReturn(savingList);
-        when(savingRepository.findByDate(saving.getDate())).thenReturn(savingList);
+    @AfterEach
+    void tearDown(){
+        savingRepository.deleteAll();
     }
 
     @Test
@@ -57,7 +52,7 @@ class SavingsServiceTest {
 
     @Test
     void findById() {
-        assertEquals(saving, savingsService.findById(saving.getAccountId()));
+        assertEquals(saving.getAccountId(), savingsService.findById(saving.getAccountId()).getAccountId());
     }
 
     @Test

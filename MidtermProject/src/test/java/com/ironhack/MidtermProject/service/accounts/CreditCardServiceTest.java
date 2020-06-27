@@ -3,7 +3,6 @@ package com.ironhack.MidtermProject.service.accounts;
 import com.ironhack.MidtermProject.model.classes.Money;
 import com.ironhack.MidtermProject.model.entities.accounts.CreditCard;
 import com.ironhack.MidtermProject.repository.accounts.CreditCardRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +39,6 @@ class CreditCardServiceTest {
         when(creditCardRepository.findByInterestRate(creditCard.getInterestRate())).thenReturn(creditCardList);
         when(creditCardRepository.findByDate(creditCard.getDate())).thenReturn(creditCardList);
         when(creditCardRepository.findByCreditLimit(creditCard.getCreditLimit())).thenReturn(creditCardList);
-    }
-
-    @AfterEach
-    void tearDown() {
-        creditCardRepository.deleteAll();
     }
 
     @Test

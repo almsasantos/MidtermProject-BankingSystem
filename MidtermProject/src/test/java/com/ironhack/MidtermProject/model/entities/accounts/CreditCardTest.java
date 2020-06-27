@@ -71,8 +71,6 @@ class CreditCardTest {
 
     @Test
     void getDate() {
-        creditCard.setDate(LocalDate.now());
-
         assertEquals(LocalDate.now(), creditCard.getDate());
     }
 

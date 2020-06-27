@@ -4,7 +4,6 @@ import com.ironhack.MidtermProject.enums.Status;
 import com.ironhack.MidtermProject.model.classes.Money;
 import com.ironhack.MidtermProject.model.entities.accounts.Account;
 import com.ironhack.MidtermProject.model.entities.accounts.StudentChecking;
-import com.ironhack.MidtermProject.repository.accounts.AccountRepository;
 import com.ironhack.MidtermProject.service.accounts.AccountService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,9 +31,6 @@ class AccountControllerTest {
     @MockBean
     private AccountService accountService;
 
-    @Autowired
-    private AccountRepository accountRepository;
-
     private MockMvc mockMvc;
     private StudentChecking studentChecking;
 
@@ -54,7 +50,6 @@ class AccountControllerTest {
                 .andExpect(jsonPath("$[0].accountId").value(studentChecking.getAccountId()))
                 .andExpect(jsonPath("$[0].primaryOwner").value(studentChecking.getPrimaryOwner()))
                 .andExpect(jsonPath("$[0].secondaryOwner").value(studentChecking.getSecondaryOwner()))
-                //.andExpect(jsonPath("$[0].balance").value(studentChecking.getBalance()))
                 .andExpect(jsonPath("$[0].penaltyFee").value(studentChecking.getPenaltyFee()));
 
     }

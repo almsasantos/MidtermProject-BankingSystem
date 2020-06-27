@@ -41,16 +41,30 @@ public class ThirdPartyService {
 
     private static final Logger LOGGER = LogManager.getLogger(ThirdPartyService.class);
 
+    /**
+     * Find all ThirdParty created.
+     * @return a list of third party users.
+     */
     public List<ThirdParty> findAll(){
         LOGGER.info("Get all Third Party users");
         return thirdPartyRepository.findAll();
     }
 
+    /**
+     * Find ThirdParty By id.
+     * @param id receives an integer id of user.
+     * @return a third party user corresponding to that id.
+     */
     public ThirdParty findById(Integer id){
         LOGGER.info("Get Third Party with id " + id);
         return thirdPartyRepository.findById(id).orElseThrow(() -> new DataNotFoundException("Third Party id not found"));
     }
 
+    /**
+     * Allows third party users to login into their accounts.
+     * @param loginAccount receives a LoginAccount where the user enters their id and corresponding password.
+     * @return a third party logged in.
+     */
     public ThirdParty loginThirdParty(LoginAccount loginAccount){
         LOGGER.info("Third party with id " + loginAccount.getId() + " tried to login");
         ThirdParty thirdParty = thirdPartyRepository.findById(loginAccount.getId()).orElseThrow(() -> new DataNotFoundException("Third Party id not found"));
@@ -71,6 +85,11 @@ public class ThirdPartyService {
         return thirdParty;
     }
 
+    /**
+     * Allows third party users to logout from their accounts.
+     * @param loginAccount receives a LoginAccount where the user enters their id and corresponding password.
+     * @return a third party logged out.
+     */
     public ThirdParty logOutThirdParty(LoginAccount loginAccount){
         LOGGER.info("Third party with id " + loginAccount.getId() + " tried to logout");
         ThirdParty thirdParty = thirdPartyRepository.findById(loginAccount.getId()).orElseThrow(() -> new DataNotFoundException("Third Party id not found"));
@@ -91,6 +110,11 @@ public class ThirdPartyService {
         return thirdParty;
     }
 
+    /**
+     * Allows Third Party Users to debit amount in any type of account.
+     * @param hashedKey receives the hashedKey unique that third party has.
+     * @param thirdPartyTransaction receives ThirdPartyTransaction containing account id, account secretKey and amount to debit.
+     */
     public void debitTransaction(String hashedKey, ThirdPartyTransaction thirdPartyTransaction){
         LOGGER.info("[INIT] Third Party with hashedKey " + hashedKey +  " tried to make debit transaction in account " + thirdPartyTransaction.getAccountId());
 
@@ -160,6 +184,11 @@ public class ThirdPartyService {
         LOGGER.info("[END] Third Party with hashedKey " + hashedKey +  " tried to make debit transaction in account " + thirdPartyTransaction.getAccountId());
     }
 
+    /**
+     * Allows Third Party Users to credit amount in any type of account.
+     * @param hashedKey receives the hashedKey unique that third party has.
+     * @param thirdPartyTransaction receives ThirdPartyTransaction containing account id, account secretKey and amount to credit.
+     */
     public void creditTransaction(String hashedKey, ThirdPartyTransaction thirdPartyTransaction){
         LOGGER.info("[INIT] Third Party with hashedKey " + hashedKey +  " tried to make debit transaction in account " + thirdPartyTransaction.getAccountId());
 
@@ -227,6 +256,10 @@ public class ThirdPartyService {
         LOGGER.info("[END] Third Party make credit transaction");
     }
 
+    /**
+     * Method that checks if hashedKey that Third Party Users provide exists.
+     * @param hashedKey receives the hashedKey unique that third party has.
+     */
     public void checkHashedKeyExists(String hashedKey){
         LOGGER.info("Confirm Third Party hashed key " + hashedKey + " exists to make transaction");
         List<Set<String>> thirdPartyMap =  thirdPartyRepository.findAll().stream().map(t -> t.getAccountDetails().keySet()).collect(Collectors.toList());

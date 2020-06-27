@@ -5,6 +5,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class PasswordUtility {
 
+    /**
+     * This method generates a password from a string
+     * @param args a String value
+     */
     public static void main(String[] args) {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
