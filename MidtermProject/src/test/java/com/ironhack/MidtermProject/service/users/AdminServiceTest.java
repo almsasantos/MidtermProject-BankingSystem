@@ -287,6 +287,7 @@ class AdminServiceTest {
         changeBalance.setAccountOwnerName(accountHolder.getName());
         changeBalance.setOwnerId(accountHolder.getUserId());
         changeBalance.setAccountId(saving.getAccountId());
+
         adminService.debitBalance(admin.getUserId(), changeBalance);
 
         saving.setBalance(new Money(saving.getBalance().decreaseAmount(changeBalance.getAmount())));
@@ -305,6 +306,8 @@ class AdminServiceTest {
         changeBalance.setOwnerId(accountHolder.getUserId());
         changeBalance.setAccountId(creditCard.getAccountId());
 
+        adminService.debitBalance(admin.getUserId(), changeBalance);
+
         creditCard.setBalance(new Money(creditCard.getBalance().decreaseAmount(changeBalance.getAmount())));
         creditCardRepository.save(creditCard);
 
@@ -321,6 +324,8 @@ class AdminServiceTest {
         changeBalance.setOwnerId(accountHolder.getUserId());
         changeBalance.setAccountId(checking.getAccountId());
 
+        adminService.debitBalance(admin.getUserId(), changeBalance);
+
         checking.setBalance(new Money(checking.getBalance().decreaseAmount(changeBalance.getAmount())));
         checkingRepository.save(checking);
 
@@ -336,6 +341,8 @@ class AdminServiceTest {
         changeBalance.setAccountOwnerName(accountHolder.getName());
         changeBalance.setOwnerId(accountHolder.getUserId());
         changeBalance.setAccountId(studentChecking.getAccountId());
+
+        adminService.debitBalance(admin.getUserId(), changeBalance);
 
         studentChecking.setBalance(new Money(studentChecking.getBalance().decreaseAmount(changeBalance.getAmount())));
         studentCheckingRepository.save(studentChecking);

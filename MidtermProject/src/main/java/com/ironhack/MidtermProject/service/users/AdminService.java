@@ -325,8 +325,10 @@ public class AdminService {
 
         if (creditCardViewModel.getSecondaryOwnerId() != null) {
             LOGGER.info("Check that secondary owner " + creditCardViewModel.getSecondaryOwnerId() + " exists");
-            secondaryOwner = accountsHolderRepository.findById(creditCardViewModel.getPrimaryOwnerId()).orElseThrow(() -> new DataNotFoundException("Secondary Owner id not found"));
+            secondaryOwner = accountsHolderRepository.findById(creditCardViewModel.getSecondaryOwnerId()).orElseThrow(() -> new DataNotFoundException("Secondary Owner id not found"));
             creditCard.setSecondaryOwner(secondaryOwner);
+            secondaryOwner.getAccounts().add(creditCard);
+            accountsHolderRepository.save(secondaryOwner);
         }
 
         creditCard.setBalance(new Money(creditCardViewModel.getBalance()));
@@ -446,7 +448,7 @@ public class AdminService {
      * @param adminId receives an integer with id from admin.
      * @param changeBalance receives ChangeBalance that will allow the transaction.
      */
-    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+    @Transactional(propagation= Propagation.REQUIRED, noRollbackFor=Exception.class)
     // --- DEBIT THE BALANCE ---
     public void debitBalance(Integer adminId, ChangeBalance changeBalance) {
         LOGGER.info("[INIT] Admin " + adminId + " debits " + changeBalance.getAmount() + " amount in " + changeBalance.getAccountId() + " account");
@@ -512,7 +514,8 @@ public class AdminService {
      * @param adminId receives an integer with id from admin.
      * @param changeBalance receives ChangeBalance that will allow the transaction.
      */
-    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+
+    @Transactional(propagation= Propagation.REQUIRED, noRollbackFor=Exception.class)
     // --- CREDIT THE BALANCE ---
     public void creditBalance(Integer adminId, ChangeBalance changeBalance) {
         LOGGER.info("[INIT] Admin " + adminId + " credits " + changeBalance.getAmount() + " amount in " + changeBalance.getAccountId() + " account");

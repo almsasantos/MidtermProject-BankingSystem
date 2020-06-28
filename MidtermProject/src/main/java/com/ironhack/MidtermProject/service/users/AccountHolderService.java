@@ -193,7 +193,7 @@ public class AccountHolderService {
      * Allows account holder users to transfer money from their accounts to others.
      * @param transference receives a Transference with all information needed to make that transaction.
      */
-    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+    @Transactional(propagation= Propagation.REQUIRED, noRollbackFor=Exception.class)
     public void transferAmount(Transference transference) {
         LOGGER.info("[INIT] Account Holder " + transference.getUserId() + " makes a transference of " + transference.getAmountToTransfer());
 
@@ -264,7 +264,7 @@ public class AccountHolderService {
      * Detects fraud detections if transactions are done within certain period of time.
      * @param studentCheckingSender receives a studend checking account.
      */
-    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+    @Transactional(propagation= Propagation.REQUIRED, noRollbackFor=Exception.class)
     public void fraudDetectionStudentChecking(StudentChecking studentCheckingSender) {
         LOGGER.info("[INIT] Fraud detection of student checking " + studentCheckingSender.getAccountId());
         if (studentCheckingSender.getTransactionsMade().size() >= 3) {
@@ -315,7 +315,7 @@ public class AccountHolderService {
      * Detects fraud detections if transactions are done within certain period of time.
      * @param checkingSender receives a checking account.
      */
-    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+    @Transactional(propagation= Propagation.REQUIRED, noRollbackFor=Exception.class)
     public void fraudDetectionChecking(Checking checkingSender) {
         LOGGER.info("[INIT] Fraud detection of checking " + checkingSender.getAccountId());
         if (checkingSender.getTransactionsMade().size() >= 3) {
@@ -366,7 +366,7 @@ public class AccountHolderService {
      * Detects fraud detections if transactions are done within certain period of time.
      * @param savingSender receives a savings account.
      */
-    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+    @Transactional(propagation= Propagation.REQUIRED, noRollbackFor=Exception.class)
     public void fraudDetectionSavings(Saving savingSender) {
         LOGGER.info("[INIT] Fraud detection of savings " + savingSender.getAccountId());
         if (savingSender.getTransactionsMade().size() >= 3) {
@@ -417,7 +417,7 @@ public class AccountHolderService {
      * Allows transfers having sender account type as savings.
      * @param transference receives a Transference with all information needed to make that transaction.
      */
-    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+    @Transactional(propagation= Propagation.REQUIRED, noRollbackFor=Exception.class)
     public void transferAmountSenderSaving(Transference transference) {
         LOGGER.info("Sender's account is from type Savings");
 
@@ -444,7 +444,7 @@ public class AccountHolderService {
      * Allows transfers having sender account type as checking.
      * @param transference receives a Transference with all information needed to make that transaction.
      */
-    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+    @Transactional(propagation= Propagation.REQUIRED, noRollbackFor=Exception.class)
     public void transferAmountSenderChecking(Transference transference) {
         LOGGER.info("Sender's account is from type Checking");
         Checking checkingSender = checkingRepository.findById(transference.getSenderAccountId()).orElseThrow(() -> new DataNotFoundException("Sender checking account id not found"));
@@ -470,7 +470,7 @@ public class AccountHolderService {
      * Allows transfers having sender account type as credit card.
      * @param transference receives a Transference with all information needed to make that transaction.
      */
-    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+    @Transactional(propagation= Propagation.REQUIRED, noRollbackFor=Exception.class)
     public void transferAmountSenderCreditCard(Transference transference) {
         LOGGER.info("Sender's account is from type Credit Card");
         CreditCard creditCardSender = creditCardRepository.findById(transference.getSenderAccountId()).orElseThrow(() -> new DataNotFoundException("Sender credit card account id not found"));
@@ -486,7 +486,7 @@ public class AccountHolderService {
      * Allows transfers having sender account type as student checking.
      * @param transference receives a Transference with all information needed to make that transaction.
      */
-    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+    @Transactional(propagation= Propagation.REQUIRED, noRollbackFor=Exception.class)
     public void transferAmountSenderStudentChecking(Transference transference) {
         LOGGER.info("Sender's account is from type Student Checking");
         StudentChecking studentCheckingSender = studentCheckingRepository.findById(transference.getSenderAccountId()).orElseThrow(() -> new DataNotFoundException("Sender student checking account id not found"));
