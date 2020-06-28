@@ -20,12 +20,133 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cce47c58-570e-4a3f-a1ed-5d9e2b8f0348" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/logs/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/app.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ironhack/MidtermProject/service/users/AccountHolderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ironhack/MidtermProject/service/users/AccountHolderService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/ironhack/MidtermProject/service/users/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ironhack/MidtermProject/service/users/AdminService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/ironhack/MidtermProject/service/users/AdminServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/ironhack/MidtermProject/service/users/AdminServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ironhack/MidtermProject/service/users/ThirdPartyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ironhack/MidtermProject/service/users/ThirdPartyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/MidtermProjectApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/MidtermProjectApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/accounts/AccountController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/accounts/AccountController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/accounts/CheckingController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/accounts/CheckingController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/accounts/CreditCardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/accounts/CreditCardController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/accounts/SavingsController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/accounts/SavingsController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/accounts/StudentCheckingController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/accounts/StudentCheckingController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/users/AccountHolderController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/users/AccountHolderController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/users/AdminController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/users/AdminController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/users/ThirdPartyController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/users/ThirdPartyController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/users/UsersController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/impl/users/UsersController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/accounts/AccountControllerInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/accounts/AccountControllerInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/accounts/CheckingControllerInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/accounts/CheckingControllerInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/accounts/CreditCardControllerInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/accounts/CreditCardControllerInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/accounts/SavingsControllerInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/accounts/SavingsControllerInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/accounts/StudentCheckingControllerInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/accounts/StudentCheckingControllerInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/users/AccountHolderControllerInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/users/AccountHolderControllerInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/users/AdminControllerInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/users/AdminControllerInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/users/ThirdPartyControllerInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/users/ThirdPartyControllerInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/users/UsersControllerInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/controller/interfaces/users/UsersControllerInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/dto/ChangeBalance.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/dto/ChangeBalance.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/dto/CreateThirdParty.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/dto/CreateThirdParty.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/dto/LoginAccount.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/dto/LoginAccount.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/dto/ThirdPartyTransaction.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/dto/ThirdPartyTransaction.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/dto/Transference.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/dto/Transference.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/enums/AccountType.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/enums/AccountType.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/enums/Status.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/enums/Status.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/exception/DataNotFoundException.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/exception/DataNotFoundException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/handler/GlobalHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/handler/GlobalHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/classes/Money.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/classes/Money.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/classes/Transactional.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/classes/Transactional.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/Address.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/Address.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/accounts/Account.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/accounts/Account.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/accounts/Checking.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/accounts/Checking.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/accounts/CreditCard.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/accounts/CreditCard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/accounts/Saving.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/accounts/Saving.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/accounts/StudentChecking.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/accounts/StudentChecking.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/users/AccountHolder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/users/AccountHolder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/users/Admin.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/users/Admin.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/users/ThirdParty.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/users/ThirdParty.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/users/Users.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/entities/users/Users.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/security/Role.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/security/Role.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/security/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/security/User.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/viewmodel/AccountViewModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/viewmodel/AccountViewModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/viewmodel/CreditCardViewModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/viewmodel/CreditCardViewModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/viewmodel/SavingViewModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/model/viewmodel/SavingViewModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/accounts/AccountRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/accounts/AccountRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/accounts/CheckingRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/accounts/CheckingRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/accounts/CreditCardRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/accounts/CreditCardRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/accounts/SavingRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/accounts/SavingRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/accounts/StudentCheckingRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/accounts/StudentCheckingRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/security/RoleRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/security/RoleRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/security/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/security/UserRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/users/AccountHolderRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/users/AccountHolderRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/users/AdminRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/users/AdminRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/users/ThirdPartyRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/users/ThirdPartyRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/users/UsersRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/repository/users/UsersRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/security/CustomSecurityUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/security/CustomSecurityUser.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/security/SecurityConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/security/SecurityConfiguration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/accounts/AccountService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/accounts/AccountService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/accounts/CheckingService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/accounts/CheckingService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/accounts/CreditCardService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/accounts/CreditCardService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/accounts/SavingsService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/accounts/SavingsService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/accounts/StudentCheckingService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/accounts/StudentCheckingService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/security/UserDetailsServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/security/UserDetailsServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/users/AccountHolderService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/users/AccountHolderService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/users/AdminService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/users/AdminService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/users/ThirdPartyService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/users/ThirdPartyService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/users/UsersService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/service/users/UsersService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/util/PasswordUtility.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/ironhack/MidtermProject/util/PasswordUtility.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/MidtermProjectApplicationTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/MidtermProjectApplicationTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/accounts/AccountControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/accounts/AccountControllerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/accounts/CheckingControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/accounts/CheckingControllerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/accounts/CreditCardControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/accounts/CreditCardControllerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/accounts/SavingsControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/accounts/SavingsControllerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/accounts/StudentCheckingControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/accounts/StudentCheckingControllerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/users/AccountHolderControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/users/AccountHolderControllerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/users/AdminControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/users/AdminControllerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/users/ThirdPartyControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/users/ThirdPartyControllerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/users/UsersControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/controller/impl/users/UsersControllerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/dto/ChangeBalanceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/dto/ChangeBalanceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/dto/CreateThirdPartyTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/dto/CreateThirdPartyTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/dto/LoginAccountTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/dto/LoginAccountTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/dto/ThirdPartyTransactionTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/dto/ThirdPartyTransactionTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/dto/TransferenceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/dto/TransferenceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/enums/AccountTypeTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/enums/AccountTypeTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/enums/StatusTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/enums/StatusTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/handler/GlobalHandlerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/handler/GlobalHandlerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/classes/MoneyTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/classes/MoneyTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/entities/AddressTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/entities/AddressTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/entities/accounts/CheckingTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/entities/accounts/CheckingTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/entities/accounts/CreditCardTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/entities/accounts/CreditCardTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/entities/accounts/SavingTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/entities/accounts/SavingTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/entities/accounts/StudentCheckingTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/entities/accounts/StudentCheckingTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/entities/users/AccountHolderTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/entities/users/AccountHolderTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/entities/users/AdminTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/entities/users/AdminTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/entities/users/ThirdPartyTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/entities/users/ThirdPartyTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/security/RoleTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/security/RoleTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/viewmodel/AccountViewModelTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/viewmodel/AccountViewModelTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/viewmodel/CreditCardViewModelTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/viewmodel/CreditCardViewModelTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/viewmodel/SavingViewModelTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/model/viewmodel/SavingViewModelTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/accounts/AccountRepositoryTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/accounts/AccountRepositoryTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/accounts/CheckingRepositoryTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/accounts/CheckingRepositoryTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/accounts/CreditCardRepositoryTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/accounts/CreditCardRepositoryTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/accounts/SavingRepositoryTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/accounts/SavingRepositoryTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/accounts/StudentCheckingRepositoryTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/accounts/StudentCheckingRepositoryTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/users/AccountHolderRepositoryTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/users/AccountHolderRepositoryTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/users/AdminRepositoryTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/users/AdminRepositoryTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/users/ThirdPartyRepositoryTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/users/ThirdPartyRepositoryTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/users/UserRepositoryTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/repository/users/UserRepositoryTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/security/CustomSecurityUserTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/security/CustomSecurityUserTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/accounts/AccountServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/accounts/AccountServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/accounts/CheckingServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/accounts/CheckingServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/accounts/CreditCardServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/accounts/CreditCardServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/accounts/SavingsServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/accounts/SavingsServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/accounts/StudentCheckingServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/accounts/StudentCheckingServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/security/UserDetailsServiceImplTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/security/UserDetailsServiceImplTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/users/AccountHolderServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/users/AccountHolderServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/users/AdminServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/users/AdminServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/users/ThirdPartyServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/users/ThirdPartyServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/users/UsersServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/service/users/UsersServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/util/PasswordUtilityTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/com/ironhack/MidtermProject/util/PasswordUtilityTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +185,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Teen-TiTenX-CRM-3" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../midclone/MidtermProject-BankingSystem/MidtermProject" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.0" />
@@ -85,15 +206,7 @@
       <recent name="com.ironhack.MidtermProject.model.entities" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All in MidtermProject (2)">
-    <configuration name="All in MidtermProject (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="MidtermProject" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.All in MidtermProject (6)">
     <configuration name="All in MidtermProject (2)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="MidtermProject" />
       <option name="PACKAGE_NAME" value="" />
@@ -126,6 +239,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="All in MidtermProject (6)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MidtermProject" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="All in MidtermProject" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
       <module name="MidtermProject" />
       <option name="PACKAGE_NAME" value="" />
@@ -136,11 +257,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in MidtermProject (6)" />
         <item itemvalue="JUnit.All in MidtermProject (2)" />
         <item itemvalue="JUnit.All in MidtermProject (5)" />
         <item itemvalue="JUnit.All in MidtermProject (4)" />
         <item itemvalue="JUnit.All in MidtermProject (3)" />
-        <item itemvalue="JUnit.All in MidtermProject (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -201,26 +322,26 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="723" y="263" width="530" height="578" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/67.27.1853.1053@67.27.1853.1053" timestamp="1593287260675" />
-    <state x="1139" y="311" width="424" height="484" key="FileChooserDialogImpl" timestamp="1593287259183">
+    <state x="1139" y="311" width="424" height="484" key="FileChooserDialogImpl" timestamp="1593337362781">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state x="1139" y="311" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1593287259183" />
-    <state width="1807" height="334" key="GridCell.Tab.0.bottom" timestamp="1593336707156">
+    <state x="1139" y="311" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1593337362781" />
+    <state width="1807" height="334" key="GridCell.Tab.0.bottom" timestamp="1593365305585">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="334" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1593336707156" />
-    <state width="1807" height="334" key="GridCell.Tab.0.center" timestamp="1593336707155">
+    <state width="1807" height="334" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1593365305585" />
+    <state width="1807" height="334" key="GridCell.Tab.0.center" timestamp="1593365305584">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="334" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1593336707155" />
-    <state width="1807" height="334" key="GridCell.Tab.0.left" timestamp="1593336707155">
+    <state width="1807" height="334" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1593365305584" />
+    <state width="1807" height="334" key="GridCell.Tab.0.left" timestamp="1593365305584">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="334" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1593336707155" />
-    <state width="1807" height="334" key="GridCell.Tab.0.right" timestamp="1593336707155">
+    <state width="1807" height="334" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1593365305584" />
+    <state width="1807" height="334" key="GridCell.Tab.0.right" timestamp="1593365305585">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
-    <state width="1807" height="334" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1593336707155" />
+    <state width="1807" height="334" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1593365305585" />
     <state width="1807" height="329" key="GridCell.Tab.1.bottom" timestamp="1593270615053">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
@@ -269,8 +390,8 @@
     <SUITE FILE_PATH="coverage/MidtermProject$AdminTest.ic" NAME="AdminTest Coverage Results" MODIFIED="1592925039290" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.ironhack.MidtermProject.model.entities.users.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/MidtermProject$All_in_MidtermProject__6_.ic" NAME="All in MidtermProject (6) Coverage Results" MODIFIED="1593333066095" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/MidtermProject$All_in_MidtermProject__5_.ic" NAME="All in MidtermProject (5) Coverage Results" MODIFIED="1593333600168" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/MidtermProject$All_in_MidtermProject__6_.ic" NAME="All in MidtermProject (6) Coverage Results" MODIFIED="1593365154055" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/MidtermProject$All_in_MidtermProject.ic" NAME="All in MidtermProject Coverage Results" MODIFIED="1593155991759" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/MidtermProject$All_in_MidtermProject__2_.ic" NAME="All in MidtermProject (2) Coverage Results" MODIFIED="1593336496547" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/MidtermProject$AccountHolderTest_testEquals.ic" NAME="AccountHolderTest.testEquals Coverage Results" MODIFIED="1592924716297" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">

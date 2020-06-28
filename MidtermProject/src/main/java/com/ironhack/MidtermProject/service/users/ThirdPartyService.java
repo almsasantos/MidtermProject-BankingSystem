@@ -14,6 +14,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -123,6 +124,11 @@ public class ThirdPartyService {
         LOGGER.info("Confirm if account with id " + thirdPartyTransaction.getAccountId() + " exists");
         Account account = accountRepository.findById(thirdPartyTransaction.getAccountId()).orElseThrow(() -> new DataNotFoundException("Account id not found"));
 
+        LOGGER.info("Check if amount provided is positive");
+        if(thirdPartyTransaction.getAmount().compareTo(BigDecimal.ZERO) == -1){
+            throw new DataNotFoundException("Amount cannot be negative");
+        }
+
         if(account.getAccountType().equals(AccountType.CHECKING)){
             LOGGER.info("Confirm if account with id " + thirdPartyTransaction.getAccountId() + " is from type checking");
             Checking checkingToDebit = checkingRepository.findById(thirdPartyTransaction.getAccountId()).orElseThrow(() -> new DataNotFoundException("Checking account id not found"));
@@ -196,6 +202,11 @@ public class ThirdPartyService {
 
         LOGGER.info("Confirm if account with id " + thirdPartyTransaction.getAccountId() + " exists");
         Account account = accountRepository.findById(thirdPartyTransaction.getAccountId()).orElseThrow(() -> new DataNotFoundException("Account id not found"));
+
+        LOGGER.info("Check if amount provided is positive");
+        if(thirdPartyTransaction.getAmount().compareTo(BigDecimal.ZERO) == -1){
+            throw new DataNotFoundException("Amount cannot be negative");
+        }
 
         if(account.getAccountType().equals(AccountType.CHECKING)){
             LOGGER.info("Confirm if account with id " + thirdPartyTransaction.getAccountId() + " is from type checking");

@@ -149,7 +149,7 @@ public class AccountHolderService {
      * @param ownerId receives an integer with id from account holder.
      * @return a BigDecimal with balance from account.
      */
-    @Transactional(propagation= Propagation.REQUIRED, readOnly=true, noRollbackFor=Exception.class)
+    @Transactional(propagation= Propagation.REQUIRED, noRollbackFor=Exception.class)
     public BigDecimal checkAccountBalance(Integer accountId, Integer ownerId) {
         LOGGER.info("Account Holder " + ownerId + " checks balance from account " + accountId);
         Account account = accountRepository.findById(accountId).orElseThrow(() -> new DataNotFoundException("Account id not found"));
@@ -201,6 +201,11 @@ public class AccountHolderService {
         AccountHolder accountHolder = accountsHolderRepository.findById(transference.getUserId()).orElseThrow(() -> new DataNotFoundException("Sender id not found"));
         if (accountHolder.isLogged() == false) {
             throw new DataNotFoundException("User must be logged in to make a transference");
+        }
+
+        LOGGER.info("Check if amount provided is positive");
+        if(transference.getAmountToTransfer().compareTo(BigDecimal.ZERO) == -1){
+            throw new DataNotFoundException("Amount cannot be negative");
         }
 
         LOGGER.info("Check that sender account " + transference.getSenderAccountId() + " and receiver account " + transference.getReceiverAccountId() + " exist");

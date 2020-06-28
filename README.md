@@ -147,7 +147,7 @@ This [LINK](https://www.getpostman.com/collections/d90673f14fafa51e4dfa) will al
 </p>
 
 ## <a name="test-coverage"></a>Test Coverage
-* In the **Java Program** in IntelliJ our test coverage is **100% for classes**, **97% for methods** and **90% for lines**.
+* In the **Java Program** in IntelliJ our test coverage is **100% for classes**, **98% for methods** and **90% for lines**.
 
 * In the **Postman** every request is tested (**48 requests -> 48 tests passed**).
 

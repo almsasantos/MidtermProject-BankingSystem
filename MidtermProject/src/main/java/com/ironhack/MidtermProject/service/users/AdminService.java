@@ -458,6 +458,11 @@ public class AdminService {
         LOGGER.info("Confirm if account with id " + changeBalance.getAccountId() + " exists");
         Account account = accountRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Account id not found"));
 
+        LOGGER.info("Check if amount provided is positive");
+        if(changeBalance.getAmount().compareTo(BigDecimal.ZERO) == -1){
+            throw new DataNotFoundException("Amount cannot be negative");
+        }
+
         confirmDataIsCorrect(account, changeBalance.getOwnerId(), changeBalance.getAccountOwnerName(), changeBalance.getAccountId());
 
         if (account.getAccountType().equals(AccountType.CHECKING)) {
@@ -525,6 +530,11 @@ public class AdminService {
 
         LOGGER.info("Confirm if account with id " + changeBalance.getAccountId() + " exists");
         Account account = accountRepository.findById(changeBalance.getAccountId()).orElseThrow(() -> new DataNotFoundException("Account id not found"));
+
+        LOGGER.info("Check if amount provided is positive");
+        if(changeBalance.getAmount().compareTo(BigDecimal.ZERO) == -1){
+            throw new DataNotFoundException("Amount cannot be negative");
+        }
 
         confirmDataIsCorrect(account, changeBalance.getOwnerId(), changeBalance.getAccountOwnerName(), changeBalance.getAccountId());
 
