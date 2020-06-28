@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="cce47c58-570e-4a3f-a1ed-5d9e2b8f0348" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/logs/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/app.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ironhack/MidtermProject/service/users/AccountHolderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ironhack/MidtermProject/service/users/AccountHolderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ironhack/MidtermProject/service/users/AdminService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ironhack/MidtermProject/service/users/AdminService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/ironhack/MidtermProject/service/users/AdminServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/ironhack/MidtermProject/service/users/AdminServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/application.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="CoverageOptionsProvider">
+    <option name="myAddOrReplace" value="-1" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="AnnotationType" />
+        <option value="JUnit5 Test Class" />
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1dXWTehqATbicLAg2lHUlaWQ3qE" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Teen-TiTenX-CRM-3" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.folding" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="com.ironhack.MidtermProject.controller.impl.users" />
+      <recent name="com.ironhack.MidtermProject.service.users" />
+      <recent name="com.ironhack.MidtermProject.controller.impl.accounts" />
+      <recent name="com.ironhack.MidtermProject.dto" />
+      <recent name="com.ironhack.MidtermProject.model.security" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.ironhack.MidtermProject.model.entities" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.All in MidtermProject (2)">
+    <configuration name="All in MidtermProject (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MidtermProject" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in MidtermProject (2)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MidtermProject" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in MidtermProject (3)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MidtermProject" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in MidtermProject (4)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MidtermProject" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in MidtermProject (5)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MidtermProject" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in MidtermProject" type="JUnit" factoryName="JUnit" nameIsGenerated="true">
+      <module name="MidtermProject" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.All in MidtermProject (2)" />
+        <item itemvalue="JUnit.All in MidtermProject (5)" />
+        <item itemvalue="JUnit.All in MidtermProject (4)" />
+        <item itemvalue="JUnit.All in MidtermProject (3)" />
+        <item itemvalue="JUnit.All in MidtermProject (1)" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cce47c58-570e-4a3f-a1ed-5d9e2b8f0348" name="Default Changelist" comment="" />
+      <created>1592571926733</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1592571926733</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.log" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1593199656212">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1593199656212" />
+    <state x="167" y="125" width="1653" height="855" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog" timestamp="1593027425296">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="167" y="125" width="1653" height="855" key="#com.intellij.execution.junit2.states.ComparisonFailureState$DiffDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1593027425296" />
+    <state x="719" y="254" width="553" height="562" key="#com.intellij.ide.util.MemberChooser" timestamp="1593272948540">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="719" y="254" width="553" height="562" key="#com.intellij.ide.util.MemberChooser/67.27.1853.1053@67.27.1853.1053" timestamp="1593272948540" />
+    <state x="280" y="477" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1592668642811">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="280" y="477" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1592668642811" />
+    <state x="633" y="66" width="702" height="973" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1593251418751">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="633" y="66" width="702" height="973" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1593251418751" />
+    <state x="726" y="301" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1592914202359">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="726" y="301" width="524" height="502" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1592914202359" />
+    <state x="723" y="263" width="530" height="578" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1593287260676">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="723" y="263" width="530" height="578" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/67.27.1853.1053@67.27.1853.1053" timestamp="1593287260675" />
+    <state x="1139" y="311" width="424" height="484" key="FileChooserDialogImpl" timestamp="1593287259183">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="1139" y="311" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1593287259183" />
+    <state width="1807" height="334" key="GridCell.Tab.0.bottom" timestamp="1593336707156">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1593336707156" />
+    <state width="1807" height="334" key="GridCell.Tab.0.center" timestamp="1593336707155">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1593336707155" />
+    <state width="1807" height="334" key="GridCell.Tab.0.left" timestamp="1593336707155">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1593336707155" />
+    <state width="1807" height="334" key="GridCell.Tab.0.right" timestamp="1593336707155">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="334" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1593336707155" />
+    <state width="1807" height="329" key="GridCell.Tab.1.bottom" timestamp="1593270615053">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="329" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1593270615053" />
+    <state width="1807" height="329" key="GridCell.Tab.1.center" timestamp="1593270615053">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="329" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1593270615053" />
+    <state width="1807" height="329" key="GridCell.Tab.1.left" timestamp="1593270615053">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="329" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1593270615053" />
+    <state width="1807" height="329" key="GridCell.Tab.1.right" timestamp="1593270615053">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1807" height="329" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1593270615053" />
+    <state x="526" y="210" width="924" height="684" key="Maven.ArtifactSearchDialog" timestamp="1592667570513">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="526" y="210" width="924" height="684" key="Maven.ArtifactSearchDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1592667570513" />
+    <state width="926" height="527" key="XDebugger.FullValuePopup" timestamp="1592988469459">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="926" height="527" key="XDebugger.FullValuePopup/67.27.1853.1053@67.27.1853.1053" timestamp="1592988469459" />
+    <state x="966" y="293" width="697" height="516" key="com.intellij.testIntegration.createTest.CreateTestDialog" timestamp="1593184896064">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="966" y="293" width="697" height="516" key="com.intellij.testIntegration.createTest.CreateTestDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1593184896064" />
+    <state x="1062" y="253" key="run.anything.popup" timestamp="1593024295198">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="1062" y="253" key="run.anything.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1593024295198" />
+    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1593190163693">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1593190163693" />
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo typeName="com.ironhack.MidtermProject.model.entities.accounts.Saving" fieldName="transactionsMade" />
+      </pinned-members>
+    </pin-to-top-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/MidtermProject$AdminTest.ic" NAME="AdminTest Coverage Results" MODIFIED="1592925039290" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.ironhack.MidtermProject.model.entities.users.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/MidtermProject$All_in_MidtermProject__6_.ic" NAME="All in MidtermProject (6) Coverage Results" MODIFIED="1593333066095" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/MidtermProject$All_in_MidtermProject__5_.ic" NAME="All in MidtermProject (5) Coverage Results" MODIFIED="1593333600168" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/MidtermProject$All_in_MidtermProject.ic" NAME="All in MidtermProject Coverage Results" MODIFIED="1593155991759" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/MidtermProject$All_in_MidtermProject__2_.ic" NAME="All in MidtermProject (2) Coverage Results" MODIFIED="1593336496547" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/MidtermProject$AccountHolderTest_testEquals.ic" NAME="AccountHolderTest.testEquals Coverage Results" MODIFIED="1592924716297" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.ironhack.MidtermProject.model.entities.users.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/MidtermProject$All_in_MidtermProject__1_.ic" NAME="All in MidtermProject (1) Coverage Results" MODIFIED="1593333211547" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/MidtermProject$MidtermProjectApplication.ic" NAME="MidtermProjectApplication Coverage Results" MODIFIED="1592989535870" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.ironhack.MidtermProject.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/MidtermProject$AdminControllerTest_creditBalance.ic" NAME="AdminControllerTest.creditBalance Coverage Results" MODIFIED="1593188555985" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.ironhack.MidtermProject.controller.impl.users.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/MidtermProject$All_in_MidtermProject__3_.ic" NAME="All in MidtermProject (3) Coverage Results" MODIFIED="1593333287130" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/MidtermProject$All_in_MidtermProject__4_.ic" NAME="All in MidtermProject (4) Coverage Results" MODIFIED="1593333488997" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/MidtermProject$AdminServiceTest.ic" NAME="AdminServiceTest Coverage Results" MODIFIED="1593193674996" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.ironhack.MidtermProject.service.users.*</FILTER>
+    </SUITE>
+  </component>
+</project>
